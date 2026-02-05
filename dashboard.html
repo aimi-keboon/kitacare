@@ -1,312 +1,663 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Portal | kitacare</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <style>
-        :root { --brand-blue: #007bff; --brand-black: #000000; --bg-light: #f8f9fa; --border: #dddddd; }
-        body { background-color: var(--bg-light); font-family: 'Segoe UI', sans-serif; margin: 0; }
-        
-        /* Responsive Layout Container */
-        .dashboard-wrapper { display: flex; min-height: 100vh; flex-direction: column; }
+      :root {
+        --brand-blue: #007bff;
+        --brand-black: #000000;
+        --bg-light: #f8f9fa;
+        --border: #dddddd;
+      }
+      body {
+        background-color: var(--bg-light);
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+      }
 
-        @media (min-width: 992px) {
-            .dashboard-wrapper { flex-direction: row; }
-            .sidebar { width: 260px; height: 100vh; position: sticky; top: 0; }
-            .main-content { flex: 1; padding: 40px; }
-            .mobile-nav-toggle { display: none; }
+      /* Responsive Layout Container */
+      .dashboard-wrapper {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+
+      @media (min-width: 992px) {
+        .dashboard-wrapper {
+          flex-direction: row;
         }
-
-        /* Sidebar & Mobile Nav */
-        .sidebar { background: var(--brand-black); color: white; transition: 0.3s; }
-        
+        .sidebar {
+          width: 260px;
+          height: 100vh;
+          position: sticky;
+          top: 0;
+        }
+        .main-content {
+          flex: 1;
+          padding: 40px;
+        }
         .mobile-nav-toggle {
-            background: var(--brand-black);
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
+          display: none;
         }
+      }
 
-        .nav-items-container { display: none; padding: 20px 0; }
-        .nav-items-container.active { display: block; }
+      /* Sidebar & Mobile Nav */
+      .sidebar {
+        background: var(--brand-black);
+        color: white;
+        transition: 0.3s;
+      }
 
-        @media (min-width: 992px) {
-            .nav-items-container { display: block; }
+      .mobile-nav-toggle {
+        background: var(--brand-black);
+        color: white;
+        padding: 15px;
+        display: none; /* Hidden by default on Desktop */
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        z-index: 1001;
+      }
+
+      /* Show the floating menu ONLY on small screens */
+      @media (max-width: 991px) {
+        .mobile-nav-toggle {
+          display: flex;
         }
+      }
 
-        .nav-item { 
-            padding: 18px 30px; cursor: pointer; font-weight: 700; font-size: 0.8rem; 
-            letter-spacing: 1px; text-transform: uppercase; transition: 0.3s; border-left: 4px solid transparent;
-        }
-        .nav-item:hover { background: #1a1a1a; color: var(--brand-blue); }
-        .nav-item.active { background: #1a1a1a; border-left: 4px solid var(--brand-blue); color: var(--brand-blue); }
+      .nav-items-container {
+        display: block; /* Shown on Web by default */
+        padding: 20px 0;
+      }
 
-        /* Main Content Styling */
-        .main-content { padding: 20px; box-sizing: border-box; }
-        .section-header h1 { font-size: 1.5rem; }
-        .section-header { margin-bottom: 20px; border-bottom: 2px solid var(--brand-black); padding-bottom: 10px; }
-        .card { background: white; border: 1px solid var(--border); padding: 20px; border-radius: 4px; margin-bottom: 20px; }
-        
-        /* Responsive Forms */
-        .grid-2 { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 15px; }
-        
-        @media (min-width: 768px) {
-            .grid-2 { grid-template-columns: 1fr 1fr; gap: 20px; }
+      @media (max-width: 991px) {
+        .nav-items-container {
+          display: none; /* Hidden on Mobile until clicked */
         }
+        .nav-items-container.active {
+          display: block;
+        }
+      }
+      .nav-items-container.active {
+        display: block;
+      }
 
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-weight: bold; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 5px; color: #555; }
-        
-        /* Prevents iOS zoom on focus */
-        .input-group input, .input-group select, .input-group textarea { 
-            width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 16px;
+      @media (min-width: 992px) {
+        .nav-items-container {
+          display: block;
         }
-        
-        /* Table Responsiveness */
-        .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        table { width: 100%; border-collapse: collapse; background: white; min-width: 600px; }
-        
-        th { background: var(--brand-black); color: white; text-align: left; padding: 12px; font-size: 0.7rem; }
-        td { padding: 12px; border-bottom: 1px solid #eee; font-size: 0.85rem; }
-        
-        /* Accordion Detail Container */
-        .detail-container { padding: 15px; border: 2px solid var(--brand-blue); border-top: none; display: flex; flex-direction: column; gap: 15px; }
-        
-        @media (min-width: 768px) {
-            .detail-container { display: grid; grid-template-columns: 1fr 1fr; }
-        }
+      }
 
-        .status-pill { padding: 4px 10px; border-radius: 20px; font-size: 0.65rem; font-weight: 800; }
-        .btn-primary { background: var(--brand-black); color: white; padding: 15px; border: none; font-weight: bold; cursor: pointer; width: 100%; border-radius: 4px; font-size: 1rem; }
-        .hidden { display: none; }
+      .nav-item {
+        padding: 18px 30px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: 0.3s;
+        border-left: 4px solid transparent;
+      }
+      .nav-item:hover {
+        background: #1a1a1a;
+        color: var(--brand-blue);
+      }
+      .nav-item.active {
+        background: #1a1a1a;
+        border-left: 4px solid var(--brand-blue);
+        color: var(--brand-blue);
+      }
+
+      .main-content {
+        flex: 1;
+        padding: 20px;
+        box-sizing: border-box;
+        max-width: 100%;
+      }
+
+      @media (min-width: 992px) {
+        .main-content {
+          padding: 40px; /* More breathing room on Web View */
+        }
+      }
+      .section-header h1 {
+        font-size: 1.5rem;
+      }
+      .section-header {
+        margin-bottom: 20px;
+        border-bottom: 2px solid var(--brand-black);
+        padding-bottom: 10px;
+      }
+      .card {
+        background: white;
+        border: 1px solid var(--border);
+        padding: 20px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+      }
+
+      /* Responsive Forms */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      @media (min-width: 768px) {
+        .grid-2 {
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+        }
+      }
+
+      .input-group {
+        margin-bottom: 15px;
+      }
+      .input-group label {
+        display: block;
+        font-weight: bold;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+        color: #555;
+      }
+
+      /* Prevents iOS zoom on focus */
+      .input-group input,
+      .input-group select,
+      .input-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+      }
+
+      /* Responsive Card Styles */
+      .booking-card {
+        background: white;
+        border: 1px solid var(--border);
+        margin-bottom: 12px;
+        border-radius: 6px;
+        overflow: hidden;
+        border-left: 4px solid var(--brand-blue);
+      }
+      .booking-card-header {
+        padding: 15px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .header-info h4 {
+        margin: 0;
+        font-size: 1rem;
+        color: #000;
+      }
+      .header-info span {
+        font-size: 0.7rem;
+        color: #666;
+        font-weight: bold;
+      }
+
+      .booking-card-body {
+        display: none;
+        padding: 15px;
+        background: #fcfcfc;
+        border-top: 1px solid #eee;
+      }
+      .booking-card-body.active {
+        display: block;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      @media (min-width: 600px) {
+        .info-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .info-item label {
+        display: block;
+        font-size: 0.6rem;
+        font-weight: 800;
+        color: var(--brand-blue);
+        text-transform: uppercase;
+        margin-bottom: 3px;
+      }
+      .info-item p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: #333;
+        line-height: 1.4;
+      }
+
+      .status-paid {
+        background: #28a745;
+        color: white;
+      }
+      .status-pending {
+        background: var(--brand-blue);
+        color: white;
+      }
+
+      .status-pill {
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.65rem;
+        font-weight: 800;
+      }
+      .btn-primary {
+        background: var(--brand-black);
+        color: white;
+        padding: 15px;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        width: 100%;
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+      .hidden {
+        display: none;
+      }
     </style>
-</head>
-<body>
-
-    <header style="padding: 10px 20px; background: white; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
-        <img src="kitacare.png" alt="kitacare" style="height: 30px;">
-        <button onclick="logout()" style="border: 1px solid red; color: red; background: none; padding: 5px 10px; cursor: pointer; font-weight: bold; font-size: 0.7rem;">LOGOUT</button>
+  </head>
+  <body>
+    <header
+      style="
+        padding: 10px 20px;
+        background: white;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      "
+    >
+      <img src="kitacare.png" alt="kitacare" style="height: 30px" />
+      <button
+        onclick="logout()"
+        style="
+          border: 1px solid red;
+          color: red;
+          background: none;
+          padding: 5px 10px;
+          cursor: pointer;
+          font-weight: bold;
+          font-size: 0.7rem;
+        "
+      >
+        LOGOUT
+      </button>
     </header>
 
     <div class="dashboard-wrapper">
-        <div class="mobile-nav-toggle" onclick="toggleSidebar()">
-            <span>MENU</span>
-            <span id="menu-icon">☰</span>
-        </div>
+      <div class="mobile-nav-toggle" onclick="toggleSidebar()">
+        <span>MENU</span>
+        <span id="menu-icon">☰</span>
+      </div>
 
-        <div class="sidebar">
-            <div class="nav-items-container" id="nav-container">
-                <div class="nav-item active" id="nav-book" onclick="showSection('book')">New Booking</div>
-                <div class="nav-item" id="nav-details" onclick="showSection('details')">My Bookings</div>
-                <div class="nav-item" id="nav-profile" onclick="showSection('profile')">My Profile</div>
+      <div class="sidebar">
+        <div class="nav-items-container" id="nav-container">
+          <div
+            class="nav-item active"
+            id="nav-book"
+            onclick="showSection('book')"
+          >
+            New Booking
+          </div>
+          <div
+            class="nav-item"
+            id="nav-details"
+            onclick="showSection('details')"
+          >
+            My Bookings
+          </div>
+          <div
+            class="nav-item"
+            id="nav-profile"
+            onclick="showSection('profile')"
+          >
+            My Profile
+          </div>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <section id="section-book">
+          <div class="section-header"><h1>Book a Caretaker</h1></div>
+          <div class="card">
+            <h3
+              style="color: var(--brand-blue); margin-top: 0; font-size: 1.1rem"
+            >
+              1. Patient Details
+            </h3>
+            <div class="grid-2">
+              <div class="input-group">
+                <label>Patient Name</label><input type="text" id="r-name" />
+              </div>
+              <div class="input-group">
+                <label>Date of Birth</label><input type="date" id="r-dob" />
+              </div>
             </div>
-        </div>
+            <div class="grid-2">
+              <div class="input-group">
+                <label>Age</label><input type="number" id="r-age" />
+              </div>
+              <div class="input-group">
+                <label>Gender</label
+                ><select id="r-gender">
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              </div>
+            </div>
 
-        <div class="main-content">
-            <section id="section-book">
-                <div class="section-header"><h1>Book a Caretaker</h1></div>
-                <div class="card">
-                    <h3 style="color: var(--brand-blue); margin-top: 0; font-size: 1.1rem;">1. Patient Details</h3>
-                    <div class="grid-2">
-                        <div class="input-group"><label>Patient Name</label><input type="text" id="r-name"></div>
-                        <div class="input-group"><label>Date of Birth</label><input type="date" id="r-dob"></div>
-                    </div>
-                    <div class="grid-2">
-                        <div class="input-group"><label>Age</label><input type="number" id="r-age"></div>
-                        <div class="input-group"><label>Gender</label><select id="r-gender"><option>Male</option><option>Female</option></select></div>
-                    </div>
-                    
-                    <h3 style="color: var(--brand-blue); margin-top: 15px; font-size: 1.1rem;">2. Care & Medical</h3>
-                    <div class="input-group"><label>Purpose of Visit</label><textarea id="c-purpose"></textarea></div>
-                    <div class="grid-2">
-                        <div class="input-group"><label>Meds/History</label><input type="text" id="c-meds"></div>
-                        <div class="input-group"><label>Required Professional</label><select id="c-role"><option>Caregiver</option><option>Nurse</option><option>Doctor</option></select></div>
-                    </div>
+            <h3
+              style="
+                color: var(--brand-blue);
+                margin-top: 15px;
+                font-size: 1.1rem;
+              "
+            >
+              2. Care & Medical
+            </h3>
+            <div class="input-group">
+              <label>Purpose of Visit</label
+              ><textarea id="c-purpose"></textarea>
+            </div>
+            <div class="grid-2">
+              <div class="input-group">
+                <label>Meds/History</label><input type="text" id="c-meds" />
+              </div>
+              <div class="input-group">
+                <label>Required Professional</label
+                ><select id="c-role">
+                  <option>Caregiver</option>
+                  <option>Nurse</option>
+                  <option>Doctor</option>
+                </select>
+              </div>
+            </div>
 
-                    <h3 style="color: var(--brand-blue); margin-top: 15px; font-size: 1.1rem;">3. Emergency & Dates</h3>
-                    <div class="grid-2">
-                        <div class="input-group"><label>Emergency Name</label><input type="text" id="r-e-name"></div>
-                        <div class="input-group"><label>Emergency Phone</label><input type="tel" id="r-e-phone"></div>
-                    </div>
+            <h3
+              style="
+                color: var(--brand-blue);
+                margin-top: 15px;
+                font-size: 1.1rem;
+              "
+            >
+              3. Emergency & Dates
+            </h3>
+            <div class="grid-2">
+              <div class="input-group">
+                <label>Emergency Name</label><input type="text" id="r-e-name" />
+              </div>
+              <div class="input-group">
+                <label>Emergency Phone</label
+                ><input type="tel" id="r-e-phone" />
+              </div>
+            </div>
 
-                    <div style="margin-bottom: 15px;">
-                        <input type="checkbox" id="multi-toggle" onclick="toggleMultiDate()"> <label style="font-size: 0.85rem;">Multiple dates needed?</label>
-                    </div>
+            <div style="margin-bottom: 15px">
+              <input
+                type="checkbox"
+                id="multi-toggle"
+                onclick="toggleMultiDate()"
+              />
+              <label style="font-size: 0.85rem">Multiple dates needed?</label>
+            </div>
 
-                    <div id="date-selection-area" class="input-group">
-                        <label>Date & Time</label>
-                        <input type="datetime-local" class="date-input-field">
-                    </div>
+            <div id="date-selection-area" class="input-group">
+              <label>Date & Time</label>
+              <input type="datetime-local" class="date-input-field" />
+            </div>
 
-                    <button class="btn-primary" id="book-btn" onclick="proceedToPayment()">PROCEED TO PAYMENT</button>
-                </div>
-            </section>
+            <button
+              class="btn-primary"
+              id="book-btn"
+              onclick="proceedToPayment()"
+            >
+              PROCEED TO PAYMENT
+            </button>
+          </div>
+        </section>
 
-            <section id="section-details" class="hidden">
-                <div class="section-header"><h1>My Bookings</h1></div>
-                <div class="card" style="padding: 0; overflow: hidden;">
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Ref No.</th>
-                                    <th>Patient</th>
-                                    <th>Service</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="history-table">
-                                <tr><td colspan="4" style="text-align:center; padding:40px;">Loading bookings...</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+        <section id="section-details" class="hidden">
+          <div class="section-header"><h1>My Bookings</h1></div>
 
-            <section id="section-profile" class="hidden">
-                <div class="section-header"><h1>User Profile</h1></div>
-                <div class="card">
-                    <div class="grid-2">
-                        <div class="input-group"><label>Full Name</label><input type="text" id="p-name" disabled></div>
-                        <div class="input-group"><label>Role</label><input type="text" id="p-role" disabled></div>
-                    </div>
-                    <div class="grid-2">
-                        <div class="input-group"><label>Email</label><input type="text" id="p-email" disabled></div>
-                        <div class="input-group"><label>Phone</label><input type="text" id="p-phone" disabled></div>
-                    </div>
-                    <div class="grid-2">
-                        <div class="input-group"><label>DOB</label><input type="text" id="p-dob" disabled></div>
-                        <div class="input-group"><label>Gender</label><input type="text" id="p-gender" disabled></div>
-                    </div>
-                </div>
-            </section>
-        </div>
+          <div id="history-list-container">
+            <div style="text-align: center; padding: 40px; color: #999">
+              Loading your history...
+            </div>
+          </div>
+        </section>
+
+        <section id="section-profile" class="hidden">
+          <div class="section-header"><h1>User Profile</h1></div>
+          <div class="card">
+            <div class="grid-2">
+              <div class="input-group">
+                <label>Full Name</label
+                ><input type="text" id="p-name" disabled />
+              </div>
+              <div class="input-group">
+                <label>Role</label><input type="text" id="p-role" disabled />
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="input-group">
+                <label>Email</label><input type="text" id="p-email" disabled />
+              </div>
+              <div class="input-group">
+                <label>Phone</label><input type="text" id="p-phone" disabled />
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="input-group">
+                <label>DOB</label><input type="text" id="p-dob" disabled />
+              </div>
+              <div class="input-group">
+                <label>Gender</label
+                ><input type="text" id="p-gender" disabled />
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
 
     <script src="config.js"></script>
     <script>
-        // Toggle Sidebar on Mobile
-        function toggleSidebar() {
-            const container = document.getElementById('nav-container');
-            container.classList.toggle('active');
-            document.getElementById('menu-icon').innerText = container.classList.contains('active') ? '✕' : '☰';
+      // Toggle Sidebar on Mobile
+      function toggleSidebar() {
+        const container = document.getElementById("nav-container");
+        container.classList.toggle("active");
+        document.getElementById("menu-icon").innerText =
+          container.classList.contains("active") ? "✕" : "☰";
+      }
+
+      // Logic for showSection with mobile awareness
+      function showSection(name) {
+        document
+          .querySelectorAll("section")
+          .forEach((s) => s.classList.add("hidden"));
+        document
+          .querySelectorAll(".nav-item")
+          .forEach((n) => n.classList.remove("active"));
+        document.getElementById("section-" + name).classList.remove("hidden");
+        document.getElementById("nav-" + name).classList.add("active");
+
+        // On mobile, close sidebar after clicking
+        if (window.innerWidth < 992) {
+          document.getElementById("nav-container").classList.remove("active");
+          document.getElementById("menu-icon").innerText = "☰";
         }
 
-        // Logic for showSection with mobile awareness
-        function showSection(name) {
-            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById('section-' + name).classList.remove('hidden');
-            document.getElementById('nav-' + name).classList.add('active');
-            
-            // On mobile, close sidebar after clicking
-            if (window.innerWidth < 992) {
-                document.getElementById('nav-container').classList.remove('active');
-                document.getElementById('menu-icon').innerText = '☰';
-            }
-            
-            if(name === 'details') fetchHistory();
-        }
+        if (name === "details") fetchHistory();
+      }
 
-        // Rest of your JS logic...
-        window.onload = function() {
-            const user = JSON.parse(localStorage.getItem("userData"));
-            if (!user) { window.location.href = "index.html"; return; }
-            document.getElementById('p-name').value = user.name || "N/A";
-            document.getElementById('p-role').value = user.role || "N/A";
-            document.getElementById('p-email').value = user.email || "N/A";
-            document.getElementById('p-phone').value = user.phone || "N/A";
-            document.getElementById('p-gender').value = user.gender || "N/A";
-            document.getElementById('p-dob').value = user.dob ? new Date(user.dob).toLocaleDateString() : "N/A";
-            fetchHistory();
+      // Rest of your JS logic...
+      window.onload = function () {
+        const user = JSON.parse(localStorage.getItem("userData"));
+        if (!user) {
+          window.location.href = "index.html";
+          return;
+        }
+        document.getElementById("p-name").value = user.name || "N/A";
+        document.getElementById("p-role").value = user.role || "N/A";
+        document.getElementById("p-email").value = user.email || "N/A";
+        document.getElementById("p-phone").value = user.phone || "N/A";
+        document.getElementById("p-gender").value = user.gender || "N/A";
+        document.getElementById("p-dob").value = user.dob
+          ? new Date(user.dob).toLocaleDateString()
+          : "N/A";
+        fetchHistory();
+      };
+
+      function toggleMultiDate() {
+        const area = document.getElementById("date-selection-area");
+        if (document.getElementById("multi-toggle").checked) {
+          area.innerHTML = `<div id="multi-list"><input type="datetime-local" class="date-input-field" style="margin-bottom:10px;"></div>
+                                  <button onclick="addSlot()" style="cursor:pointer; background:none; border:1px solid #000; padding:10px; width:100%;">+ Add Date</button>`;
+        } else {
+          area.innerHTML = `<label>Preferred Date & Time</label><input type="datetime-local" class="date-input-field">`;
+        }
+      }
+
+      function addSlot() {
+        const input = document.createElement("input");
+        input.type = "datetime-local";
+        input.className = "date-input-field";
+        input.style.cssText =
+          "display:block; margin-bottom:10px; width:100%; padding:12px; border:1px solid #ddd; border-radius:4px; font-size:16px;";
+        document.getElementById("multi-list").appendChild(input);
+      }
+
+      async function proceedToPayment() {
+        const btn = document.getElementById("book-btn");
+        const dates = Array.from(document.querySelectorAll(".date-input-field"))
+          .map((i) => i.value)
+          .filter((v) => v);
+        if (dates.length === 0) return alert("Select at least one date");
+
+        btn.innerText = "SAVING...";
+        btn.disabled = true;
+
+        const data = {
+          action: "book",
+          userEmail: localStorage.getItem("userEmail"),
+          recipientName: document.getElementById("r-name").value,
+          recipientDob: document.getElementById("r-dob").value,
+          age: document.getElementById("r-age").value,
+          gender: document.getElementById("r-gender").value,
+          emergencyName: document.getElementById("r-e-name").value,
+          emergencyPhone: document.getElementById("r-e-phone").value,
+          purpose: document.getElementById("c-purpose").value,
+          requestedRole: document.getElementById("c-role").value,
+          meds: document.getElementById("c-meds").value,
+          dates: dates.join(" | "),
         };
 
-        function toggleMultiDate() {
-            const area = document.getElementById('date-selection-area');
-            if (document.getElementById('multi-toggle').checked) {
-                area.innerHTML = `<div id="multi-list"><input type="datetime-local" class="date-input-field" style="margin-bottom:10px;"></div>
-                                  <button onclick="addSlot()" style="cursor:pointer; background:none; border:1px solid #000; padding:10px; width:100%;">+ Add Date</button>`;
-            } else {
-                area.innerHTML = `<label>Preferred Date & Time</label><input type="datetime-local" class="date-input-field">`;
-            }
+        try {
+          const res = await fetch(APPS_SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify(data),
+          });
+          const result = await res.json();
+          if (result.status === "success")
+            window.location.href =
+              "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
+        } catch (e) {
+          alert("Server error.");
+          btn.disabled = false;
+          btn.innerText = "BOOK & PROCEED";
         }
+      }
 
-        function addSlot() {
-            const input = document.createElement('input');
-            input.type = "datetime-local";
-            input.className = "date-input-field";
-            input.style.cssText = "display:block; margin-bottom:10px; width:100%; padding:12px; border:1px solid #ddd; border-radius:4px; font-size:16px;";
-            document.getElementById('multi-list').appendChild(input);
-        }
+      async function fetchHistory() {
+        const email = localStorage.getItem("userEmail");
+        const container = document.getElementById("history-list-container");
 
-        async function proceedToPayment() {
-            const btn = document.getElementById('book-btn');
-            const dates = Array.from(document.querySelectorAll('.date-input-field')).map(i => i.value).filter(v => v);
-            if(dates.length === 0) return alert("Select at least one date");
+        try {
+          const res = await fetch(
+            APPS_SCRIPT_URL + "?email=" + encodeURIComponent(email),
+          );
+          const data = await res.json();
 
-            btn.innerText = "SAVING..."; btn.disabled = true;
+          if (!data || data.length === 0) {
+            container.innerHTML = `<div class="card" style="text-align:center">No records found.</div>`;
+            return;
+          }
 
-            const data = {
-                action: "book",
-                userEmail: localStorage.getItem("userEmail"),
-                recipientName: document.getElementById('r-name').value,
-                recipientDob: document.getElementById('r-dob').value,
-                age: document.getElementById('r-age').value,
-                gender: document.getElementById('r-gender').value,
-                emergencyName: document.getElementById('r-e-name').value,
-                emergencyPhone: document.getElementById('r-e-phone').value,
-                purpose: document.getElementById('c-purpose').value,
-                requestedRole: document.getElementById('c-role').value,
-                meds: document.getElementById('c-meds').value,
-                dates: dates.join(" | ")
-            };
-
-            try {
-                const res = await fetch(APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify(data) });
-                const result = await res.json();
-                if(result.status === "success") window.location.href = "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
-            } catch(e) { alert("Server error."); btn.disabled = false; btn.innerText = "BOOK & PROCEED"; }
-        }
-
-        async function fetchHistory() {
-            const email = localStorage.getItem("userEmail");
-            const table = document.getElementById('history-table');
-            try {
-                const res = await fetch(APPS_SCRIPT_URL + "?email=" + encodeURIComponent(email));
-                const data = await res.json();
-                if (data.length === 0) { table.innerHTML = "<tr><td colspan='4' style='text-align:center'>No records found.</td></tr>"; return; }
-                table.innerHTML = data.map((row, index) => `
-                    <tr class="clickable-row" onclick="toggleDetails(${index})">
-                        <td><b>${row.ref}</b></td>
-                        <td>${row.recipient}</td>
-                        <td>${row.role}</td>
-                        <td><span class="status-pill ${row.status === 'Paid' ? 'status-paid' : 'status-pending'}">${row.status}</span></td>
-                    </tr>
-                    <tr class="detail-row" id="det-${index}">
-                        <td colspan="4">
-                            <div class="detail-container">
-                                <div class="detail-item"><b>Reason</b><p>${row.purpose}</p></div>
-                                <div class="detail-item"><b>Meds</b><p>${row.meds}</p></div>
-                                <div class="detail-item"><b>Emergency</b><p>${row.eName}</p></div>
-                                <div class="detail-item"><b>Dates</b><p>${row.dates}</p></div>
+          container.innerHTML = data
+            .reverse()
+            .map(
+              (row, index) => `
+                    <div class="booking-card">
+                        <div class="booking-card-header" onclick="toggleBookingDropdown('${index}')">
+                            <div class="header-info">
+                                <h4>${row.recipient}</h4>
+                                <span>${row.ref} • ${row.role}</span>
                             </div>
-                        </td>
-                    </tr>
-                `).join('');
-            } catch(e) { table.innerHTML = "<tr><td colspan='4'>Error loading history.</td></tr>"; }
+                            <div style="text-align:right">
+                                <span class="status-pill ${row.status.toLowerCase().includes("paid") ? "status-paid" : "status-pending"}">
+                                    ${row.status}
+                                </span>
+                                <div style="font-size: 10px; margin-top: 5px; color: #999;" id="chevron-${index}">DETAILS ▼</div>
+                            </div>
+                        </div>
+                        
+                        <div class="booking-card-body" id="body-${index}">
+                            <div class="info-grid">
+                                <div class="info-item"><label>Condition</label><p>${row.purpose || "N/A"}</p></div>
+                                <div class="info-item"><label>Medications</label><p>${row.meds || "None"}</p></div>
+                                <div class="info-item"><label>Emergency</label><p>${row.eName} (${row.ePhone || ""})</p></div>
+                                <div class="info-item"><label>Scheduled Dates</label><p>${row.dates.replace(/\|/g, "<br>")}</p></div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+            )
+            .join("");
+        } catch (e) {
+          container.innerHTML = `<div class="card" style="color:red; text-align:center;">Error loading records.</div>`;
         }
+      }
 
-        function toggleDetails(i) {
-            const row = document.getElementById('det-' + i);
-            row.classList.toggle('open');
+      function toggleBookingDropdown(index) {
+        const body = document.getElementById(`body-${index}`);
+        const chevron = document.getElementById(`chevron-${index}`);
+        const isActive = body.classList.contains("active");
+
+        // Close all others
+        document
+          .querySelectorAll(".booking-card-body")
+          .forEach((el) => el.classList.remove("active"));
+        document
+          .querySelectorAll('[id^="chevron-"]')
+          .forEach((el) => (el.innerText = "DETAILS ▼"));
+
+        if (!isActive) {
+          body.classList.add("active");
+          chevron.innerText = "HIDE ▲";
         }
+      }
 
-        function logout() { localStorage.clear(); window.location.href = "index.html"; }
+      function logout() {
+        localStorage.clear();
+        window.location.href = "index.html";
+      }
     </script>
-</body>
+  </body>
 </html>
