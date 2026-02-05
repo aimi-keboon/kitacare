@@ -232,7 +232,7 @@
                 
                 if(result.status === "success") {
                     btn.innerText = "REDIRECTING TO STRIPE...";
-                    window.location.href = "https://buy.stripe.com/8x2eVe4Nv7kR9lp8gRgw00d";
+                    window.location.href = "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
                 } else {
                     alert("Error: " + result.message);
                     btn.disabled = false;
@@ -241,7 +241,7 @@
             } catch(e) {
                 console.error(e);
                 alert("Connection error. The booking might have saved, but redirect failed.");
-                window.location.href = "https://buy.stripe.com/8x2eVe4Nv7kR9lp8gRgw00d";
+                window.location.href = "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
             }
         }
 
