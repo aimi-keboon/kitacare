@@ -6,22 +6,86 @@
     <title>Access | kitacare</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background-color: var(--bg-light); }
-        .auth-wrapper { min-height: calc(100vh - 80px); display: flex; justify-content: center; align-items: center; padding: 40px 20px; }
-        .auth-card { width: 100%; max-width: 450px; background: white; border: 2px solid var(--brand-black); padding: 40px; box-shadow: 10px 10px 0px var(--brand-black); }
-        .tabs { display: flex; margin-bottom: 30px; border-bottom: 2px solid var(--border-gray); }
-        .tab { flex: 1; padding: 12px; text-align: center; cursor: pointer; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; color: var(--text-muted); }
-        .tab.active { color: var(--brand-blue); border-bottom: 3px solid var(--brand-blue); }
+        /* Modern Mobile-First Fixes */
+        body { background-color: var(--bg-light); margin: 0; }
+        
+        .auth-wrapper { 
+            min-height: calc(100vh - 80px); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 20px; /* Reduced padding for mobile */
+        }
+
+        .auth-card { 
+            width: 100%; 
+            max-width: 450px; 
+            background: white; 
+            border: 2px solid var(--brand-black); 
+            padding: 30px 20px; /* Tighter padding on mobile */
+            box-shadow: 8px 8px 0px var(--brand-black); /* Slightly smaller shadow for small screens */
+            box-sizing: border-box;
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 20px 15px;
+                box-shadow: 5px 5px 0px var(--brand-black); /* Minimal shadow on very small phones */
+            }
+            header img {
+                height: 30px; /* Smaller logo for mobile headers */
+            }
+            .grid-mobile-stack {
+                grid-template-columns: 1fr !important; /* Stack DOB and Gender on mobile */
+                gap: 0 !important;
+            }
+        }
+
+        .tabs { display: flex; margin-bottom: 25px; border-bottom: 2px solid var(--border-gray); }
+        .tab { 
+            flex: 1; 
+            padding: 15px 10px; 
+            text-align: center; 
+            cursor: pointer; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            font-size: 0.8rem; 
+            color: var(--text-muted); 
+            transition: 0.2s;
+        }
+        .tab.active { color: var(--brand-blue); border-bottom: 4px solid var(--brand-blue); }
+        
+        /* Form Styling */
+        .input-group { margin-bottom: 18px; }
+        .input-group label { display: block; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; margin-bottom: 6px; }
+        
+        /* Larger touch targets for mobile inputs */
+        input, select, textarea {
+            width: 100%;
+            padding: 12px; 
+            font-size: 16px !important; /* Prevents iOS auto-zoom on focus */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
         .hidden { display: none; }
-        .btn-primary { width: 100%; margin-top: 10px; }
+        .btn-primary { 
+            width: 100%; 
+            padding: 15px; 
+            font-weight: 800; 
+            letter-spacing: 1px; 
+            cursor: pointer;
+        }
         .loading { opacity: 0.7; pointer-events: none; cursor: wait; }
     </style>
 </head>
 <body>
 
-    <header>
+    <header style="padding: 15px 20px; border-bottom: 1px solid #eee; background: white;">
         <a href="index.html" class="logo-link">
-            <img src="kitacare.png" alt="kitacare">
+            <img src="kitacare.png" alt="kitacare" style="height: 35px;">
         </a>
     </header>
 
@@ -35,11 +99,11 @@
             <form id="login-form">
                 <div class="input-group">
                     <label>Email Address</label>
-                    <input type="email" id="l-email" required>
+                    <input type="email" id="l-email" placeholder="email@example.com" required>
                 </div>
                 <div class="input-group">
                     <label>Password</label>
-                    <input type="password" id="l-pass" required>
+                    <input type="password" id="l-pass" placeholder="••••••••" required>
                 </div>
                 <button type="button" class="btn-primary" id="login-btn" onclick="handleLogin()">LOGIN</button>
             </form>
@@ -55,9 +119,9 @@
                 </div>
                 <div class="input-group">
                     <label>Full Name</label>
-                    <input type="text" id="s-name" placeholder="As per IC/Passport" required>
+                    <input type="text" id="s-name" placeholder="Full Name" required>
                 </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="grid-mobile-stack" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div class="input-group">
                         <label>Date of Birth</label>
                         <input type="date" id="s-dob" required>
@@ -72,15 +136,15 @@
                 </div>
                 <div class="input-group">
                     <label>Email Address</label>
-                    <input type="email" id="s-email" required>
+                    <input type="email" id="s-email" placeholder="name@email.com" required>
                 </div>
                 <div class="input-group">
                     <label>Contact Number</label>
-                    <input type="tel" id="s-phone" placeholder="e.g. +60123456789" required>
+                    <input type="tel" id="s-phone" placeholder="+60..." required>
                 </div>
                 <div class="input-group">
                     <label>Create Password</label>
-                    <input type="password" id="s-pass" required>
+                    <input type="password" id="s-pass" placeholder="min 8 chars" required>
                 </div>
                 <button type="button" class="btn-primary" id="signup-btn" onclick="handleSignup()">CREATE ACCOUNT</button>
             </form>
@@ -89,18 +153,14 @@
 
     <script src="config.js"></script>
     <script>
-        // Toggle between Login and Signup views
         function switchTab(view) {
             document.getElementById('login-form').classList.toggle('hidden', view !== 'login');
             document.getElementById('signup-form').classList.toggle('hidden', view !== 'signup');
             document.getElementById('l-tab').classList.toggle('active', view === 'login');
             document.getElementById('s-tab').classList.toggle('active', view === 'signup');
+            window.scrollTo(0, 0); // Reset scroll position when switching tabs
         }
 
-        /**
-         * SIGNUP HANDLER
-         * Sends data to Google Sheets and alerts if email already exists
-         */
         async function handleSignup() {
             const btn = document.getElementById('signup-btn');
             const data = {
@@ -116,35 +176,26 @@
 
             if (!data.email || !data.password || !data.name) return alert("Please fill in all fields.");
             
-            btn.innerText = "CREATING ACCOUNT...";
+            btn.innerText = "CREATING...";
             btn.classList.add('loading');
 
             try {
-                const response = await fetch(APPS_SCRIPT_URL, { 
-                    method: "POST", 
-                    body: JSON.stringify(data) 
-                });
-                
+                const response = await fetch(APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify(data) });
                 const result = await response.json();
-                
                 if (result.status === "success") {
-                    alert("Account created successfully! You can now login.");
+                    alert("Account created! Logging you in...");
                     switchTab('login');
                 } else {
-                    alert("Registration Failed: " + result.message);
+                    alert(result.message);
                 }
             } catch (e) { 
-                alert("Connection error. Ensure your script is deployed as 'Anyone'."); 
+                alert("Signup error."); 
             } finally {
                 btn.innerText = "CREATE ACCOUNT";
                 btn.classList.remove('loading');
             }
         }
 
-        /**
-         * LOGIN HANDLER
-         * Stores full user profile and handles Role-Based redirection
-         */
         async function handleLogin() {
             const btn = document.getElementById('login-btn');
             const email = document.getElementById('l-email').value.toLowerCase().trim();
@@ -152,7 +203,7 @@
 
             if (!email || !password) return alert("Please enter credentials.");
             
-            btn.innerText = "LOGGING IN...";
+            btn.innerText = "WAIT...";
             btn.classList.add('loading');
 
             try {
@@ -160,24 +211,20 @@
                     method: "POST",
                     body: JSON.stringify({ action: "login", email, password })
                 });
-                
                 const result = await response.json();
 
                 if (result.status === "success") {
-                    // Store the full user object for the Profile section
                     localStorage.setItem("userData", JSON.stringify(result.user));
                     localStorage.setItem("userEmail", result.user.email);
                     localStorage.setItem("userName", result.user.name);
 
-                    // --- TRAFFIC CONTROL ---
-                    // Clients go to Dashboard, Professionals/Caregivers go to their portal
                     if (result.user.role === "Client") {
                         window.location.href = "dashboard.html";
                     } else {
                         window.location.href = "professionals.html";
                     }
                 } else {
-                    alert("Login Failed: " + result.message);
+                    alert(result.message);
                 }
             } catch (e) { 
                 alert("Login connection error."); 
