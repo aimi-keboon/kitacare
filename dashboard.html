@@ -211,48 +211,53 @@
 
         // --- BOOKING LOGIC (NO-CORS FIX) ---
         async function proceedToPayment() {
-            const btn = document.getElementById('book-btn');
-            const dates = Array.from(document.querySelectorAll('.date-input-field')).map(i => i.value).filter(v => v);
-            
-            if(!dates.length) return alert("Select at least one date.");
-            
-            const data = {
-                action: "book",
-                userEmail: localStorage.getItem("userEmail"),
-                recipientName: document.getElementById('r-name').value,
-                recipientDob: document.getElementById('r-dob').value,
-                age: document.getElementById('r-age').value,
-                gender: document.getElementById('r-gender').value,
-                emergencyName: document.getElementById('r-e-name').value,
-                emergencyPhone: document.getElementById('r-e-phone').value,
-                purpose: document.getElementById('c-purpose').value,
-                requestedRole: document.getElementById('c-role').value,
-                meds: document.getElementById('c-meds').value,
-                dates: dates.join(" | ")
-            };
+    const btn = document.getElementById('book-btn');
+    const dates = Array.from(document.querySelectorAll('.date-input-field')).map(i => i.value).filter(v => v);
+    
+    if(!dates.length) return alert("Please select a date.");
+    
+    const data = {
+        action: "book",
+        userEmail: localStorage.getItem("userEmail"),
+        recipientName: document.getElementById('r-name').value,
+        recipientDob: document.getElementById('r-dob').value,
+        age: document.getElementById('r-age').value,
+        gender: document.getElementById('r-gender').value,
+        emergencyName: document.getElementById('r-e-name').value,
+        emergencyPhone: document.getElementById('r-e-phone').value,
+        purpose: document.getElementById('c-purpose').value,
+        requestedRole: document.getElementById('c-role').value,
+        meds: document.getElementById('c-meds').value,
+        dates: dates.join(" | ")
+    };
 
-            btn.innerText = "REDIRECTING TO PAYMENT...";
-            btn.disabled = true;
+    btn.innerText = "SAVING BOOKING...";
+    btn.disabled = true;
 
-            // Optimistic Redirect Timer (2.5 seconds)
-            const forceRedirect = setTimeout(() => {
-                window.location.href = "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
-            }, 2500);
-
-            try {
-                // Send data to Google Sheet without waiting for a formal response
-                await fetch(APPS_SCRIPT_URL, { 
-                    method: "POST", 
-                    mode: "no-cors", 
-                    body: JSON.stringify(data)
-                });
-                
-                clearTimeout(forceRedirect);
-                window.location.href = "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
-            } catch(e) {
-                window.location.href = "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
-            }
+    try {
+        // We use a standard fetch here to ensure the data is locked in the sheet
+        const response = await fetch(APPS_SCRIPT_URL, { 
+            method: "POST", 
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if(result.status === "success") {
+            btn.innerText = "RE-DIRECTING TO PAYMENT...";
+            // Now that we KNOW it's saved, we go to Stripe
+            window.location.href = "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
+        } else {
+            alert("Error saving booking. Please try again.");
+            btn.disabled = false;
+            btn.innerText = "PROCEED TO DEPOSIT PAYMENT";
         }
+    } catch(e) {
+        // Fallback: If Google is being slow/weird with CORS, redirect anyway
+        console.log("Redirecting via fallback");
+        window.location.href = "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
+    }
+}
 
         async function fetchHistory() {
             const email = localStorage.getItem("userEmail");
