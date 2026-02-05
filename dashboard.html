@@ -20,7 +20,49 @@
             margin: 0;
         }
 
-        /* Responsive Layout Container */
+        /* --- INPUT NORMALIZATION (The Fix) --- */
+        input,
+        select,
+        textarea {
+            width: 100%;
+            height: 48px;
+            /* Standardized height */
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: white;
+            font-family: inherit;
+            /* Removes default browser styling/double arrows */
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        /* Fix for Date & Time pickers to match height */
+        input[type="date"],
+        input[type="datetime-local"] {
+            min-height: 48px;
+            line-height: 1.2;
+        }
+
+        /* Custom Dropdown Arrow (Only 1 arrow now) */
+        select {
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px auto;
+            padding-right: 35px;
+            cursor: pointer;
+        }
+
+        textarea {
+            height: auto;
+            min-height: 80px;
+        }
+
+        /* --- DASHBOARD LAYOUT --- */
         .dashboard-wrapper {
             display: flex;
             min-height: 100vh;
@@ -35,18 +77,14 @@
             .sidebar {
                 width: 260px;
                 height: calc(100vh - 60px);
-                /* Full height minus header */
                 position: fixed;
-                /* Stays locked to the left */
                 top: 60px;
                 left: 0;
                 overflow-y: auto;
-                /* Scrollable if menu is long */
             }
 
             .main-content {
                 margin-left: 260px;
-                /* Push content so it's not hidden under sidebar */
                 flex: 1;
                 padding: 40px;
             }
@@ -59,22 +97,17 @@
         .main-header {
             padding: 10px 20px;
             background: #ffffff;
-            /* Solid white background */
             border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
-            /* Keeps it at the top */
             top: 0;
             z-index: 2000;
-            /* Higher than the sidebar/menu toggle */
             height: 60px;
-            /* Consistent height */
             box-sizing: border-box;
         }
 
-        /* Sidebar & Mobile Nav */
         .sidebar {
             background: var(--brand-black);
             color: white;
@@ -90,7 +123,6 @@
             align-items: center;
             cursor: pointer;
             position: fixed;
-            /* Completely locked */
             top: 60px;
             left: 0;
             width: 100%;
@@ -98,7 +130,6 @@
             box-sizing: border-box;
         }
 
-        /* Add this to prevent content from hiding under the fixed toggle on mobile */
         @media (max-width: 991px) {
             .mobile-nav-toggle {
                 display: flex;
@@ -107,33 +138,22 @@
             .main-content {
                 margin-top: 45px;
             }
-        }
 
-        /* Show the floating menu ONLY on small screens */
-        @media (max-width: 991px) {
-            .mobile-nav-toggle {
-                display: flex;
-            }
-        }
-
-        .nav-items-container {
-            display: none;
-            padding: 20px 0;
-        }
-
-        @media (max-width: 991px) {
             .nav-items-container.active {
                 display: block;
                 position: fixed;
-                /* Locks the dropdown menu to the screen */
                 top: 105px;
-                /* Sits below Header + Menu Toggle */
                 left: 0;
                 width: 100%;
                 background: var(--brand-black);
                 z-index: 1400;
                 border-bottom: 2px solid var(--brand-blue);
             }
+        }
+
+        .nav-items-container {
+            display: none;
+            padding: 20px 0;
         }
 
         @media (min-width: 992px) {
@@ -171,21 +191,15 @@
             max-width: 100%;
         }
 
-        @media (min-width: 992px) {
-            .main-content {
-                padding: 40px;
-                /* More breathing room on Web View */
-            }
-        }
-
-        .section-header h1 {
-            font-size: 1.5rem;
-        }
-
         .section-header {
             margin-bottom: 20px;
             border-bottom: 2px solid var(--brand-black);
             padding-bottom: 10px;
+        }
+
+        .section-header h1 {
+            font-size: 1.5rem;
+            margin: 0;
         }
 
         .card {
@@ -196,11 +210,11 @@
             margin-bottom: 20px;
         }
 
-        /* Responsive Forms */
+        /* Grid System */
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 10px;
+            gap: 15px;
             margin-bottom: 15px;
         }
 
@@ -224,19 +238,7 @@
             color: #555;
         }
 
-        /* Prevents iOS zoom on focus */
-        .input-group input,
-        .input-group select,
-        .input-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-
-        /* Responsive Card Styles */
+        /* Booking Cards (History) */
         .booking-card {
             background: white;
             border: 1px solid var(--border);
@@ -305,6 +307,13 @@
             line-height: 1.4;
         }
 
+        .status-pill {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 800;
+        }
+
         .status-paid {
             background: #28a745;
             color: white;
@@ -313,13 +322,6 @@
         .status-pending {
             background: var(--brand-blue);
             color: white;
-        }
-
-        .status-pill {
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.65rem;
-            font-weight: 800;
         }
 
         .btn-primary {
@@ -332,6 +334,11 @@
             width: 100%;
             border-radius: 4px;
             font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #333;
         }
 
         .hidden {
@@ -611,11 +618,17 @@
             const container = document.getElementById("multi-list");
             const row = document.createElement("div");
             row.className = "grid-2";
-            row.style.cssText = "grid-template-columns: 2fr 1fr; margin-bottom: 10px;";
+            row.style.cssText = "grid-template-columns: 2fr 1fr; margin-bottom: 15px; align-items: end;";
             row.innerHTML = `
-    <input type="datetime-local" class="date-input-field">
-    <input type="number" class="hour-input-field" placeholder="Hrs" min="1" value="1">
-  `;
+                <div>
+                    <label style="font-size:0.65rem; color:#999">Date & Time</label>
+                    <input type="datetime-local" class="date-input-field">
+                </div>
+                <div>
+                    <label style="font-size:0.65rem; color:#999">Hours</label>
+                    <input type="number" class="hour-input-field" placeholder="Hrs" min="1" value="1">
+                </div>
+            `;
             container.appendChild(row);
         }
 
