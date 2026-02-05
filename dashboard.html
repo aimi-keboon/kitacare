@@ -6,78 +6,67 @@
     <title>User Portal | kitacare</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        :root { --brand-blue: #007bff; --brand-black: #000000; --bg-light: #f8f9fa; --border: #dddddd; }
+        body { background-color: var(--bg-light); font-family: 'Segoe UI', sans-serif; margin: 0; }
+        
+        /* Layout */
         .dashboard-wrapper { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
         
-        /* Sidebar Navigation */
-        .sidebar { background: #000; color: white; padding: 40px 0; }
+        /* Sidebar */
+        .sidebar { background: var(--brand-black); color: white; padding: 40px 0; }
         .nav-item { 
-            padding: 18px 30px; 
-            cursor: pointer; 
-            font-weight: 700; 
-            font-size: 0.8rem; 
-            letter-spacing: 1px; 
-            text-transform: uppercase;
-            transition: 0.3s;
-            border-left: 4px solid transparent;
+            padding: 18px 30px; cursor: pointer; font-weight: 700; font-size: 0.8rem; 
+            letter-spacing: 1px; text-transform: uppercase; transition: 0.3s; border-left: 4px solid transparent;
         }
-        .nav-item:hover { background: #1a1a1a; color: #007bff; }
-        .nav-item.active { background: #1a1a1a; border-left: 4px solid #007bff; color: #007bff; }
+        .nav-item:hover { background: #1a1a1a; color: var(--brand-blue); }
+        .nav-item.active { background: #1a1a1a; border-left: 4px solid var(--brand-blue); color: var(--brand-blue); }
 
-        .main-content { padding: 50px; }
-        .section-header { margin-bottom: 40px; border-bottom: 2px solid #000; padding-bottom: 15px; }
+        /* Main Content */
+        .main-content { padding: 40px; }
+        .section-header { margin-bottom: 30px; border-bottom: 2px solid var(--brand-black); padding-bottom: 10px; }
+        .card { background: white; border: 1px solid var(--border); padding: 30px; border-radius: 4px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         
-        /* Cards & Forms */
-        .card { background: white; border: 1px solid #ddd; padding: 35px; border-radius: 4px; margin-bottom: 20px; }
+        /* Form Elements */
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px; }
         .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-weight: bold; font-size: 0.8rem; margin-bottom: 5px; }
-        .input-group input, .input-group select, .input-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        .input-group label { display: block; font-weight: bold; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 5px; color: #555; }
+        .input-group input, .input-group select, .input-group textarea { 
+            width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; 
+        }
         
-        /* Interactive Table */
+        /* Table & Accordion */
         table { width: 100%; border-collapse: collapse; background: white; }
-        th { background: #000; color: white; text-align: left; padding: 15px; font-size: 0.75rem; text-transform: uppercase; }
+        th { background: var(--brand-black); color: white; text-align: left; padding: 15px; font-size: 0.75rem; text-transform: uppercase; }
         td { padding: 15px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
-        
         .clickable-row { cursor: pointer; transition: 0.2s; }
         .clickable-row:hover { background: #f1f1f1; }
-        .clickable-row td:last-child::after { content: ' ▼'; font-size: 0.6rem; float: right; color: #888; }
         
-        /* Dropdown Detail Styles */
         .detail-row { display: none; background: #fafafa; }
         .detail-row.open { display: table-row; }
-        .detail-container { 
-            padding: 25px; 
-            border: 2px solid #007bff; 
-            border-top: none; 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 20px; 
-        }
-        .detail-item b { display: block; color: #007bff; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 5px; }
-        .detail-item p { margin: 0; font-size: 0.85rem; line-height: 1.4; color: #333; }
+        .detail-container { padding: 20px; border: 2px solid var(--brand-blue); border-top: none; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .detail-item b { display: block; color: var(--brand-blue); font-size: 0.7rem; text-transform: uppercase; margin-bottom: 3px; }
 
         .status-pill { padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; }
         .status-paid { background: #28a745; color: white; }
-        .status-pending { background: #007bff; color: white; }
+        .status-pending { background: var(--brand-blue); color: white; }
         
+        .btn-primary { background: var(--brand-black); color: white; padding: 15px; border: none; font-weight: bold; cursor: pointer; width: 100%; border-radius: 4px; }
+        .btn-primary:hover { background: #333; }
         .hidden { display: none; }
-        .btn-primary { background: #000; color: white; padding: 15px 30px; border: none; font-weight: bold; cursor: pointer; }
-        .btn-primary:disabled { background: #888; }
     </style>
 </head>
 <body>
 
-    <header style="padding: 20px 50px; background: white; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
-        <img src="kitacare.png" alt="kitacare" style="height: 40px;">
-        <button onclick="logout()" style="background: none; border: 1px solid red; color: red; padding: 8px 15px; cursor: pointer; border-radius: 4px;">LOGOUT</button>
+    <header style="padding: 15px 40px; background: white; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+        <img src="kitacare.png" alt="kitacare" style="height: 35px;">
+        <button onclick="logout()" style="border: 1px solid red; color: red; background: none; padding: 8px 15px; cursor: pointer; font-weight: bold;">LOGOUT</button>
     </header>
 
     <div class="dashboard-wrapper">
         <div class="sidebar">
             <div class="nav-item active" id="nav-book" onclick="showSection('book')">New Booking</div>
             <div class="nav-item" id="nav-details" onclick="showSection('details')">My Bookings</div>
-            <div class="nav-item" id="nav-profile" onclick="showSection('profile')">Profile</div>
+            <div class="nav-item" id="nav-profile" onclick="showSection('profile')">My Profile</div>
         </div>
 
         <div class="main-content">
@@ -85,7 +74,7 @@
             <section id="section-book">
                 <div class="section-header"><h1>Book a Caretaker</h1></div>
                 <div class="card">
-                    <h3 style="color: #007bff; margin-bottom: 20px;">Patient Details</h3>
+                    <h3 style="color: var(--brand-blue); margin-top: 0;">1. Patient Details</h3>
                     <div class="grid-2">
                         <div class="input-group"><label>Patient Name</label><input type="text" id="r-name"></div>
                         <div class="input-group"><label>Date of Birth</label><input type="date" id="r-dob"></div>
@@ -95,35 +84,36 @@
                         <div class="input-group"><label>Gender</label><select id="r-gender"><option>Male</option><option>Female</option></select></div>
                     </div>
                     
-                    <h3 style="color: #007bff; margin-top: 30px;">Emergency Contact</h3>
+                    <h3 style="color: var(--brand-blue); margin-top: 20px;">2. Care & Medical</h3>
+                    <div class="input-group"><label>Purpose of Visit</label><textarea id="c-purpose" style="height: 60px;"></textarea></div>
                     <div class="grid-2">
-                        <div class="input-group"><label>Contact Name</label><input type="text" id="r-e-name"></div>
-                        <div class="input-group"><label>Phone Number</label><input type="tel" id="r-e-phone"></div>
+                        <div class="input-group"><label>Medical History/Meds</label><input type="text" id="c-meds"></div>
+                        <div class="input-group"><label>Required Professional</label><select id="c-role"><option>Caregiver</option><option>Nurse</option><option>Doctor</option></select></div>
                     </div>
 
-                    <h3 style="color: #007bff; margin-top: 30px;">Care Requirements</h3>
-                    <div class="input-group"><label>Purpose of Visit</label><textarea id="c-purpose"></textarea></div>
+                    <h3 style="color: var(--brand-blue); margin-top: 20px;">3. Emergency & Dates</h3>
                     <div class="grid-2">
-                        <div class="input-group"><label>Specialty Needed</label><select id="c-role"><option>Caregiver</option><option>Nurse</option><option>Doctor</option></select></div>
-                        <div class="input-group"><label>Medical Conditions/Meds</label><input type="text" id="c-meds"></div>
+                        <div class="input-group"><label>Emergency Name</label><input type="text" id="r-e-name"></div>
+                        <div class="input-group"><label>Emergency Phone</label><input type="tel" id="r-e-phone"></div>
                     </div>
 
-                    <div style="margin: 20px 0;">
-                        <input type="checkbox" id="multi-toggle" onclick="toggleMultiDate()"> <label>Multi-date arrangement?</label>
+                    <div style="margin-bottom: 15px;">
+                        <input type="checkbox" id="multi-toggle" onclick="toggleMultiDate()"> <label style="font-size: 0.9rem;">Multiple dates needed?</label>
                     </div>
 
-                    <div id="date-selection-area">
-                        <div class="input-group"><label>Preferred Date & Time</label><input type="datetime-local" class="date-input-field"></div>
+                    <div id="date-selection-area" class="input-group">
+                        <label>Preferred Date & Time</label>
+                        <input type="datetime-local" class="date-input-field">
                     </div>
 
-                    <button class="btn-primary" id="book-btn" onclick="proceedToPayment()" style="width: 100%;">PROCEED TO PAYMENT</button>
+                    <button class="btn-primary" id="book-btn" onclick="proceedToPayment()">BOOK & PROCEED TO PAYMENT</button>
                 </div>
             </section>
 
             <section id="section-details" class="hidden">
                 <div class="section-header"><h1>My Bookings</h1></div>
-                <div class="card" style="padding: 0;">
-                    <table id="bookings-table">
+                <div class="card" style="padding: 0; overflow: hidden;">
+                    <table>
                         <thead>
                             <tr>
                                 <th>Ref No.</th>
@@ -133,7 +123,7 @@
                             </tr>
                         </thead>
                         <tbody id="history-table">
-                            <tr><td colspan="4" style="text-align:center; padding:40px;">Loading your care history...</td></tr>
+                            <tr><td colspan="4" style="text-align:center; padding:40px;">Loading bookings...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -142,17 +132,16 @@
             <section id="section-profile" class="hidden">
                 <div class="section-header"><h1>User Profile</h1></div>
                 <div class="card">
-                    <h3 style="color: #007bff; margin-bottom: 20px; font-size: 0.9rem; text-transform: uppercase;">Account Information</h3>
                     <div class="grid-2">
                         <div class="input-group"><label>Full Name</label><input type="text" id="p-name" disabled></div>
-                        <div class="input-group"><label>Account Role</label><input type="text" id="p-role" disabled style="text-transform: capitalize;"></div>
+                        <div class="input-group"><label>Role</label><input type="text" id="p-role" disabled></div>
                     </div>
                     <div class="grid-2">
-                        <div class="input-group"><label>Email Address</label><input type="text" id="p-email" disabled></div>
-                        <div class="input-group"><label>Phone Number</label><input type="text" id="p-phone" disabled></div>
+                        <div class="input-group"><label>Email</label><input type="text" id="p-email" disabled></div>
+                        <div class="input-group"><label>Phone</label><input type="text" id="p-phone" disabled></div>
                     </div>
                     <div class="grid-2">
-                        <div class="input-group"><label>Date of Birth</label><input type="text" id="p-dob" disabled></div>
+                        <div class="input-group"><label>DOB</label><input type="text" id="p-dob" disabled></div>
                         <div class="input-group"><label>Gender</label><input type="text" id="p-gender" disabled></div>
                     </div>
                 </div>
@@ -163,31 +152,37 @@
 
     <script src="config.js"></script>
     <script>
-        // On Startup
+        // Start Up
         window.onload = function() {
-            const userData = JSON.parse(localStorage.getItem("userData"));
-            if (!userData) { window.location.href = "index.html"; return; }
-            document.getElementById('p-name').innerText = userData.name;
-            document.getElementById('p-email').innerText = userData.email;
+            const user = JSON.parse(localStorage.getItem("userData"));
+            if (!user) { window.location.href = "index.html"; return; }
+
+            // Profile Map
+            document.getElementById('p-name').value = user.name || "N/A";
+            document.getElementById('p-role').value = user.role || "N/A";
+            document.getElementById('p-email').value = user.email || "N/A";
+            document.getElementById('p-phone').value = user.phone || "N/A";
+            document.getElementById('p-gender').value = user.gender || "N/A";
+            document.getElementById('p-dob').value = user.dob ? new Date(user.dob).toLocaleDateString() : "N/A";
+
             fetchHistory();
         };
-
-        function logout() { localStorage.clear(); window.location.href = "index.html"; }
 
         function showSection(name) {
             document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById('section-' + name).classList.remove('hidden');
             document.getElementById('nav-' + name).classList.add('active');
-            if (name === 'details') fetchHistory();
+            if(name === 'details') fetchHistory();
         }
 
         function toggleMultiDate() {
             const area = document.getElementById('date-selection-area');
             if (document.getElementById('multi-toggle').checked) {
-                area.innerHTML = `<div id="multi-list"><input type="datetime-local" class="date-input-field" style="margin-bottom:10px;"></div><button onclick="addSlot()" style="cursor:pointer">+ Add Date</button>`;
+                area.innerHTML = `<div id="multi-list"><input type="datetime-local" class="date-input-field" style="margin-bottom:10px;"></div>
+                                  <button onclick="addSlot()" style="cursor:pointer; background:none; border:1px solid #000; padding:5px 10px;">+ Add Date</button>`;
             } else {
-                area.innerHTML = `<input type="datetime-local" class="date-input-field">`;
+                area.innerHTML = `<label>Preferred Date & Time</label><input type="datetime-local" class="date-input-field">`;
             }
         }
 
@@ -197,13 +192,17 @@
             input.className = "date-input-field";
             input.style.display = "block";
             input.style.marginBottom = "10px";
+            input.style.width = "100%";
+            input.style.padding = "12px";
+            input.style.border = "1px solid #ddd";
             document.getElementById('multi-list').appendChild(input);
         }
 
         async function proceedToPayment() {
             const btn = document.getElementById('book-btn');
             const dates = Array.from(document.querySelectorAll('.date-input-field')).map(i => i.value).filter(v => v);
-            
+            if(dates.length === 0) return alert("Select at least one date");
+
             const data = {
                 action: "book",
                 userEmail: localStorage.getItem("userEmail"),
@@ -216,7 +215,7 @@
                 purpose: document.getElementById('c-purpose').value,
                 requestedRole: document.getElementById('c-role').value,
                 meds: document.getElementById('c-meds').value,
-                dates: dates.join(", ")
+                dates: dates.join(" | ")
             };
 
             btn.innerText = "SAVING..."; btn.disabled = true;
@@ -225,46 +224,48 @@
                 const res = await fetch(APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify(data) });
                 const result = await res.json();
                 if(result.status === "success") window.location.href = "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
-            } catch(e) { alert("Error connecting to server."); btn.disabled = false; }
+            } catch(e) { alert("Server error. Please try again."); btn.disabled = false; btn.innerText = "BOOK & PROCEED"; }
         }
 
         async function fetchHistory() {
             const email = localStorage.getItem("userEmail");
-            const tableBody = document.getElementById('history-table');
+            const table = document.getElementById('history-table');
             try {
                 const res = await fetch(APPS_SCRIPT_URL + "?email=" + encodeURIComponent(email));
                 const data = await res.json();
                 
                 if (data.length === 0) {
-                    tableBody.innerHTML = "<tr><td colspan='4' style='text-align:center'>No records found.</td></tr>";
+                    table.innerHTML = "<tr><td colspan='4' style='text-align:center'>No records found.</td></tr>";
                     return;
                 }
 
-                tableBody.innerHTML = data.map((row, index) => `
+                table.innerHTML = data.map((row, index) => `
                     <tr class="clickable-row" onclick="toggleDetails(${index})">
                         <td><b>${row.ref}</b></td>
                         <td>${row.recipient}</td>
                         <td>${row.role}</td>
                         <td><span class="status-pill ${row.status === 'Paid' ? 'status-paid' : 'status-pending'}">${row.status}</span></td>
                     </tr>
-                    <tr class="detail-row" id="row-detail-${index}">
+                    <tr class="detail-row" id="det-${index}">
                         <td colspan="4">
                             <div class="detail-container">
-                                <div class="detail-item"><b>Condition/Purpose</b><p>${row.purpose || 'N/A'}</p></div>
-                                <div class="detail-item"><b>Medications</b><p>${row.meds || 'None recorded'}</p></div>
-                                <div class="detail-item"><b>Emergency Contact</b><p>${row.eName} (${row.ePhone})</p></div>
-                                <div class="detail-item"><b>Visit Dates</b><p>${row.dates}</p></div>
+                                <div class="detail-item"><b>Reason</b><p>${row.purpose}</p></div>
+                                <div class="detail-item"><b>Meds/History</b><p>${row.meds}</p></div>
+                                <div class="detail-item"><b>Emergency</b><p>${row.eName} (${row.ePhone})</p></div>
+                                <div class="detail-item"><b>Dates</b><p>${row.dates}</p></div>
                             </div>
                         </td>
                     </tr>
                 `).join('');
-            } catch(e) { console.error(e); }
+            } catch(e) { table.innerHTML = "<tr><td colspan='4'>Error loading history.</td></tr>"; }
         }
 
-        function toggleDetails(idx) {
-            const el = document.getElementById('row-detail-' + idx);
-            el.classList.toggle('open');
+        function toggleDetails(i) {
+            const row = document.getElementById('det-' + i);
+            row.classList.toggle('open');
         }
+
+        function logout() { localStorage.clear(); window.location.href = "index.html"; }
     </script>
 </body>
 </html>
