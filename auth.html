@@ -27,36 +27,45 @@
             box-sizing: border-box;
         }
 
-        /* --- INPUT NORMALIZATION FIX --- */
+        /* --- INPUT NORMALIZATION FIX (Updated) --- */
         input, select, textarea {
             width: 100%;
-            height: 48px; /* Force consistent height across all browsers */
+            height: 48px; /* Force consistent height */
             padding: 10px 12px; 
-            font-size: 16px !important; 
+            font-size: 16px !important; /* Prevents iOS zoom */
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
             display: block;
             background-color: #fff;
             font-family: inherit;
-        }
-
-        /* Special fix for date inputs to match height of text inputs */
-        input[type="date"] {
+            /* Removes default browser styling/arrows */
             appearance: none;
             -webkit-appearance: none;
-            min-height: 48px;
+            -moz-appearance: none;
         }
 
-        /* Fix for select boxes in Safari/Chrome */
+        /* Special fix for date inputs */
+        input[type="date"] {
+            min-height: 48px;
+            line-height: 1.2;
+            background-color: #fff;
+        }
+
+        /* Custom Dropdown Arrow (Fixes the double arrow issue) */
         select {
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
             background-repeat: no-repeat;
             background-position: right 12px center;
             background-size: 12px auto;
-            padding-right: 30px;
+            padding-right: 35px;
+            cursor: pointer;
         }
-        /* --- END FIX --- */
+
+        /* Removes arrow for IE */
+        select::-ms-expand {
+            display: none;
+        }
 
         @media (max-width: 480px) {
             .auth-card {
@@ -97,7 +106,9 @@
             color: white;
             border: none;
             border-radius: 4px;
+            transition: background 0.3s;
         }
+        .btn-primary:hover { background: #333; }
         .loading { opacity: 0.7; pointer-events: none; cursor: wait; }
     </style>
 </head>
@@ -200,7 +211,10 @@
             btn.classList.add('loading');
 
             try {
-                const response = await fetch(APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify(data) });
+                const response = await fetch(APPS_SCRIPT_URL, { 
+                    method: "POST", 
+                    body: JSON.stringify(data) 
+                });
                 const result = await response.json();
                 if (result.status === "success") {
                     alert("Account created! Logging you in...");
