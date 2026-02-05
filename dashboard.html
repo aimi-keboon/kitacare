@@ -432,18 +432,59 @@
               </div>
             </div>
 
-            <div style="margin-bottom: 15px">
-              <input
-                type="checkbox"
-                id="multi-toggle"
-                onclick="toggleMultiDate()"
-              />
-              <label style="font-size: 0.85rem">Multiple dates needed?</label>
+            <div
+              style="
+                margin-bottom: 20px;
+                background: #f0f7ff;
+                padding: 15px;
+                border-radius: 6px;
+                border: 1px dashed var(--brand-blue);
+              "
+            >
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  cursor: pointer;
+                  font-weight: bold;
+                  font-size: 0.9rem;
+                  color: var(--brand-blue);
+                "
+              >
+                <input
+                  type="checkbox"
+                  id="multi-toggle"
+                  onclick="toggleMultiDate()"
+                  style="width: 18px; height: 18px; margin-right: 10px"
+                />
+                I need to book multiple dates
+              </label>
             </div>
 
             <div id="date-selection-area" class="input-group">
-              <label>Date & Time</label>
-              <input type="datetime-local" class="date-input-field" />
+              <label id="date-label">Date & Time</label>
+              <div id="multi-list">
+                <input type="datetime-local" class="date-input-field" />
+              </div>
+              <div id="add-more-container" class="hidden">
+                <button
+                  onclick="addSlot()"
+                  type="button"
+                  style="
+                    margin-top: 10px;
+                    cursor: pointer;
+                    background: white;
+                    border: 1px solid var(--brand-black);
+                    padding: 8px;
+                    width: 100%;
+                    font-weight: bold;
+                    font-size: 0.8rem;
+                    border-radius: 4px;
+                  "
+                >
+                  + ADD ANOTHER DATE
+                </button>
+              </div>
             </div>
 
             <button
@@ -549,22 +590,30 @@
       };
 
       function toggleMultiDate() {
-        const area = document.getElementById("date-selection-area");
-        if (document.getElementById("multi-toggle").checked) {
-          area.innerHTML = `<div id="multi-list"><input type="datetime-local" class="date-input-field" style="margin-bottom:10px;"></div>
-                                  <button onclick="addSlot()" style="cursor:pointer; background:none; border:1px solid #000; padding:10px; width:100%;">+ Add Date</button>`;
+        const isMulti = document.getElementById("multi-toggle").checked;
+        const addMoreBtn = document.getElementById("add-more-container");
+        const dateLabel = document.getElementById("date-label");
+        const multiList = document.getElementById("multi-list");
+
+        if (isMulti) {
+          addMoreBtn.classList.remove("hidden");
+          dateLabel.innerText = "Select All Required Dates";
         } else {
-          area.innerHTML = `<label>Preferred Date & Time</label><input type="datetime-local" class="date-input-field">`;
+          addMoreBtn.classList.add("hidden");
+          dateLabel.innerText = "Date & Time";
+          // Optional: Clear extra inputs if they toggle back to single
+          multiList.innerHTML =
+            '<input type="datetime-local" class="date-input-field">';
         }
       }
 
       function addSlot() {
-        const input = document.createElement("input");
-        input.type = "datetime-local";
-        input.className = "date-input-field";
-        input.style.cssText =
-          "display:block; margin-bottom:10px; width:100%; padding:12px; border:1px solid #ddd; border-radius:4px; font-size:16px;";
-        document.getElementById("multi-list").appendChild(input);
+        const container = document.getElementById("multi-list");
+        const newInput = document.createElement("input");
+        newInput.type = "datetime-local";
+        newInput.className = "date-input-field";
+        newInput.style.marginTop = "10px"; // Spacing between inputs
+        container.appendChild(newInput);
       }
 
       async function proceedToPayment() {
