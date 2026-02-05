@@ -27,8 +27,8 @@
         .main-content { padding: 50px; }
         .section-header { margin-bottom: 40px; border-bottom: 2px solid var(--brand-black); padding-bottom: 15px; }
         
-        /* Components */
-        .card { background: white; border: 1px solid var(--border-gray); padding: 35px; border-radius: 4px; margin-bottom: 20px;}
+        /* UI Cards & Tables */
+        .card { background: white; border: 1px solid var(--border-gray); padding: 35px; border-radius: 4px; margin-bottom: 20px; }
         .multi-date-container { background: #f0f0f0; padding: 20px; border-radius: 4px; margin-bottom: 20px; border: 1px dashed var(--brand-black); }
         
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
@@ -48,7 +48,7 @@
 
     <header>
         <a href="dashboard.html" class="logo-link"><img src="kitacare.png" alt="kitacare"></a>
-        <nav><a href="#" onclick="logout()" style="color:red; border: 1px solid red; padding: 8px 15px; border-radius: 4px; text-decoration:none; font-weight:bold;">Logout</a></nav>
+        <nav><a href="#" onclick="logout()" style="color:red; border: 1px solid red; padding: 8px 15px; border-radius: 4px; text-decoration:none; font-weight:bold; font-size: 0.8rem;">Logout</a></nav>
     </header>
 
     <div class="dashboard-wrapper">
@@ -63,9 +63,9 @@
             <section id="section-book">
                 <div class="section-header"><h1>Book a Caretaker</h1></div>
                 <div class="card">
-                    <h3 style="text-transform: uppercase; font-size: 0.8rem; margin-bottom: 20px; color: var(--brand-blue);">1. Care Recipient Details</h3>
+                    <h3 style="text-transform: uppercase; font-size: 0.8rem; margin-bottom: 20px; color: var(--brand-blue);">1. Care Recipient Information</h3>
                     <div class="grid-2">
-                        <div class="input-group"><label>Full Name</label><input type="text" id="r-name" placeholder="As per IC/Passport"></div>
+                        <div class="input-group"><label>Full Name</label><input type="text" id="r-name"></div>
                         <div class="input-group"><label>Date of Birth</label><input type="date" id="r-dob"></div>
                     </div>
                     <div class="grid-2">
@@ -77,17 +77,13 @@
                         <div class="input-group"><label>Emergency Contact Number</label><input type="tel" id="r-e-phone"></div>
                     </div>
 
-                    <h3 style="text-transform: uppercase; font-size: 0.8rem; margin-top: 30px; margin-bottom: 20px; color: var(--brand-blue);">2. Care Requirements</h3>
-                    <div class="input-group"><label>Reason for Booking</label><textarea id="c-purpose" style="height:80px;" placeholder="Describe the care needed..."></textarea></div>
+                    <h3 style="text-transform: uppercase; font-size: 0.8rem; margin-top: 30px; margin-bottom: 20px; color: var(--brand-blue);">2. Care Details</h3>
+                    <div class="input-group"><label>Purpose of Visit</label><textarea id="c-purpose" style="height:80px;"></textarea></div>
                     
                     <div class="grid-2">
                         <div class="input-group">
-                            <label>Preferred Professional</label>
-                            <select id="c-role">
-                                <option>Caregiver</option>
-                                <option>Nurse</option>
-                                <option>Doctor</option>
-                            </select>
+                            <label>Looking for Role</label>
+                            <select id="c-role"><option>Caregiver</option><option>Nurse</option><option>Doctor</option></select>
                         </div>
                         <div class="input-group"><label>Medications/Diagnosis</label><input type="text" id="c-meds"></div>
                     </div>
@@ -143,29 +139,27 @@
                         <div class="input-group"><label>Date of Birth</label><input type="text" id="p-dob" disabled></div>
                         <div class="input-group"><label>Gender</label><input type="text" id="p-gender" disabled></div>
                     </div>
-                    <p style="font-size: 0.8rem; color: #777; padding-top: 15px; border-top: 1px solid #eee;">To update verified information, please contact kitacare support.</p>
                 </div>
             </section>
-
         </div>
     </div>
 
     <script src="config.js"></script>
     <script>
-        // --- 1. Initial Load & Security ---
+        // --- INITIALIZATION & SECURITY ---
         window.onload = function() {
             const rawData = localStorage.getItem("userData");
             if (!rawData) { window.location.href = "auth.html"; return; }
 
             const user = JSON.parse(rawData);
             
-            // Role Security Guard
+            // Redirect non-clients
             if (user.role !== "Client") {
                 window.location.href = "professionals.html";
                 return;
             }
 
-            // Populate Profile
+            // Populate Profile Fields
             document.getElementById('p-role').value = user.role;
             document.getElementById('p-name').value = user.name;
             document.getElementById('p-email').value = user.email;
@@ -187,7 +181,6 @@
             if(name === 'details') fetchHistory();
         }
 
-        // --- 2. Form Logic ---
         function applyDateRestrictions() {
             const minDate = new Date();
             minDate.setDate(minDate.getDate() + 5);
@@ -199,10 +192,10 @@
             const area = document.getElementById('date-selection-area');
             if (document.getElementById('multi-toggle').checked) {
                 area.innerHTML = `<div class="multi-date-container" id="multi-list">
-                    <div class="input-group"><label>Date & Time #1</label><input type="datetime-local" class="date-input-field"></div>
+                    <div class="input-group"><label>Date #1</label><input type="datetime-local" class="date-input-field"></div>
                 </div><button class="btn-outline" onclick="addSlot()">+ Add Date</button>`;
             } else {
-                area.innerHTML = `<div class="input-group"><label>Preferred Date & Time</label><input type="datetime-local" class="date-input-field"></div>`;
+                area.innerHTML = `<div class="input-group"><label>Preferred Date</label><input type="datetime-local" class="date-input-field"></div>`;
             }
             applyDateRestrictions();
         }
@@ -211,17 +204,17 @@
             const list = document.getElementById('multi-list');
             const div = document.createElement('div');
             div.className = "input-group";
-            div.innerHTML = `<label>Date & Time #${list.children.length + 1}</label><input type="datetime-local" class="date-input-field">`;
+            div.innerHTML = `<label>Date #${list.children.length + 1}</label><input type="datetime-local" class="date-input-field">`;
             list.appendChild(div);
             applyDateRestrictions();
         }
 
-        // --- 3. Backend Integration ---
+        // --- BOOKING LOGIC (NO-CORS FIX) ---
         async function proceedToPayment() {
             const btn = document.getElementById('book-btn');
             const dates = Array.from(document.querySelectorAll('.date-input-field')).map(i => i.value).filter(v => v);
             
-            if(!dates.length) return alert("Please select a date.");
+            if(!dates.length) return alert("Select at least one date.");
             
             const data = {
                 action: "book",
@@ -238,17 +231,26 @@
                 dates: dates.join(" | ")
             };
 
-            btn.innerText = "SAVING..."; btn.disabled = true;
+            btn.innerText = "REDIRECTING TO PAYMENT...";
+            btn.disabled = true;
+
+            // Optimistic Redirect Timer (2.5 seconds)
+            const forceRedirect = setTimeout(() => {
+                window.location.href = "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
+            }, 2500);
 
             try {
-                const res = await fetch(APPS_SCRIPT_URL, { method: "POST", body: JSON.stringify(data)});
-                const result = await res.json();
-                if(result.status === "success") {
-                    window.location.href = "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
-                }
-            } catch(e) { 
-                console.error(e);
-                window.location.href = "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000"; 
+                // Send data to Google Sheet without waiting for a formal response
+                await fetch(APPS_SCRIPT_URL, { 
+                    method: "POST", 
+                    mode: "no-cors", 
+                    body: JSON.stringify(data)
+                });
+                
+                clearTimeout(forceRedirect);
+                window.location.href = "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
+            } catch(e) {
+                window.location.href = "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
             }
         }
 
@@ -266,7 +268,7 @@
                         <td><span class="status-pill ${row.status === 'Paid' ? 'status-paid' : 'status-pending'}">${row.status}</span></td>
                     </tr>
                 `).join('') || "<tr><td colspan='4' style='text-align:center'>No bookings found.</td></tr>";
-            } catch(e) { table.innerHTML = "<tr><td colspan='4' style='text-align:center'>Error loading history.</td></tr>"; }
+            } catch(e) { console.log("Fetch failed"); }
         }
     </script>
 </body>
