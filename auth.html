@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access | kitacare</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background-color: var(--bg-light); }
+        .auth-wrapper { min-height: calc(100vh - 80px); display: flex; justify-content: center; align-items: center; padding: 40px 20px; }
+        .auth-card { width: 100%; max-width: 450px; background: white; border: 2px solid var(--brand-black); padding: 40px; box-shadow: 10px 10px 0px var(--brand-black); }
+        .tabs { display: flex; margin-bottom: 30px; border-bottom: 2px solid var(--border-gray); }
+        .tab { flex: 1; padding: 12px; text-align: center; cursor: pointer; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; color: var(--text-muted); }
+        .tab.active { color: var(--brand-blue); border-bottom: 3px solid var(--brand-blue); }
+        .hidden { display: none; }
+        .btn-primary { width: 100%; margin-top: 10px; }
+        .loading { opacity: 0.7; pointer-events: none; cursor: wait; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="kitacare.png" alt="kitacare">
+        </a>
+    </header>
+
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            <div class="tabs">
+                <div class="tab active" id="l-tab" onclick="switchTab('login')">Login</div>
+                <div class="tab" id="s-tab" onclick="switchTab('signup')">Signup</div>
+            </div>
+
+            <form id="login-form">
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="l-email" required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" id="l-pass" required>
+                </div>
+                <button type="button" class="btn-primary" id="login-btn" onclick="handleLogin()">LOGIN</button>
+            </form>
+
+            <form id="signup-form" class="hidden">
+                <div class="input-group">
+                    <label>Register As</label>
+                    <select id="s-role" required>
+                        <option value="Client">Client (Seeking Care)</option>
+                        <option value="Caregiver">Caregiver</option>
+                        <option value="Professional">Professional (Nurse/Doctor)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="s-name" placeholder="As per IC/Passport" required>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="input-group">
+                        <label>Date of Birth</label>
+                        <input type="date" id="s-dob" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Gender</label>
+                        <select id="s-gender" required>
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="s-email" required>
+                </div>
+                <div class="input-group">
+                    <label>Contact Number</label>
+                    <input type="tel" id="s-phone" placeholder="e.g. +60123456789" required>
+                </div>
+                <div class="input-group">
+                    <label>Create Password</label>
+                    <input type="password" id="s-pass" required>
+                </div>
+                <button type="button" class="btn-primary" id="signup-btn" onclick="handleSignup()">CREATE ACCOUNT</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        // Toggle between Login and Signup views
+        function switchTab(view) {
+            document.getElementById('login-form').classList.toggle('hidden', view !== 'login');
+            document.getElementById('signup-form').classList.toggle('hidden', view !== 'signup');
+            document.getElementById('l-tab').classList.toggle('active', view === 'login');
+            document.getElementById('s-tab').classList.toggle('active', view === 'signup');
+        }
+
+        /**
+         * SIGNUP HANDLER
+         * Sends data to Google Sheets and alerts if email already exists
+         */
+        async function handleSignup() {
+            const btn = document.getElementById('signup-btn');
+            const data = {
+                action: "signup",
+                role: document.getElementById('s-role').value,
+                name: document.getElementById('s-name').value,
+                dob: document.getElementById('s-dob').value,
+                gender: document.getElementById('s-gender').value,
+                email: document.getElementById('s-email').value.toLowerCase().trim(),
+                phone: document.getElementById('s-phone').value,
+                password: document.getElementById('s-pass').value
+            };
+
+            if (!data.email || !data.password || !data.name) return alert("Please fill in all fields.");
+            
+            btn.innerText = "CREATING ACCOUNT...";
+            btn.classList.add('loading');
+
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, { 
+                    method: "POST", 
+                    body: JSON.stringify(data) 
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === "success") {
+                    alert("Account created successfully! You can now login.");
+                    switchTab('login');
+                } else {
+                    alert("Registration Failed: " + result.message);
+                }
+            } catch (e) { 
+                alert("Connection error. Ensure your script is deployed as 'Anyone'."); 
+            } finally {
+                btn.innerText = "CREATE ACCOUNT";
+                btn.classList.remove('loading');
+            }
+        }
+
+        /**
+         * LOGIN HANDLER
+         * Stores full user profile and handles Role-Based redirection
+         */
+        async function handleLogin() {
+            const btn = document.getElementById('login-btn');
+            const email = document.getElementById('l-email').value.toLowerCase().trim();
+            const password = document.getElementById('l-pass').value;
+
+            if (!email || !password) return alert("Please enter credentials.");
+            
+            btn.innerText = "LOGGING IN...";
+            btn.classList.add('loading');
+
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: "POST",
+                    body: JSON.stringify({ action: "login", email, password })
+                });
+                
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    // Store the full user object for the Profile section
+                    localStorage.setItem("userData", JSON.stringify(result.user));
+                    localStorage.setItem("userEmail", result.user.email);
+                    localStorage.setItem("userName", result.user.name);
+
+                    // --- TRAFFIC CONTROL ---
+                    // Clients go to Dashboard, Professionals/Caregivers go to their portal
+                    if (result.user.role === "Client") {
+                        window.location.href = "dashboard.html";
+                    } else {
+                        window.location.href = "professionals.html";
+                    }
+                } else {
+                    alert("Login Failed: " + result.message);
+                }
+            } catch (e) { 
+                alert("Login connection error."); 
+            } finally {
+                btn.innerText = "LOGIN";
+                btn.classList.remove('loading');
+            }
+        }
+    </script>
+</body>
+</html>
