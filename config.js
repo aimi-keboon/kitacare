@@ -1,2 +1,2 @@
 // Paste your deployed Google Apps Script URL between the quotes
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzehw3BTzqP0uzrC6fiabdxFLZXUvL2lMZA_hN5RxhH9SJbsgU4bI8-k6cXXQE8-ae5Fg/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyUye_SoWvNxD7v8zSZ_dLtDXpHmhi3Xj8re6DWccLJqj2dmsWfn1x1dcy8ExJ82MYmwA/exec";
