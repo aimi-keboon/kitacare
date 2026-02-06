@@ -207,7 +207,8 @@
 
             if (!data.email || !data.password || !data.name) return alert("Please fill in all fields.");
             
-            btn.innerText = "CREATING...";
+            // UI Feedback for email sending
+            btn.innerText = "SENDING VERIFICATION...";
             btn.classList.add('loading');
 
             try {
@@ -216,14 +217,16 @@
                     body: JSON.stringify(data) 
                 });
                 const result = await response.json();
+                
                 if (result.status === "success") {
-                    alert("Account created! Logging you in...");
+                    // ALERT UPDATE: Tells user to check email
+                    alert("Verification link sent! 📩\n\nPlease check your email inbox (and spam folder) to activate your account. You can log in once verified.");
                     switchTab('login');
                 } else {
                     alert(result.message);
                 }
             } catch (e) { 
-                alert("Signup error."); 
+                alert("Signup error. Please check your connection."); 
             } finally {
                 btn.innerText = "CREATE ACCOUNT";
                 btn.classList.remove('loading');
@@ -237,7 +240,7 @@
 
             if (!email || !password) return alert("Please enter credentials.");
             
-            btn.innerText = "WAIT...";
+            btn.innerText = "VERIFYING...";
             btn.classList.add('loading');
 
             try {
@@ -258,6 +261,7 @@
                         window.location.href = "professionals.html";
                     }
                 } else {
+                    // Logic for unverified users is handled by result.message from Apps Script
                     alert(result.message);
                 }
             } catch (e) { 
