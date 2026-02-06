@@ -1,112 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professional Portal | kitacare</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        :root { --brand-blue: #007bff; --brand-black: #000000; --bg-light: #f8f9fa; --border: #dddddd; }
-        body { background-color: var(--bg-light); font-family: 'Segoe UI', sans-serif; margin: 0; }
+        :root {
+            --brand-blue: #007bff;
+            --brand-black: #000000;
+            --bg-light: #f8f9fa;
+            --border: #dddddd;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+        }
 
         /* Layout - Responsive Container */
-        .dashboard-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
+        .dashboard-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
         @media (min-width: 992px) {
-            .dashboard-wrapper { flex-direction: row; }
-            .sidebar { width: 260px; height: 100vh; position: sticky; top: 0; }
-            .main-content { flex: 1; padding: 50px; }
-            .mobile-nav-toggle { display: none; }
+            .dashboard-wrapper {
+                flex-direction: row;
+                align-items: flex-start;
+                /* Crucial for sticky */
+            }
+
+            .sidebar {
+                width: 260px;
+                height: 100vh;
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .main-content {
+                flex: 1;
+                padding: 50px;
+                min-width: 0;
+                /* Prevents flex items from overflowing */
+            }
+
+            .mobile-nav-toggle {
+                display: none;
+            }
         }
 
-        /* Header Fixes */
-        header { 
-            padding: 10px 20px; 
-            background: white; 
-            border-bottom: 1px solid var(--border); 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
+        /* Sidebar Navigation container */
+        .nav-container {
+            display: none;
+            background: var(--brand-black);
+            flex: 1;
+            /* Makes it fill the sidebar height */
         }
-        header img { height: 30px; }
 
-        /* Mobile Sidebar Toggle */
-        .mobile-nav-toggle {
+        @media (min-width: 992px) {
+            .nav-container {
+                display: block;
+            }
+        }
+
+        .nav-container.active {
+            display: block;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
             background: var(--brand-black);
             color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        }
+
+        .nav-item {
+            padding: 18px 30px;
             cursor: pointer;
-            font-weight: 800;
+            font-weight: 700;
             font-size: 0.8rem;
-            letter-spacing: 1px;
-        }
-
-        /* Navigation items container */
-        .nav-container { display: none; background: var(--brand-black); }
-        .nav-container.active { display: block; }
-
-        @media (min-width: 992px) {
-            .nav-container { display: block; height: 100%; }
-        }
-
-        .sidebar { background: var(--brand-black); color: white; }
-        .nav-item { 
-            padding: 18px 30px; 
-            cursor: pointer; 
-            font-weight: 700; 
-            font-size: 0.8rem; 
-            letter-spacing: 1.5px; 
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             transition: 0.3s;
             border-left: 4px solid transparent;
         }
-        .nav-item:hover { background: #1A1A1A; color: var(--brand-blue); }
-        .nav-item.active { background: #1A1A1A; border-left: 4px solid var(--brand-blue); color: var(--brand-blue); }
 
-        /* Main Content Adjustments */
-        .main-content { padding: 25px 15px; }
-        .section-header { margin-bottom: 30px; border-bottom: 2px solid var(--brand-black); padding-bottom: 10px; }
-        .section-header h1 { font-size: 1.5rem; margin: 0; }
-        
-        .card { background: white; border: 1px solid var(--border); padding: 25px 20px; border-radius: 4px; margin-bottom: 20px; }
-        
-        /* Grid System: Stack on mobile, side-by-side on tablet/desktop */
-        .grid-2 { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 15px; }
-        
-        @media (min-width: 768px) {
-            .grid-2 { grid-template-columns: 1fr 1fr; gap: 20px; }
+        .nav-item:hover {
+            background: #1A1A1A;
+            color: var(--brand-blue);
         }
 
-        .input-group label { display: block; font-weight: bold; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 6px; color: #555; }
-        .input-group input, .input-group textarea { 
-            width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 16px; /* Prevents iOS auto-zoom */
+        .nav-item.active {
+            background: #1A1A1A;
+            border-left: 4px solid var(--brand-blue);
+            color: var(--brand-blue);
         }
 
-        /* Job Cards */
-        .job-card { 
-            border-left: 5px solid var(--brand-blue); 
-            padding: 20px; 
-            margin-bottom: 15px; 
-            background: white; 
-            border-top: 1px solid #eee; 
-            border-right: 1px solid #eee; 
-            border-bottom: 1px solid #eee; 
+        /* Other Styles ... */
+        header {
+            padding: 10px 20px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            /* Keep header visible too */
+            top: 0;
+            z-index: 1100;
         }
-        .job-title { font-size: 1.1rem; font-weight: 800; }
-        .status-tag { display: inline-block; padding: 4px 10px; font-size: 0.65rem; border-radius: 2px; font-weight: 900; background: #eee; margin-top: 10px; }
 
-        .hidden { display: none; }
-        .btn-primary { width: 100%; padding: 15px; font-weight: bold; cursor: pointer; }
+        /* Rest of your CSS... */
     </style>
 </head>
+
 <body>
 
     <header>
         <a href="professionals.html" class="logo-link"><img src="kitacare.png" alt="kitacare"></a>
-        <button onclick="logout()" style="color:red; border: 1px solid red; background: none; padding: 6px 12px; border-radius: 4px; font-weight:bold; cursor:pointer; font-size: 0.7rem;">LOGOUT</button>
+        <button onclick="logout()"
+            style="color:red; border: 1px solid red; background: none; padding: 6px 12px; border-radius: 4px; font-weight:bold; cursor:pointer; font-size: 0.7rem;">LOGOUT</button>
     </header>
 
     <div class="dashboard-wrapper">
@@ -123,44 +142,57 @@
         </div>
 
         <div class="main-content">
-            
+
             <section id="section-jobs">
-                <div class="section-header"><h1>My Schedule</h1></div>
-                
+                <div class="section-header">
+                    <h1>My Schedule</h1>
+                </div>
+
                 <div id="job-list">
                     <div class="job-card">
-                        <div class="job-meta" style="font-size: 0.7rem; color: #777; font-weight: 700;">NEXT APPOINTMENT • 12 FEB 2026</div>
+                        <div class="job-meta" style="font-size: 0.7rem; color: #777; font-weight: 700;">NEXT APPOINTMENT
+                            • 12 FEB 2026</div>
                         <div class="job-title">Home Care - Post-Op Recovery</div>
-                        <p style="font-size: 0.9rem; color: #555; margin: 8px 0;">Recipient: Mohammad Azlan<br>Location: Petaling Jaya</p>
+                        <p style="font-size: 0.9rem; color: #555; margin: 8px 0;">Recipient: Mohammad Azlan<br>Location:
+                            Petaling Jaya</p>
                         <div class="status-tag" style="background: #e3f2fd; color: #1976d2;">CONFIRMED</div>
                     </div>
 
                     <div class="card" style="text-align: center; color: #999; border: 1px dashed #ccc;">
-                        <p style="font-size: 0.85rem;">Admin will assign new cases here based on your verified availability.</p>
+                        <p style="font-size: 0.85rem;">Admin will assign new cases here based on your verified
+                            availability.</p>
                     </div>
                 </div>
             </section>
 
             <section id="section-profile" class="hidden">
-                <div class="section-header"><h1>Professional Profile</h1></div>
+                <div class="section-header">
+                    <h1>Professional Profile</h1>
+                </div>
                 <div class="card">
                     <div class="grid-2">
-                        <div class="input-group"><label>Designation</label><input type="text" id="p-role" disabled></div>
+                        <div class="input-group"><label>Designation</label><input type="text" id="p-role" disabled>
+                        </div>
                         <div class="input-group"><label>Full Name</label><input type="text" id="p-name" disabled></div>
                     </div>
                     <div class="grid-2">
-                        <div class="input-group"><label>Email Address</label><input type="email" id="p-email" disabled></div>
-                        <div class="input-group"><label>Verified Contact</label><input type="tel" id="p-phone" disabled></div>
+                        <div class="input-group"><label>Email Address</label><input type="email" id="p-email" disabled>
+                        </div>
+                        <div class="input-group"><label>Verified Contact</label><input type="tel" id="p-phone" disabled>
+                        </div>
                     </div>
                     <div class="grid-2">
-                        <div class="input-group"><label>Date of Birth</label><input type="text" id="p-dob" disabled></div>
+                        <div class="input-group"><label>Date of Birth</label><input type="text" id="p-dob" disabled>
+                        </div>
                         <div class="input-group"><label>Gender</label><input type="text" id="p-gender" disabled></div>
                     </div>
                     <div class="input-group">
                         <label>Professional Bio</label>
-                        <textarea style="height: 100px;" placeholder="Verified caregivers can submit a bio here..."></textarea>
+                        <textarea style="height: 100px;"
+                            placeholder="Verified caregivers can submit a bio here..."></textarea>
                     </div>
-                    <button class="btn-primary" onclick="alert('Profile update submitted for verification.')">Update Info</button>
+                    <button class="btn-primary" onclick="alert('Profile update submitted for verification.')">Update
+                        Info</button>
                 </div>
             </section>
 
@@ -175,12 +207,12 @@
             icon.innerText = nav.classList.contains('active') ? '✕' : '☰';
         }
 
-        window.onload = function() {
+        window.onload = function () {
             const rawData = localStorage.getItem("userData");
             if (!rawData) { window.location.href = "auth.html"; return; }
 
             const user = JSON.parse(rawData);
-            
+
             if (user.role === "Client") {
                 window.location.href = "dashboard.html";
                 return;
@@ -191,7 +223,7 @@
             document.getElementById('p-email').value = user.email || "N/A";
             document.getElementById('p-phone').value = user.phone || "N/A";
             document.getElementById('p-gender').value = user.gender || "N/A";
-            if(user.dob) document.getElementById('p-dob').value = new Date(user.dob).toLocaleDateString();
+            if (user.dob) document.getElementById('p-dob').value = new Date(user.dob).toLocaleDateString();
         };
 
         function logout() { localStorage.clear(); window.location.href = "index.html"; }
@@ -201,12 +233,13 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById('section-' + name).classList.remove('hidden');
             document.getElementById('nav-' + name).classList.add('active');
-            
+
             // Close mobile nav after selection
-            if(window.innerWidth < 992) {
+            if (window.innerWidth < 992) {
                 toggleNav();
             }
         }
     </script>
 </body>
+
 </html>
