@@ -339,12 +339,41 @@
                 return;
             }
 
+            // Set Profile Data
             document.getElementById('p-role').value = user.role || "N/A";
             document.getElementById('p-name').value = user.name || "N/A";
             document.getElementById('p-email').value = user.email || "N/A";
             document.getElementById('p-phone').value = user.phone || "N/A";
             document.getElementById('p-gender').value = user.gender || "N/A";
-            if (user.dob) document.getElementById('p-dob').value = user.dob;
+
+            // Convert DOB to clean Malaysia Date Format (DD/MM/YYYY)
+            // Clean Malaysia Date Format (DD/MM/YYYY)
+            if (user.dob) {
+                let rawDob = user.dob;
+
+                // Check if it's the long ISO format (contains T)
+                if (rawDob.includes('T')) {
+                    const dateObj = new Date(rawDob);
+
+                    // Force conversion to Malaysia Time String
+                    rawDob = dateObj.toLocaleDateString('en-GB', {
+                        timeZone: 'Asia/Kuala_Lumpur',
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    });
+                }
+
+                // Final check: if it still has dashes (YYYY-MM-DD), flip it to DD/MM/YYYY
+                if (rawDob.includes('-') && !rawDob.includes('T')) {
+                    const parts = rawDob.split('-');
+                    if (parts[0].length === 4) { // It's YYYY-MM-DD
+                        rawDob = `${parts[2]}/${parts[1]}/${parts[0]}`;
+                    }
+                }
+
+                document.getElementById('p-dob').value = rawDob;
+            }
 
             fetchProfessionalJobs(user.email);
         };
@@ -357,46 +386,60 @@
 
                 if (!jobs || jobs.length === 0) {
                     container.innerHTML = `
-                <div class="card" style="text-align: center; color: #999; border: 1px dashed #ccc;">
-                    <p style="font-size: 0.85rem;">No active assignments. Admin will assign new cases here based on your availability.</p>
-                </div>`;
+        <div class="card" style="text-align: center; color: #999; border: 1px dashed #ccc;">
+            <p style="font-size: 0.85rem;">No active assignments. Admin will assign new cases here based on your availability.</p>
+        </div>`;
                     return;
                 }
 
                 container.innerHTML = "";
                 jobs.reverse().forEach(job => {
+                    // --- CLEANING THE RECIPIENT DOB ---
+                    let cleanDob = job.dob || "N/A";
+                    if (cleanDob.includes('T')) {
+                        const d = new Date(cleanDob);
+                        cleanDob = d.toLocaleDateString('en-GB', {
+                            timeZone: 'Asia/Kuala_Lumpur',
+                            day: '2-digit', month: '2-digit', year: 'numeric'
+                        });
+                    } else if (cleanDob.includes('-')) {
+                        const p = cleanDob.split('-');
+                        if (p[0].length === 4) cleanDob = `${p[2]}/${p[1]}/${p[0]}`;
+                    }
+                    // ----------------------------------
+
                     let contactHtml = "";
                     if (job.assignedDetails) {
                         contactHtml = `
-                    <div class="contact-box">
-                        <strong>${job.assignedDetails.label}:</strong> ${job.assignedDetails.name}<br>
-                        <strong>Phone:</strong> <a href="tel:${job.assignedDetails.phone}">${job.assignedDetails.phone}</a>
-                    </div>`;
+            <div class="contact-box">
+                <strong>${job.assignedDetails.label}:</strong> ${job.assignedDetails.name}<br>
+                <strong>Phone:</strong> <a href="tel:${job.assignedDetails.phone}">${job.assignedDetails.phone}</a>
+            </div>`;
                     }
 
                     container.innerHTML += `
-                <div class="job-card">
-                    <div class="job-meta">REF: ${job.ref} • ${job.dates}</div>
-                    <div class="job-title">${job.purpose}</div>
-                    
-                    <div style="background: #f9f9f9; padding: 15px; border-radius: 4px; margin: 10px 0; border: 1px solid #eee;">
-                        <p style="font-size: 0.85rem; margin: 0 0 10px 0; border-bottom: 1px solid #ddd; padding-bottom: 5px; font-weight: bold; color: var(--brand-blue);">RECIPIENT DETAILS</p>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.85rem;">
-                            <div><strong>Name:</strong> ${job.recipient}</div>
-                            <div><strong>Gender:</strong> ${job.gender || "N/A"}</div>
-                            <div><strong>DOB:</strong> ${job.dob || "N/A"}</div>
-                            <div><strong>Weight:</strong> ${job.weight || "N/A"}</div>
-                        </div>
-                        <p style="font-size: 0.85rem; margin: 10px 0 0 0;"><strong>Medical/Meds:</strong> ${job.meds || "None reported"}</p>
-                    </div>
+        <div class="job-card">
+            <div class="job-meta">REF: ${job.ref} • ${job.dates}</div>
+            <div class="job-title">${job.purpose}</div>
+            
+            <div style="background: #f9f9f9; padding: 15px; border-radius: 4px; margin: 10px 0; border: 1px solid #eee;">
+                <p style="font-size: 0.85rem; margin: 0 0 10px 0; border-bottom: 1px solid #ddd; padding-bottom: 5px; font-weight: bold; color: var(--brand-blue);">RECIPIENT DETAILS</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.85rem;">
+                    <div><strong>Name:</strong> ${job.recipient}</div>
+                    <div><strong>Gender:</strong> ${job.gender || "N/A"}</div>
+                    <div><strong>DOB:</strong> ${cleanDob}</div> 
+                    <div><strong>Weight:</strong> ${job.weight || "N/A"}</div>
+                </div>
+                <p style="font-size: 0.85rem; margin: 10px 0 0 0;"><strong>Medical/Meds:</strong> ${job.meds || "None reported"}</p>
+            </div>
 
-                    <div style="font-size: 0.85rem; color: #555; margin-bottom: 10px;">
-                        <strong>Emergency Contact:</strong> ${job.eName} (<a href="tel:${job.ePhone}">${job.ePhone}</a>)
-                    </div>
+            <div style="font-size: 0.85rem; color: #555; margin-bottom: 10px;">
+                <strong>Emergency Contact:</strong> ${job.eName} (<a href="tel:${job.ePhone}">${job.ePhone}</a>)
+            </div>
 
-                    <div class="status-tag" style="background: #e3f2fd; color: #1976d2;">${job.status}</div>
-                    ${contactHtml}
-                </div>`;
+            <div class="status-tag" style="background: #e3f2fd; color: #1976d2;">${job.status}</div>
+            ${contactHtml}
+        </div>`;
                 });
 
             } catch (e) {
