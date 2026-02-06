@@ -36,7 +36,9 @@
             box-sizing: border-box;
         }
 
-        header img { height: 30px; }
+        header img {
+            height: 30px;
+        }
 
         /* --- LAYOUT STRUCTURE --- */
         .dashboard-wrapper {
@@ -48,7 +50,8 @@
         @media (min-width: 992px) {
             .dashboard-wrapper {
                 flex-direction: row;
-                align-items: flex-start; /* Crucial for sticky behavior */
+                align-items: flex-start;
+                /* Crucial for sticky behavior */
             }
 
             .sidebar {
@@ -116,43 +119,137 @@
             color: #ccc;
         }
 
-        .nav-item:hover { background: #1a1a1a; color: var(--brand-blue); }
-        .nav-item.active { background: #1a1a1a; border-left: 4px solid var(--brand-blue); color: var(--brand-blue); }
+        .nav-item:hover {
+            background: #1a1a1a;
+            color: var(--brand-blue);
+        }
+
+        .nav-item.active {
+            background: #1a1a1a;
+            border-left: 4px solid var(--brand-blue);
+            color: var(--brand-blue);
+        }
 
         /* --- CONTENT UI --- */
-        .main-content { padding: 25px 15px; box-sizing: border-box; }
-        .section-header { margin-bottom: 20px; border-bottom: 2px solid var(--brand-black); padding-bottom: 10px; }
-        .section-header h1 { font-size: 1.5rem; margin: 0; }
-        .card { background: white; border: 1px solid var(--border); padding: 25px 20px; border-radius: 4px; margin-bottom: 20px; }
+        .main-content {
+            padding: 25px 15px;
+            box-sizing: border-box;
+        }
 
-        .grid-2 { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 15px; }
-        @media (min-width: 768px) { .grid-2 { grid-template-columns: 1fr 1fr; gap: 20px; } }
+        .section-header {
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--brand-black);
+            padding-bottom: 10px;
+        }
 
-        .input-group label { display: block; font-weight: bold; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 6px; color: #555; }
-        .input-group input, .input-group textarea { 
-            width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 16px; 
+        .section-header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 25px 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            color: #555;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
         }
 
         /* Job Cards */
-        .job-card { 
-            padding: 20px; 
-            margin-bottom: 15px; 
-            background: white; 
+        .job-card {
+            padding: 20px;
+            margin-bottom: 15px;
+            background: white;
             border: 1px solid #eee;
             border-left: 5px solid var(--brand-blue);
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
-        }
-        .job-meta { font-size: 0.7rem; color: #777; font-weight: 700; text-transform: uppercase; }
-        .job-title { font-size: 1.1rem; font-weight: 800; margin: 5px 0; }
-        .status-tag { display: inline-block; padding: 4px 10px; font-size: 0.65rem; border-radius: 2px; font-weight: 900; background: #eee; margin-top: 10px; }
-        
-        .contact-box {
-            margin-top: 12px; padding: 12px; background: #f0f7ff; border-radius: 4px; font-size: 0.85rem; border: 1px dashed var(--brand-blue);
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
         }
 
-        .hidden { display: none; }
-        .btn-primary { width: 100%; padding: 15px; font-weight: bold; cursor: pointer; background: var(--brand-black); color: white; border: none; border-radius: 4px; }
-        .loader { text-align: center; padding: 40px; color: #777; }
+        .job-meta {
+            font-size: 0.7rem;
+            color: #777;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .job-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin: 5px 0;
+        }
+
+        .status-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 0.65rem;
+            border-radius: 2px;
+            font-weight: 900;
+            background: #eee;
+            margin-top: 10px;
+        }
+
+        .contact-box {
+            margin-top: 12px;
+            padding: 12px;
+            background: #f0f7ff;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            border: 1px dashed var(--brand-blue);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            background: var(--brand-black);
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .loader {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+        }
     </style>
 </head>
 
@@ -194,22 +291,28 @@
                 </div>
                 <div class="card">
                     <div class="grid-2">
-                        <div class="input-group"><label>Designation</label><input type="text" id="p-role" disabled></div>
+                        <div class="input-group"><label>Designation</label><input type="text" id="p-role" disabled>
+                        </div>
                         <div class="input-group"><label>Full Name</label><input type="text" id="p-name" disabled></div>
                     </div>
                     <div class="grid-2">
-                        <div class="input-group"><label>Email Address</label><input type="email" id="p-email" disabled></div>
-                        <div class="input-group"><label>Verified Contact</label><input type="tel" id="p-phone" disabled></div>
+                        <div class="input-group"><label>Email Address</label><input type="email" id="p-email" disabled>
+                        </div>
+                        <div class="input-group"><label>Verified Contact</label><input type="tel" id="p-phone" disabled>
+                        </div>
                     </div>
                     <div class="grid-2">
-                        <div class="input-group"><label>Date of Birth</label><input type="text" id="p-dob" disabled></div>
+                        <div class="input-group"><label>Date of Birth</label><input type="text" id="p-dob" disabled>
+                        </div>
                         <div class="input-group"><label>Gender</label><input type="text" id="p-gender" disabled></div>
                     </div>
                     <div class="input-group">
                         <label>Professional Bio</label>
-                        <textarea style="height: 100px;" placeholder="Verified caregivers can submit a bio here..."></textarea>
+                        <textarea style="height: 100px;"
+                            placeholder="Verified caregivers can submit a bio here..."></textarea>
                     </div>
-                    <button class="btn-primary" onclick="alert('Profile update submitted for verification.')">Update Info</button>
+                    <button class="btn-primary" onclick="alert('Profile update submitted for verification.')">Update
+                        Info</button>
                 </div>
             </section>
 
@@ -254,34 +357,46 @@
 
                 if (!jobs || jobs.length === 0) {
                     container.innerHTML = `
-                        <div class="card" style="text-align: center; color: #999; border: 1px dashed #ccc;">
-                            <p style="font-size: 0.85rem;">No active assignments. Admin will assign new cases here based on your availability.</p>
-                        </div>`;
+                <div class="card" style="text-align: center; color: #999; border: 1px dashed #ccc;">
+                    <p style="font-size: 0.85rem;">No active assignments. Admin will assign new cases here based on your availability.</p>
+                </div>`;
                     return;
                 }
 
-                container.innerHTML = ""; 
+                container.innerHTML = "";
                 jobs.reverse().forEach(job => {
                     let contactHtml = "";
                     if (job.assignedDetails) {
                         contactHtml = `
-                            <div class="contact-box">
-                                <strong>${job.assignedDetails.label}:</strong> ${job.assignedDetails.name}<br>
-                                <strong>Contact:</strong> <a href="tel:${job.assignedDetails.phone}">${job.assignedDetails.phone}</a>
-                            </div>`;
+                    <div class="contact-box">
+                        <strong>${job.assignedDetails.label}:</strong> ${job.assignedDetails.name}<br>
+                        <strong>Phone:</strong> <a href="tel:${job.assignedDetails.phone}">${job.assignedDetails.phone}</a>
+                    </div>`;
                     }
 
                     container.innerHTML += `
-                        <div class="job-card">
-                            <div class="job-meta">REF: ${job.ref} • ${job.dates}</div>
-                            <div class="job-title">${job.purpose}</div>
-                            <p style="font-size: 0.9rem; color: #555; margin: 8px 0;">
-                                <strong>Recipient:</strong> ${job.recipient}<br>
-                                <strong>Service Needed:</strong> ${job.role}
-                            </p>
-                            <div class="status-tag" style="background: #e3f2fd; color: #1976d2;">${job.status}</div>
-                            ${contactHtml}
-                        </div>`;
+                <div class="job-card">
+                    <div class="job-meta">REF: ${job.ref} • ${job.dates}</div>
+                    <div class="job-title">${job.purpose}</div>
+                    
+                    <div style="background: #f9f9f9; padding: 15px; border-radius: 4px; margin: 10px 0; border: 1px solid #eee;">
+                        <p style="font-size: 0.85rem; margin: 0 0 10px 0; border-bottom: 1px solid #ddd; padding-bottom: 5px; font-weight: bold; color: var(--brand-blue);">RECIPIENT DETAILS</p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.85rem;">
+                            <div><strong>Name:</strong> ${job.recipient}</div>
+                            <div><strong>Gender:</strong> ${job.gender || "N/A"}</div>
+                            <div><strong>DOB:</strong> ${job.dob || "N/A"}</div>
+                            <div><strong>Weight:</strong> ${job.weight || "N/A"}</div>
+                        </div>
+                        <p style="font-size: 0.85rem; margin: 10px 0 0 0;"><strong>Medical/Meds:</strong> ${job.meds || "None reported"}</p>
+                    </div>
+
+                    <div style="font-size: 0.85rem; color: #555; margin-bottom: 10px;">
+                        <strong>Emergency Contact:</strong> ${job.eName} (<a href="tel:${job.ePhone}">${job.ePhone}</a>)
+                    </div>
+
+                    <div class="status-tag" style="background: #e3f2fd; color: #1976d2;">${job.status}</div>
+                    ${contactHtml}
+                </div>`;
                 });
 
             } catch (e) {
