@@ -12,72 +12,96 @@
             --brand-black: #000000;
             --bg-light: #f8f9fa;
             --border: #dddddd;
+            --header-height: 60px;
         }
 
         body {
             background-color: var(--bg-light);
-            font-family: 'Segoe UI', sans-serif;
+            font-family: "Segoe UI", sans-serif;
             margin: 0;
         }
 
-        /* Layout - Responsive Container */
+        /* --- HEADER --- */
+        header {
+            height: var(--header-height);
+            padding: 0 20px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+            box-sizing: border-box;
+        }
+
+        header img { height: 30px; }
+
+        /* --- LAYOUT STRUCTURE --- */
         .dashboard-wrapper {
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            min-height: calc(100vh - var(--header-height));
         }
 
         @media (min-width: 992px) {
             .dashboard-wrapper {
                 flex-direction: row;
-                align-items: flex-start;
-                /* Crucial for sticky */
+                align-items: flex-start; /* Crucial for sticky behavior */
             }
 
             .sidebar {
                 width: 260px;
-                height: 100vh;
                 position: sticky;
-                top: 0;
-                z-index: 1000;
+                top: var(--header-height);
+                height: calc(100vh - var(--header-height));
+                background: var(--brand-black);
                 display: flex;
                 flex-direction: column;
+                flex-shrink: 0;
+                z-index: 1000;
+                overflow-y: auto;
             }
 
             .main-content {
                 flex: 1;
-                padding: 50px;
+                padding: 40px;
                 min-width: 0;
-                /* Prevents flex items from overflowing */
             }
 
+            /* HIDE MOBILE TOGGLE ON DESKTOP */
             .mobile-nav-toggle {
-                display: none;
+                display: none !important;
+            }
+
+            .nav-container {
+                display: block !important;
             }
         }
 
-        /* Sidebar Navigation container */
+        /* --- NAVIGATION --- */
+        .mobile-nav-toggle {
+            background: var(--brand-black);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 0.8rem;
+            z-index: 1500;
+        }
+
         .nav-container {
             display: none;
             background: var(--brand-black);
             flex: 1;
-            /* Makes it fill the sidebar height */
-        }
-
-        @media (min-width: 992px) {
-            .nav-container {
-                display: block;
-            }
         }
 
         .nav-container.active {
             display: block;
-        }
-
-        /* Sidebar Styling */
-        .sidebar {
-            background: var(--brand-black);
-            color: white;
         }
 
         .nav-item {
@@ -89,34 +113,46 @@
             text-transform: uppercase;
             transition: 0.3s;
             border-left: 4px solid transparent;
+            color: #ccc;
         }
 
-        .nav-item:hover {
-            background: #1A1A1A;
-            color: var(--brand-blue);
+        .nav-item:hover { background: #1a1a1a; color: var(--brand-blue); }
+        .nav-item.active { background: #1a1a1a; border-left: 4px solid var(--brand-blue); color: var(--brand-blue); }
+
+        /* --- CONTENT UI --- */
+        .main-content { padding: 25px 15px; box-sizing: border-box; }
+        .section-header { margin-bottom: 20px; border-bottom: 2px solid var(--brand-black); padding-bottom: 10px; }
+        .section-header h1 { font-size: 1.5rem; margin: 0; }
+        .card { background: white; border: 1px solid var(--border); padding: 25px 20px; border-radius: 4px; margin-bottom: 20px; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 15px; }
+        @media (min-width: 768px) { .grid-2 { grid-template-columns: 1fr 1fr; gap: 20px; } }
+
+        .input-group label { display: block; font-weight: bold; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 6px; color: #555; }
+        .input-group input, .input-group textarea { 
+            width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 16px; 
         }
 
-        .nav-item.active {
-            background: #1A1A1A;
-            border-left: 4px solid var(--brand-blue);
-            color: var(--brand-blue);
+        /* Job Cards */
+        .job-card { 
+            padding: 20px; 
+            margin-bottom: 15px; 
+            background: white; 
+            border: 1px solid #eee;
+            border-left: 5px solid var(--brand-blue);
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+        }
+        .job-meta { font-size: 0.7rem; color: #777; font-weight: 700; text-transform: uppercase; }
+        .job-title { font-size: 1.1rem; font-weight: 800; margin: 5px 0; }
+        .status-tag { display: inline-block; padding: 4px 10px; font-size: 0.65rem; border-radius: 2px; font-weight: 900; background: #eee; margin-top: 10px; }
+        
+        .contact-box {
+            margin-top: 12px; padding: 12px; background: #f0f7ff; border-radius: 4px; font-size: 0.85rem; border: 1px dashed var(--brand-blue);
         }
 
-        /* Other Styles ... */
-        header {
-            padding: 10px 20px;
-            background: white;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            /* Keep header visible too */
-            top: 0;
-            z-index: 1100;
-        }
-
-        /* Rest of your CSS... */
+        .hidden { display: none; }
+        .btn-primary { width: 100%; padding: 15px; font-weight: bold; cursor: pointer; background: var(--brand-black); color: white; border: none; border-radius: 4px; }
+        .loader { text-align: center; padding: 40px; color: #777; }
     </style>
 </head>
 
@@ -147,21 +183,8 @@
                 <div class="section-header">
                     <h1>My Schedule</h1>
                 </div>
-
                 <div id="job-list">
-                    <div class="job-card">
-                        <div class="job-meta" style="font-size: 0.7rem; color: #777; font-weight: 700;">NEXT APPOINTMENT
-                            • 12 FEB 2026</div>
-                        <div class="job-title">Home Care - Post-Op Recovery</div>
-                        <p style="font-size: 0.9rem; color: #555; margin: 8px 0;">Recipient: Mohammad Azlan<br>Location:
-                            Petaling Jaya</p>
-                        <div class="status-tag" style="background: #e3f2fd; color: #1976d2;">CONFIRMED</div>
-                    </div>
-
-                    <div class="card" style="text-align: center; color: #999; border: 1px dashed #ccc;">
-                        <p style="font-size: 0.85rem;">Admin will assign new cases here based on your verified
-                            availability.</p>
-                    </div>
+                    <div class="loader">Loading assigned cases...</div>
                 </div>
             </section>
 
@@ -171,34 +194,29 @@
                 </div>
                 <div class="card">
                     <div class="grid-2">
-                        <div class="input-group"><label>Designation</label><input type="text" id="p-role" disabled>
-                        </div>
+                        <div class="input-group"><label>Designation</label><input type="text" id="p-role" disabled></div>
                         <div class="input-group"><label>Full Name</label><input type="text" id="p-name" disabled></div>
                     </div>
                     <div class="grid-2">
-                        <div class="input-group"><label>Email Address</label><input type="email" id="p-email" disabled>
-                        </div>
-                        <div class="input-group"><label>Verified Contact</label><input type="tel" id="p-phone" disabled>
-                        </div>
+                        <div class="input-group"><label>Email Address</label><input type="email" id="p-email" disabled></div>
+                        <div class="input-group"><label>Verified Contact</label><input type="tel" id="p-phone" disabled></div>
                     </div>
                     <div class="grid-2">
-                        <div class="input-group"><label>Date of Birth</label><input type="text" id="p-dob" disabled>
-                        </div>
+                        <div class="input-group"><label>Date of Birth</label><input type="text" id="p-dob" disabled></div>
                         <div class="input-group"><label>Gender</label><input type="text" id="p-gender" disabled></div>
                     </div>
                     <div class="input-group">
                         <label>Professional Bio</label>
-                        <textarea style="height: 100px;"
-                            placeholder="Verified caregivers can submit a bio here..."></textarea>
+                        <textarea style="height: 100px;" placeholder="Verified caregivers can submit a bio here..."></textarea>
                     </div>
-                    <button class="btn-primary" onclick="alert('Profile update submitted for verification.')">Update
-                        Info</button>
+                    <button class="btn-primary" onclick="alert('Profile update submitted for verification.')">Update Info</button>
                 </div>
             </section>
 
         </div>
     </div>
 
+    <script src="config.js"></script>
     <script>
         function toggleNav() {
             const nav = document.getElementById('nav-container');
@@ -223,8 +241,53 @@
             document.getElementById('p-email').value = user.email || "N/A";
             document.getElementById('p-phone').value = user.phone || "N/A";
             document.getElementById('p-gender').value = user.gender || "N/A";
-            if (user.dob) document.getElementById('p-dob').value = new Date(user.dob).toLocaleDateString();
+            if (user.dob) document.getElementById('p-dob').value = user.dob;
+
+            fetchProfessionalJobs(user.email);
         };
+
+        async function fetchProfessionalJobs(email) {
+            const container = document.getElementById('job-list');
+            try {
+                const response = await fetch(`${APPS_SCRIPT_URL}?email=${encodeURIComponent(email)}`);
+                const jobs = await response.json();
+
+                if (!jobs || jobs.length === 0) {
+                    container.innerHTML = `
+                        <div class="card" style="text-align: center; color: #999; border: 1px dashed #ccc;">
+                            <p style="font-size: 0.85rem;">No active assignments. Admin will assign new cases here based on your availability.</p>
+                        </div>`;
+                    return;
+                }
+
+                container.innerHTML = ""; 
+                jobs.reverse().forEach(job => {
+                    let contactHtml = "";
+                    if (job.assignedDetails) {
+                        contactHtml = `
+                            <div class="contact-box">
+                                <strong>${job.assignedDetails.label}:</strong> ${job.assignedDetails.name}<br>
+                                <strong>Contact:</strong> <a href="tel:${job.assignedDetails.phone}">${job.assignedDetails.phone}</a>
+                            </div>`;
+                    }
+
+                    container.innerHTML += `
+                        <div class="job-card">
+                            <div class="job-meta">REF: ${job.ref} • ${job.dates}</div>
+                            <div class="job-title">${job.purpose}</div>
+                            <p style="font-size: 0.9rem; color: #555; margin: 8px 0;">
+                                <strong>Recipient:</strong> ${job.recipient}<br>
+                                <strong>Service Needed:</strong> ${job.role}
+                            </p>
+                            <div class="status-tag" style="background: #e3f2fd; color: #1976d2;">${job.status}</div>
+                            ${contactHtml}
+                        </div>`;
+                });
+
+            } catch (e) {
+                container.innerHTML = `<p style="color:red; text-align:center;">Failed to load schedule.</p>`;
+            }
+        }
 
         function logout() { localStorage.clear(); window.location.href = "index.html"; }
 
@@ -234,10 +297,7 @@
             document.getElementById('section-' + name).classList.remove('hidden');
             document.getElementById('nav-' + name).classList.add('active');
 
-            // Close mobile nav after selection
-            if (window.innerWidth < 992) {
-                toggleNav();
-            }
+            if (window.innerWidth < 992) toggleNav();
         }
     </script>
 </body>
