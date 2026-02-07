@@ -3,27 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kitacare | Professional Care</title>
+    <title>About Us | KitaCare</title>
     <style>
-        /* Modern Mobile-First Fixes - PIXEL PERFECT SYNC WITH AUTH */
+        /* CORE BRANDING & SYNC WITH AUTH */
         :root { --brand-blue: #007bff; --brand-black: #000000; --bg-light: #f8f9fa; }
         
         html, body { 
-            height: 100%; 
             margin: 0; 
             padding: 0; 
-            overflow: hidden; 
             font-family: 'Segoe UI', system-ui, sans-serif; 
             background: white;
+            scroll-behavior: smooth;
         }
 
-        body { 
-            display: flex; 
-            flex-direction: column; 
-        }
-
-        /* EXACT HEADER CODE FROM YOUR AUTH PAGE */
+        /* HEADER - PIXEL PERFECT SYNC WITH AUTH PAGE */
         header { 
+            position: sticky;
+            top: 0;
             padding: 0 5%; 
             display: flex; 
             justify-content: space-between; 
@@ -32,13 +28,10 @@
             background: white;
             border-bottom: 1px solid #eee;
             box-sizing: border-box;
-            flex-shrink: 0;
+            z-index: 1000;
         }
 
-        header img { 
-            height: 45px; 
-            display: block;
-        }
+        header img { height: 45px; display: block; }
 
         .btn-outline {
             text-decoration: none;
@@ -51,12 +44,11 @@
 
         /* HERO SECTION */
         .hero { 
-            flex-grow: 1;
             display: grid; 
             grid-template-columns: 1.1fr 0.9fr; 
             gap: 60px; 
             align-items: center; 
-            padding: 0 8%;
+            padding: 80px 8%;
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -77,21 +69,92 @@
             line-height: 1.5;
         }
 
-        .hero-visual {
-            display: flex;
-            justify-content: center;
-        }
-
         .hero-visual img { 
             width: 100%; 
             max-width: 420px;
             border: 2px solid var(--brand-black); 
             padding: 8px; 
             background: white; 
-            box-shadow: 12px 12px 0px var(--brand-black); /* EXACT SHADOW FROM AUTH CARD */
+            box-shadow: 12px 12px 0px var(--brand-black); 
         }
 
-        /* PRIMARY BUTTON - MATCHING AUTH STYLE */
+        /* CONTENT SECTIONS */
+        .content-container {
+            background: var(--bg-light);
+            padding: 80px 8%;
+        }
+
+        .about-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 100px;
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            color: var(--brand-blue);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        h2 { font-size: 2.5rem; font-weight: 800; margin: 0 0 30px 0; }
+
+        /* JUSTIFIED TABULAR ROWS */
+        .info-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 20px;
+        }
+
+        .info-key {
+            width: 120px;
+            flex-shrink: 0;
+            font-size: 0.7rem;
+            color: var(--brand-blue);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding-top: 5px;
+        }
+
+        .vertical-divider {
+            width: 1px;
+            height: 15px;
+            background: #ddd;
+            margin: 8px 20px 0 0;
+        }
+
+        .info-val {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        /* DUAL BENEFITS SECTION */
+        .benefits-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .benefit-card {
+            background: white;
+            border: 1px solid #eee;
+            padding: 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+
         .btn-primary { 
             display: inline-block;
             padding: 15px 45px; 
@@ -100,37 +163,24 @@
             text-decoration: none;
             background: var(--brand-black);
             color: white;
-            border: none;
-            transition: background 0.3s;
+            transition: 0.3s;
         }
 
-        .btn-primary:hover { 
-            background: var(--brand-blue); 
-        }
+        .btn-primary:hover { background: var(--brand-blue); }
 
-        /* MICRO FOOTER */
         footer {
-            height: 40px;
+            padding: 60px 0;
             text-align: center;
-            font-size: 0.7rem;
-            color: #bbb;
-            flex-shrink: 0;
+            font-size: 0.75rem;
+            color: #999;
+            background: white;
+            border-top: 1px solid #eee;
         }
-        footer a { color: #999; text-decoration: none; }
 
-        /* MOBILE FIXES - EXACT COPIED FROM YOUR AUTH MEDIA QUERY */
-        @media (max-width: 480px) {
+        @media (max-width: 992px) {
+            .hero, .about-grid, .benefits-section { grid-template-columns: 1fr; }
+            .hero-text h1 { font-size: 2.8rem; }
             header { height: 80px; }
-            header img { height: 35px; }
-            .hero { 
-                grid-template-columns: 1fr; 
-                text-align: center; 
-                padding: 20px 5%;
-                gap: 20px;
-                overflow-y: auto;
-            }
-            .hero-text h1 { font-size: 2.5rem; }
-            .hero-visual img { max-width: 300px; box-shadow: 8px 8px 0px var(--brand-black); }
         }
     </style>
 </head>
@@ -145,6 +195,7 @@
     
     <main class="hero">
         <div class="hero-text">
+            <span class="section-label">Established 2026</span>
             <h1>Expert Care.<br><span style="color:var(--brand-blue)">At Your Home.</span></h1>
             <p>Verified caregivers, nurses, and doctors. Simple requests, professional matching, expert results.</p>
             <a href="auth.html" class="btn-primary">GET STARTED</a>
@@ -154,8 +205,76 @@
         </div>
     </main>
 
+    <section class="content-container">
+        
+        <div class="about-grid">
+            <div>
+                <span class="section-label">About Kitacare</span>
+                <h2>On-Demand Infrastructure for Modern Care.</h2>
+                <p style="font-size: 1.1rem; color: #555;">KitaCare is a technology-driven platform connecting families with a verified network of healthcare professionals. We facilitate immediate access to quality support without the friction of traditional administrative processes.</p>
+            </div>
+            <div>
+                <span class="section-label">The Core Model</span>
+                <div class="info-row">
+                    <div class="info-key">Efficiency</div>
+                    <div class="vertical-divider"></div>
+                    <div class="info-val">Deployment based on real-time location and clinical requirements.</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-key">Trust</div>
+                    <div class="vertical-divider"></div>
+                    <div class="info-val">Strict vetting protocols and credential verification for every user.</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-key">Precision</div>
+                    <div class="vertical-divider"></div>
+                    <div class="info-val">Comprehensive data matching for medical history and emergency accuracy.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="benefits-section">
+            
+            <div class="benefit-card">
+                <span class="section-label">For Seekers</span>
+                <h3 style="font-size: 1.5rem; font-weight: 800;">Request Quality Care</h3>
+                <div style="margin-top: 25px;">
+                    <div class="info-row">
+                        <div class="info-key">Matching</div>
+                        <div class="vertical-divider"></div>
+                        <div class="info-val">Connect with nurses and caregivers who fit your specific health profile.</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-key">Control</div>
+                        <div class="vertical-divider"></div>
+                        <div class="info-val">Manage schedules and view professional history in one dashboard.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="benefit-card">
+                <span class="section-label">For Professionals</span>
+                <h3 style="font-size: 1.5rem; font-weight: 800;">Join the Care Network</h3>
+                <div style="margin-top: 25px;">
+                    <div class="info-row">
+                        <div class="info-key">Autonomy</div>
+                        <div class="vertical-divider"></div>
+                        <div class="info-val">Accept assignments that match your expertise and personal schedule.</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-key">Visibility</div>
+                        <div class="vertical-divider"></div>
+                        <div class="info-val">Access detailed job briefs, patient history, and emergency protocols instantly.</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
     <footer>
-        &copy; 2026 kitacare | Support: <a href="mailto:admin@mykitacare.com">admin@mykitacare.com</a>
+        &copy; 2026 kitacare | Website: kitacare.com<br><br>
+        Support: <a href="mailto:admin@kitacare.com" style="color:var(--brand-blue); text-decoration:none;">admin@kitacare.com</a>
     </footer>
 
 </body>
