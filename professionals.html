@@ -1,407 +1,469 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Professional Portal | kitacare</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <style>
-        :root {
-            --brand-blue: #007bff;
-            --brand-black: #000000;
-            --bg-light: #f8f9fa;
-            --border: #dddddd;
-            --header-height: 60px;
-        }
+      :root {
+        --brand-blue: #007bff;
+        --brand-black: #000000;
+        --bg-light: #f8f9fa;
+        --border: #dddddd;
+        --header-height: 60px;
+      }
 
-        body {
-            background-color: var(--bg-light);
-            font-family: "Segoe UI", sans-serif;
-            margin: 0;
-        }
+      body {
+        background-color: var(--bg-light);
+        font-family: "Segoe UI", sans-serif;
+        margin: 0;
+      }
 
-        /* --- HEADER --- */
-        header {
-            height: var(--header-height);
-            padding: 0 20px;
-            background: white;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 2000;
-            box-sizing: border-box;
-        }
+      /* --- HEADER --- */
+      header {
+        height: var(--header-height);
+        padding: 0 20px;
+        background: white;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 2000;
+        box-sizing: border-box;
+      }
 
-        header img {
-            height: 30px;
-        }
+      header img {
+        height: 30px;
+      }
 
-        /* --- LAYOUT STRUCTURE --- */
+      /* --- LAYOUT STRUCTURE --- */
+      .dashboard-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: calc(100vh - var(--header-height));
+      }
+
+      @media (min-width: 992px) {
         .dashboard-wrapper {
-            display: flex;
-            flex-direction: column;
-            min-height: calc(100vh - var(--header-height));
+          flex-direction: row;
+          align-items: flex-start;
+          /* Crucial for sticky behavior */
         }
 
-        @media (min-width: 992px) {
-            .dashboard-wrapper {
-                flex-direction: row;
-                align-items: flex-start;
-                /* Crucial for sticky behavior */
-            }
-
-            .sidebar {
-                width: 260px;
-                position: sticky;
-                top: var(--header-height);
-                height: calc(100vh - var(--header-height));
-                background: var(--brand-black);
-                display: flex;
-                flex-direction: column;
-                flex-shrink: 0;
-                z-index: 1000;
-                overflow-y: auto;
-            }
-
-            .main-content {
-                flex: 1;
-                padding: 40px;
-                min-width: 0;
-            }
-
-            /* HIDE MOBILE TOGGLE ON DESKTOP */
-            .mobile-nav-toggle {
-                display: none !important;
-            }
-
-            .nav-container {
-                display: block !important;
-            }
+        .sidebar {
+          width: 260px;
+          position: sticky;
+          top: var(--header-height);
+          height: calc(100vh - var(--header-height));
+          background: var(--brand-black);
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          z-index: 1000;
+          overflow-y: auto;
         }
 
-        /* --- NAVIGATION --- */
+        .main-content {
+          flex: 1;
+          padding: 40px;
+          min-width: 0;
+        }
+
+        /* HIDE MOBILE TOGGLE ON DESKTOP */
         .mobile-nav-toggle {
-            background: var(--brand-black);
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-weight: 800;
-            font-size: 0.8rem;
-            z-index: 1500;
+          display: none !important;
         }
 
         .nav-container {
-            display: none;
-            background: var(--brand-black);
-            flex: 1;
+          display: block !important;
         }
+      }
 
-        .nav-container.active {
-            display: block;
-        }
+      /* --- NAVIGATION --- */
+      .mobile-nav-toggle {
+        background: var(--brand-black);
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        font-weight: 800;
+        font-size: 0.8rem;
+        z-index: 1500;
+      }
 
-        .nav-item {
-            padding: 18px 30px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.8rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            transition: 0.3s;
-            border-left: 4px solid transparent;
-            color: #ccc;
-        }
+      .nav-container {
+        display: none;
+        background: var(--brand-black);
+        flex: 1;
+      }
 
-        .nav-item:hover {
-            background: #1a1a1a;
-            color: var(--brand-blue);
-        }
+      .nav-container.active {
+        display: block;
+      }
 
-        .nav-item.active {
-            background: #1a1a1a;
-            border-left: 4px solid var(--brand-blue);
-            color: var(--brand-blue);
-        }
+      .nav-item {
+        padding: 18px 30px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 0.8rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        transition: 0.3s;
+        border-left: 4px solid transparent;
+        color: #ccc;
+      }
 
-        /* --- CONTENT UI --- */
-        .main-content {
-            padding: 25px 15px;
-            box-sizing: border-box;
-        }
+      .nav-item:hover {
+        background: #1a1a1a;
+        color: var(--brand-blue);
+      }
 
-        .section-header {
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--brand-black);
-            padding-bottom: 10px;
-        }
+      .nav-item.active {
+        background: #1a1a1a;
+        border-left: 4px solid var(--brand-blue);
+        color: var(--brand-blue);
+      }
 
-        .section-header h1 {
-            font-size: 1.5rem;
-            margin: 0;
-        }
+      /* --- CONTENT UI --- */
+      .main-content {
+        padding: 25px 15px;
+        box-sizing: border-box;
+      }
 
-        .card {
-            background: white;
-            border: 1px solid var(--border);
-            padding: 25px 20px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
+      .section-header {
+        margin-bottom: 20px;
+        border-bottom: 2px solid var(--brand-black);
+        padding-bottom: 10px;
+      }
 
+      .section-header h1 {
+        font-size: 1.5rem;
+        margin: 0;
+      }
+
+      .card {
+        background: white;
+        border: 1px solid var(--border);
+        padding: 25px 20px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+
+      @media (min-width: 768px) {
         .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin-bottom: 15px;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
         }
+      }
 
-        @media (min-width: 768px) {
-            .grid-2 {
-                grid-template-columns: 1fr 1fr;
-                gap: 20px;
-            }
-        }
+      .input-group label {
+        display: block;
+        font-weight: bold;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+        color: #555;
+      }
 
-        .input-group label {
-            display: block;
-            font-weight: bold;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-            color: #555;
-        }
+      .input-group input,
+      .input-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+      }
 
-        .input-group input,
-        .input-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
+      /* Job Cards */
+      .job-card {
+        padding: 20px;
+        margin-bottom: 15px;
+        background: white;
+        border: 1px solid #eee;
+        border-left: 5px solid var(--brand-blue);
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+      }
 
-        /* Job Cards */
-        .job-card {
-            padding: 20px;
-            margin-bottom: 15px;
-            background: white;
-            border: 1px solid #eee;
-            border-left: 5px solid var(--brand-blue);
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
-        }
+      .job-meta {
+        font-size: 0.7rem;
+        color: #777;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
 
-        .job-meta {
-            font-size: 0.7rem;
-            color: #777;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
+      .job-title {
+        font-size: 1.1rem;
+        font-weight: 800;
+        margin: 5px 0;
+      }
 
-        .job-title {
-            font-size: 1.1rem;
-            font-weight: 800;
-            margin: 5px 0;
-        }
+      .status-tag {
+        display: inline-block;
+        padding: 4px 10px;
+        font-size: 0.65rem;
+        border-radius: 2px;
+        font-weight: 900;
+        background: #eee;
+        margin-top: 10px;
+      }
 
-        .status-tag {
-            display: inline-block;
-            padding: 4px 10px;
-            font-size: 0.65rem;
-            border-radius: 2px;
-            font-weight: 900;
-            background: #eee;
-            margin-top: 10px;
-        }
+      .contact-box {
+        margin-top: 12px;
+        padding: 12px;
+        background: #f0f7ff;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        border: 1px dashed var(--brand-blue);
+      }
 
-        .contact-box {
-            margin-top: 12px;
-            padding: 12px;
-            background: #f0f7ff;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            border: 1px dashed var(--brand-blue);
-        }
+      .hidden {
+        display: none;
+      }
 
-        .hidden {
-            display: none;
-        }
+      .btn-primary {
+        width: 100%;
+        padding: 15px;
+        font-weight: bold;
+        cursor: pointer;
+        background: var(--brand-black);
+        color: white;
+        border: none;
+        border-radius: 4px;
+      }
 
-        .btn-primary {
-            width: 100%;
-            padding: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            background: var(--brand-black);
-            color: white;
-            border: none;
-            border-radius: 4px;
-        }
-
-        .loader {
-            text-align: center;
-            padding: 40px;
-            color: #777;
-        }
+      .loader {
+        text-align: center;
+        padding: 40px;
+        color: #777;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <header>
-        <a href="professionals.html" class="logo-link"><img src="kitacare.png" alt="kitacare"></a>
-        <button onclick="logout()"
-            style="color:red; border: 1px solid red; background: none; padding: 6px 12px; border-radius: 4px; font-weight:bold; cursor:pointer; font-size: 0.7rem;">LOGOUT</button>
+      <a href="professionals.html" class="logo-link"
+        ><img src="kitacare.png" alt="kitacare"
+      /></a>
+      <button
+        onclick="logout()"
+        style="
+          color: red;
+          border: 1px solid red;
+          background: none;
+          padding: 6px 12px;
+          border-radius: 4px;
+          font-weight: bold;
+          cursor: pointer;
+          font-size: 0.7rem;
+        "
+      >
+        LOGOUT
+      </button>
     </header>
 
     <div class="dashboard-wrapper">
-        <div class="mobile-nav-toggle" onclick="toggleNav()">
-            <span>PORTAL MENU</span>
-            <span id="toggle-icon">☰</span>
-        </div>
+      <div class="mobile-nav-toggle" onclick="toggleNav()">
+        <span>PORTAL MENU</span>
+        <span id="toggle-icon">☰</span>
+      </div>
 
-        <div class="sidebar">
-            <div class="nav-container" id="nav-container">
-                <div class="nav-item active" id="nav-jobs" onclick="showSection('jobs')">Assigned Jobs</div>
-                <div class="nav-item" id="nav-profile" onclick="showSection('profile')">My Credentials</div>
+      <div class="sidebar">
+        <div class="nav-container" id="nav-container">
+          <div
+            class="nav-item active"
+            id="nav-jobs"
+            onclick="showSection('jobs')"
+          >
+            Assigned Jobs
+          </div>
+          <div
+            class="nav-item"
+            id="nav-profile"
+            onclick="showSection('profile')"
+          >
+            My Credentials
+          </div>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <section id="section-jobs">
+          <div class="section-header">
+            <h1>My Schedule</h1>
+          </div>
+          <div id="job-list">
+            <div class="loader">Loading assigned cases...</div>
+          </div>
+        </section>
+
+        <section id="section-profile" class="hidden">
+          <div class="section-header">
+            <h1>Professional Profile</h1>
+          </div>
+          <div class="card">
+            <div class="grid-2">
+              <div class="input-group">
+                <label>Designation</label
+                ><input type="text" id="p-role" disabled />
+              </div>
+              <div class="input-group">
+                <label>Full Name</label
+                ><input type="text" id="p-name" disabled />
+              </div>
             </div>
-        </div>
+            <div class="grid-2">
+              <div class="input-group">
+                <label>Email Address</label
+                ><input type="email" id="p-email" disabled />
+              </div>
+              <div class="input-group">
+                <label>Verified Contact</label
+                ><input type="tel" id="p-phone" disabled />
+              </div>
+            </div>
+            <div class="grid-2">
+              <div class="input-group">
+                <label>Date of Birth</label
+                ><input type="text" id="p-dob" disabled />
+              </div>
+              <div class="input-group">
+                <label>Gender</label
+                ><input type="text" id="p-gender" disabled />
+              </div>
+            </div>
+            <div class="input-group">
+              <label>Base Location (State)</label
+              ><input type="text" id="p-state" disabled />
+            </div>
 
-        <div class="main-content">
-
-            <section id="section-jobs">
-                <div class="section-header">
-                    <h1>My Schedule</h1>
-                </div>
-                <div id="job-list">
-                    <div class="loader">Loading assigned cases...</div>
-                </div>
-            </section>
-
-            <section id="section-profile" class="hidden">
-                <div class="section-header">
-                    <h1>Professional Profile</h1>
-                </div>
-                <div class="card">
-                    <div class="grid-2">
-                        <div class="input-group"><label>Designation</label><input type="text" id="p-role" disabled>
-                        </div>
-                        <div class="input-group"><label>Full Name</label><input type="text" id="p-name" disabled></div>
-                    </div>
-                    <div class="grid-2">
-                        <div class="input-group"><label>Email Address</label><input type="email" id="p-email" disabled>
-                        </div>
-                        <div class="input-group"><label>Verified Contact</label><input type="tel" id="p-phone" disabled>
-                        </div>
-                    </div>
-                    <div class="grid-2">
-                        <div class="input-group"><label>Date of Birth</label><input type="text" id="p-dob" disabled>
-                        </div>
-                        <div class="input-group"><label>Gender</label><input type="text" id="p-gender" disabled></div>
-                    </div>
-                    <div class="input-group">
-                        <label>Base Location (State)</label><input type="text" id="p-state" disabled>
-                    </div>
-
-                    <div
-                        style="margin-top: 20px; padding: 15px; background: #fff3cd; border: 1px solid #ffeeba; color: #856404; border-radius: 4px; font-size: 0.85rem; text-align: center;">
-                        <strong>Need to update your info?</strong><br>
-                        Please contact the Kitacare Admin to request changes to your verified credentials.
-                    </div>
-                </div>
-            </section>
-
-        </div>
+            <div
+              style="
+                margin-top: 20px;
+                padding: 15px;
+                background: #fff3cd;
+                border: 1px solid #ffeeba;
+                color: #856404;
+                border-radius: 4px;
+                font-size: 0.85rem;
+                text-align: center;
+              "
+            >
+              <strong>Need to update your info?</strong><br />
+              Please contact the Kitacare Admin to request changes to your
+              verified credentials.
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
 
     <script src="config.js"></script>
     <script>
-        function toggleNav() {
-            const nav = document.getElementById('nav-container');
-            const icon = document.getElementById('toggle-icon');
-            nav.classList.toggle('active');
-            icon.innerText = nav.classList.contains('active') ? '✕' : '☰';
+      function toggleNav() {
+        const nav = document.getElementById("nav-container");
+        const icon = document.getElementById("toggle-icon");
+        nav.classList.toggle("active");
+        icon.innerText = nav.classList.contains("active") ? "✕" : "☰";
+      }
+
+      window.onload = function () {
+        const rawData = localStorage.getItem("userData");
+        if (!rawData) {
+          window.location.href = "auth.html";
+          return;
         }
 
-        window.onload = function () {
-            const rawData = localStorage.getItem("userData");
-            if (!rawData) { window.location.href = "auth.html"; return; }
+        const user = JSON.parse(rawData);
 
-            const user = JSON.parse(rawData);
+        if (user.role === "Client") {
+          window.location.href = "dashboard.html";
+          return;
+        }
 
-            if (user.role === "Client") {
-                window.location.href = "dashboard.html";
-                return;
+        // Set Profile Data
+        document.getElementById("p-role").value = user.role || "N/A";
+        document.getElementById("p-name").value = user.name || "N/A";
+        document.getElementById("p-email").value = user.email || "N/A";
+        document.getElementById("p-phone").value = user.phone || "N/A";
+        document.getElementById("p-gender").value = user.gender || "N/A";
+        document.getElementById("p-state").value = user.state || "N/A"; // Added this line
+
+        // Convert DOB to clean Malaysia Date Format (DD/MM/YYYY)
+        // Clean Malaysia Date Format (DD/MM/YYYY)
+        if (user.dob) {
+          let rawDob = user.dob;
+
+          // Check if it's the long ISO format (contains T)
+          if (rawDob.includes("T")) {
+            const dateObj = new Date(rawDob);
+
+            // Force conversion to Malaysia Time String
+            rawDob = dateObj.toLocaleDateString("en-GB", {
+              timeZone: "Asia/Kuala_Lumpur",
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            });
+          }
+
+          // Final check: if it still has dashes (YYYY-MM-DD), flip it to DD/MM/YYYY
+          if (rawDob.includes("-") && !rawDob.includes("T")) {
+            const parts = rawDob.split("-");
+            if (parts[0].length === 4) {
+              // It's YYYY-MM-DD
+              rawDob = `${parts[2]}/${parts[1]}/${parts[0]}`;
             }
+          }
 
-            // Set Profile Data
-            document.getElementById('p-role').value = user.role || "N/A";
-            document.getElementById('p-name').value = user.name || "N/A";
-            document.getElementById('p-email').value = user.email || "N/A";
-            document.getElementById('p-phone').value = user.phone || "N/A";
-            document.getElementById('p-gender').value = user.gender || "N/A";
-            document.getElementById('p-state').value = user.state || "N/A"; // Added this line
+          document.getElementById("p-dob").value = rawDob;
+        }
 
-            // Convert DOB to clean Malaysia Date Format (DD/MM/YYYY)
-            // Clean Malaysia Date Format (DD/MM/YYYY)
-            if (user.dob) {
-                let rawDob = user.dob;
+        fetchProfessionalJobs(user.email);
+      };
 
-                // Check if it's the long ISO format (contains T)
-                if (rawDob.includes('T')) {
-                    const dateObj = new Date(rawDob);
+      async function fetchProfessionalJobs(email) {
+        const container = document.getElementById("job-list");
+        try {
+          const response = await fetch(
+            `${APPS_SCRIPT_URL}?email=${encodeURIComponent(email)}`,
+          );
+          const jobs = await response.json();
 
-                    // Force conversion to Malaysia Time String
-                    rawDob = dateObj.toLocaleDateString('en-GB', {
-                        timeZone: 'Asia/Kuala_Lumpur',
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric'
-                    });
-                }
-
-                // Final check: if it still has dashes (YYYY-MM-DD), flip it to DD/MM/YYYY
-                if (rawDob.includes('-') && !rawDob.includes('T')) {
-                    const parts = rawDob.split('-');
-                    if (parts[0].length === 4) { // It's YYYY-MM-DD
-                        rawDob = `${parts[2]}/${parts[1]}/${parts[0]}`;
-                    }
-                }
-
-                document.getElementById('p-dob').value = rawDob;
-            }
-
-            fetchProfessionalJobs(user.email);
-        };
-
-        async function fetchProfessionalJobs(email) {
-    const container = document.getElementById('job-list');
-    try {
-        const response = await fetch(`${APPS_SCRIPT_URL}?email=${encodeURIComponent(email)}`);
-        const jobs = await response.json();
-
-        if (!jobs || jobs.length === 0) {
+          if (!jobs || jobs.length === 0) {
             container.innerHTML = `<div class="card" style="text-align:center;color:#999;padding:40px;border:1px dashed #ccc;">No active assignments.</div>`;
             return;
-        }
+          }
 
-        container.innerHTML = "";
-        jobs.reverse().forEach((job, index) => {
+          container.innerHTML = "";
+          jobs.reverse().forEach((job, index) => {
             let cleanDob = job.dob || "N/A";
-            if (cleanDob.includes('T')) {
-                const d = new Date(cleanDob);
-                cleanDob = d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            if (cleanDob.includes("T")) {
+              const d = new Date(cleanDob);
+              cleanDob = d.toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              });
             }
 
             // Get the User's phone number from the backend mapping
-            const userPhone = (job.assignedDetails && job.assignedDetails.phone) ? job.assignedDetails.phone : "";
+            const userPhone =
+              job.assignedDetails && job.assignedDetails.phone
+                ? job.assignedDetails.phone
+                : "";
 
             container.innerHTML += `
                 <div class="job-card" style="border: 1px solid #eee; border-radius: 12px; margin-bottom: 16px; background: #fff; overflow: hidden; font-family: 'Segoe UI', sans-serif; box-shadow: 0 2px 5px rgba(0,0,0,0.04);">
@@ -481,34 +543,40 @@
                         </div>
                     </div>
                 </div>`;
-        });
-    } catch (e) {
-        container.innerHTML = `<p style="color:red; text-align:center; padding:20px;">Failed to load schedule.</p>`;
-    }
-}
-
-        window.toggleJobDetails = function (index) {
-            const detailBox = document.getElementById(`details-${index}`);
-            const chevron = document.getElementById(`chevron-${index}`);
-            if (!detailBox || !chevron) return;
-
-            const isHidden = detailBox.style.display === "none";
-            detailBox.style.display = isHidden ? "block" : "none";
-            chevron.innerText = isHidden ? "HIDE ▲" : "DETAILS ▼";
-            chevron.style.color = isHidden ? "var(--brand-blue)" : "#ccc";
-        };
-
-        function logout() { localStorage.clear(); window.location.href = "index.html"; }
-
-        function showSection(name) {
-            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById('section-' + name).classList.remove('hidden');
-            document.getElementById('nav-' + name).classList.add('active');
-
-            if (window.innerWidth < 992) toggleNav();
+          });
+        } catch (e) {
+          container.innerHTML = `<p style="color:red; text-align:center; padding:20px;">Failed to load schedule.</p>`;
         }
-    </script>
-</body>
+      }
 
+      window.toggleJobDetails = function (index) {
+        const detailBox = document.getElementById(`details-${index}`);
+        const chevron = document.getElementById(`chevron-${index}`);
+        if (!detailBox || !chevron) return;
+
+        const isHidden = detailBox.style.display === "none";
+        detailBox.style.display = isHidden ? "block" : "none";
+        chevron.innerText = isHidden ? "HIDE ▲" : "DETAILS ▼";
+        chevron.style.color = isHidden ? "var(--brand-blue)" : "#ccc";
+      };
+
+      function logout() {
+        localStorage.clear();
+        window.location.href = "index.html";
+      }
+
+      function showSection(name) {
+        document
+          .querySelectorAll("section")
+          .forEach((s) => s.classList.add("hidden"));
+        document
+          .querySelectorAll(".nav-item")
+          .forEach((n) => n.classList.remove("active"));
+        document.getElementById("section-" + name).classList.remove("hidden");
+        document.getElementById("nav-" + name).classList.add("active");
+
+        if (window.innerWidth < 992) toggleNav();
+      }
+    </script>
+  </body>
 </html>
