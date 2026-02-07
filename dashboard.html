@@ -450,7 +450,7 @@
                 </div>
                 <div class="card">
                     <h3 style="color: var(--brand-blue); margin-top: 0; font-size: 1.1rem">
-                        1. Care Recipient Details
+                        1. Care Recipient & Location
                     </h3>
                     <div class="grid-2">
                         <div class="input-group">
@@ -468,6 +468,34 @@
                             <label>Gender</label><select id="r-gender">
                                 <option>Male</option>
                                 <option>Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Service Address</label>
+                            <input type="text" id="r-address" placeholder="Unit, Street, Area" />
+                        </div>
+                        <div class="input-group">
+                            <label>State</label>
+                            <select id="r-state">
+                                <option value="" disabled selected>Select State</option>
+                                <option>Selangor</option>
+                                <option>Kuala Lumpur</option>
+                                <option>Johor</option>
+                                <option>Penang</option>
+                                <option>Perak</option>
+                                <option>Negeri Sembilan</option>
+                                <option>Melaka</option>
+                                <option>Pahang</option>
+                                <option>Terengganu</option>
+                                <option>Kelantan</option>
+                                <option>Kedah</option>
+                                <option>Perlis</option>
+                                <option>Sabah</option>
+                                <option>Sarawak</option>
+                                <option>Putrajaya</option>
+                                <option>Labuan</option>
                             </select>
                         </div>
                     </div>
@@ -610,6 +638,9 @@
                             <label>Gender</label><input type="text" id="p-gender" disabled />
                         </div>
                     </div>
+                    <div class="input-group">
+                        <label>State</label><input type="text" id="p-state" disabled />
+                    </div>
                 </div>
             </section>
         </div>
@@ -657,8 +688,13 @@
             document.getElementById("p-email").value = user.email || "N/A";
             document.getElementById("p-phone").value = user.phone || "N/A";
             document.getElementById("p-gender").value = user.gender || "N/A";
+            document.getElementById("p-state").value = user.state || "N/A"; // Display signup state
             
-            // Clean Date Formatting for Profile
+            // Set default booking state to user's home state
+            if (user.state) {
+                document.getElementById("r-state").value = user.state;
+            }
+
             if (user.dob) {
                 let rawDob = user.dob;
                 if (rawDob.includes('T')) {
@@ -676,73 +712,15 @@
             fetchHistory();
         };
 
-        function toggleMultiDate() {
-            const isMulti = document.getElementById("multi-toggle").checked;
-            const addMoreBtn = document.getElementById("add-more-container");
-            const dateLabel = document.getElementById("date-label");
-            const multiList = document.getElementById("multi-list");
-
-            if (isMulti) {
-                addMoreBtn.classList.remove("hidden");
-                dateLabel.innerText = "Select All Required Dates";
-            } else {
-                addMoreBtn.classList.add("hidden");
-                dateLabel.innerText = "Date & Time";
-                
-                // RESET: When unchecked, clear all extra rows and reset the first row
-                multiList.innerHTML = `
-                    <div class="grid-2" style="grid-template-columns: 2fr 1fr; margin-bottom: 10px">
-                        <div>
-                            <label id="date-label" style="font-size: 0.65rem">Date & Time</label>
-                            <input type="datetime-local" class="date-input-field" />
-                        </div>
-                        <div>
-                            <label style="font-size: 0.65rem">Hours</label>
-                            <input type="number" class="hour-input-field" placeholder="Hrs" min="1" value="1" />
-                        </div>
-                    </div>`;
-            }
-        }
-
-        function addSlot() {
-            const container = document.getElementById("multi-list");
-            const row = document.createElement("div");
-            row.className = "slot-row"; // Uses the new grid CSS
-            row.innerHTML = `
-                <div>
-                    <label style="font-size:0.65rem; color:#999">Date & Time</label>
-                    <input type="datetime-local" class="date-input-field">
-                </div>
-                <div>
-                    <label style="font-size:0.65rem; color:#999">Hours</label>
-                    <input type="number" class="hour-input-field" placeholder="Hrs" min="1" value="1">
-                </div>
-                <div>
-                    <button type="button" class="btn-delete" onclick="removeSlot(this)">✕</button>
-                </div>
-            `;
-            container.appendChild(row);
-        }
-
-        function removeSlot(btn) {
-            // Removes the entire grid row containing the button
-            btn.closest('.slot-row').remove();
-        }
-
         async function proceedToPayment() {
             const btn = document.getElementById("book-btn");
 
-            const dateInputs = Array.from(
-                document.querySelectorAll(".date-input-field"),
-            );
-            const hourInputs = Array.from(
-                document.querySelectorAll(".hour-input-field"),
-            );
+            const dateInputs = Array.from(document.querySelectorAll(".date-input-field"));
+            const hourInputs = Array.from(document.querySelectorAll(".hour-input-field"));
 
             const dates = dateInputs.map((i) => i.value).filter((v) => v);
             if (dates.length === 0) return alert("Select at least one date");
 
-            // Combine Date and Hours into a string like "2026-02-06T10:00 (4hrs)"
             const combinedDates = dates
                 .map((d, index) => {
                     const h = hourInputs[index] ? hourInputs[index].value : "1";
@@ -760,12 +738,14 @@
                 recipientDob: document.getElementById("r-dob").value,
                 weight: document.getElementById("r-weight").value,
                 gender: document.getElementById("r-gender").value,
+                address: document.getElementById("r-address").value, // Captured independently
+                state: document.getElementById("r-state").value,     // Captured independently
                 emergencyName: document.getElementById("r-e-name").value,
                 emergencyPhone: document.getElementById("r-e-phone").value,
                 purpose: document.getElementById("c-purpose").value,
                 requestedRole: document.getElementById("c-role").value,
                 meds: document.getElementById("c-meds").value,
-                dates: combinedDates, // Sends "Date (Xhrs) | Date (Yhrs)"
+                dates: combinedDates
             };
 
             try {
@@ -775,13 +755,12 @@
                 });
                 const result = await res.json();
                 if (result.status === "success")
-                    window.location.href =
-                        "https://buy.stripe.com/8x2eVe4Nv7kR9lp8gRgw00d";
+                    window.location.href = "https://buy.stripe.com/8x2eVe4Nv7kR9lp8gRgw00d";
                 // "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
             } catch (e) {
                 alert("Server error.");
                 btn.disabled = false;
-                btn.innerText = "BOOK & PROCEED";
+                btn.innerText = "PROCEED TO DEPOSIT PAYMENT";
             }
         }
 
@@ -803,7 +782,6 @@
                 container.innerHTML = data
                     .reverse()
                     .map((row, index) => {
-                        // --- NEW LOGIC FOR ASSIGNED PROFESSIONAL ---
                         let assignedHtml = "";
                         if (row.assignedDetails) {
                             assignedHtml = `
@@ -816,14 +794,13 @@
                             </div>
                         `;
                         }
-                        // --------------------------------------------
 
                         return `
                     <div class="booking-card">
                         <div class="booking-card-header" onclick="toggleBookingDropdown('${index}')">
                             <div class="header-info">
                                 <h4>${row.recipient}</h4>
-                                <span>${row.ref} • ${row.role}</span>
+                                <span>${row.ref} • ${row.role || "Care"}</span>
                             </div>
                             <div style="text-align:right">
                                 <span class="status-pill ${row.status.toLowerCase().includes("submitted") ? "status-paid" : "status-pending"}">
@@ -836,10 +813,10 @@
                         <div class="booking-card-body" id="body-${index}">
                             <div class="info-grid">
                                 <div class="info-item"><label>Visit Purpose</label><p>${row.purpose || "N/A"}</p></div>
-                                <div class="info-item"><label>Weight</label><p>${row.weight || "N/A"}</p></div>
+                                <div class="info-item"><label>Service Location</label><p>${row.address}<br><strong>${row.state}</strong></p></div>
                                 <div class="info-item"><label>Medications</label><p>${row.meds || "None"}</p></div>
                                 <div class="info-item"><label>Emergency</label><p>${row.eName} (${row.ePhone || ""})</p></div>
-                                <div class="info-item"><label>Scheduled Dates</label><p>${row.dates.replace(/\|/g, "<br>")}</p></div>
+                                <div class="info-item" style="grid-column: span 2;"><label>Scheduled Dates</label><p>${row.dates.replace(/\|/g, "<br>")}</p></div>
                             </div>
                             ${assignedHtml}
                         </div>

@@ -10,24 +10,20 @@
         :root { --brand-blue: #007bff; --brand-black: #000000; --bg-light: #f8f9fa; }
         body { background-color: var(--bg-light); margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         
-        /* MATCHED HEADER FROM INDEX */
         header { 
             padding: 0 5%; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            height: 100px; /* Matched to index */
+            height: 100px; 
             background: white;
             border-bottom: 1px solid #eee;
             box-sizing: border-box;
         }
-        header img { 
-            height: 45px; /* Matched large logo size */
-            display: block;
-        }
+        header img { height: 45px; display: block; }
 
         .auth-wrapper { 
-            min-height: calc(100vh - 100px); /* Adjusted for 100px header */
+            min-height: calc(100vh - 100px); 
             display: flex; 
             justify-content: center; 
             align-items: center; 
@@ -41,11 +37,10 @@
             background: white; 
             border: 2px solid var(--brand-black); 
             padding: 30px 20px; 
-            box-shadow: 12px 12px 0px var(--brand-black); /* Matched shadow depth */
+            box-shadow: 12px 12px 0px var(--brand-black); 
             box-sizing: border-box;
         }
 
-        /* --- INPUT NORMALIZATION FIX --- */
         input, select, textarea {
             width: 100%;
             height: 48px; 
@@ -124,9 +119,7 @@
 <body>
 
     <header>
-        <a href="index.html" class="logo-link">
-            <img src="kitacare.png" alt="kitacare">
-        </a>
+        <a href="index.html" class="logo-link"><img src="kitacare.png" alt="kitacare"></a>
         <nav><a href="index.html" class="btn-outline">HOME</a></nav>
     </header>
 
@@ -176,6 +169,28 @@
                     </div>
                 </div>
                 <div class="input-group">
+                    <label>Home State</label>
+                    <select id="s-state" required>
+                        <option value="" disabled selected>Select State</option>
+                        <option>Selangor</option>
+                        <option>Kuala Lumpur</option>
+                        <option>Johor</option>
+                        <option>Penang</option>
+                        <option>Perak</option>
+                        <option>Negeri Sembilan</option>
+                        <option>Melaka</option>
+                        <option>Pahang</option>
+                        <option>Terengganu</option>
+                        <option>Kelantan</option>
+                        <option>Kedah</option>
+                        <option>Perlis</option>
+                        <option>Sabah</option>
+                        <option>Sarawak</option>
+                        <option>Putrajaya</option>
+                        <option>Labuan</option>
+                    </select>
+                </div>
+                <div class="input-group">
                     <label>Email Address</label>
                     <input type="email" id="s-email" placeholder="name@email.com" required>
                 </div>
@@ -209,12 +224,15 @@
                 name: document.getElementById('s-name').value,
                 dob: document.getElementById('s-dob').value,
                 gender: document.getElementById('s-gender').value,
+                state: document.getElementById('s-state').value, // Captured state
                 email: document.getElementById('s-email').value.toLowerCase().trim(),
                 phone: document.getElementById('s-phone').value,
                 password: document.getElementById('s-pass').value
             };
 
-            if (!data.email || !data.password || !data.name) return alert("Please fill in all fields.");
+            if (!data.email || !data.password || !data.name || !data.state) {
+                return alert("Please fill in all fields including your home state.");
+            }
             
             btn.innerText = "SENDING VERIFICATION...";
             btn.classList.add('loading');
@@ -258,6 +276,7 @@
                 const result = await response.json();
 
                 if (result.status === "success") {
+                    // This result.user now includes the 'state' field from Backend 10.3
                     localStorage.setItem("userData", JSON.stringify(result.user));
                     localStorage.setItem("userEmail", result.user.email);
                     localStorage.setItem("userName", result.user.name);

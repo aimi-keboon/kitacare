@@ -306,6 +306,9 @@
                         </div>
                         <div class="input-group"><label>Gender</label><input type="text" id="p-gender" disabled></div>
                     </div>
+                    <div class="input-group">
+                        <label>Base Location (State)</label><input type="text" id="p-state" disabled>
+                    </div>
                     
                     <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border: 1px solid #ffeeba; color: #856404; border-radius: 4px; font-size: 0.85rem; text-align: center;">
                         <strong>Need to update your info?</strong><br> 
@@ -343,6 +346,7 @@
             document.getElementById('p-email').value = user.email || "N/A";
             document.getElementById('p-phone').value = user.phone || "N/A";
             document.getElementById('p-gender').value = user.gender || "N/A";
+            document.getElementById('p-state').value = user.state || "N/A"; // Added this line
 
             // Convert DOB to clean Malaysia Date Format (DD/MM/YYYY)
             // Clean Malaysia Date Format (DD/MM/YYYY)
@@ -384,15 +388,14 @@
 
                 if (!jobs || jobs.length === 0) {
                     container.innerHTML = `
-        <div class="card" style="text-align: center; color: #999; border: 1px dashed #ccc;">
-            <p style="font-size: 0.85rem;">No active assignments. Admin will assign new cases here based on your availability.</p>
-        </div>`;
+                        <div class="card" style="text-align: center; color: #999; border: 1px dashed #ccc;">
+                            <p style="font-size: 0.85rem;">No active assignments. Admin will assign new cases here based on your availability.</p>
+                        </div>`;
                     return;
                 }
 
                 container.innerHTML = "";
                 jobs.reverse().forEach(job => {
-                    // --- CLEANING THE RECIPIENT DOB ---
                     let cleanDob = job.dob || "N/A";
                     if (cleanDob.includes('T')) {
                         const d = new Date(cleanDob);
@@ -400,44 +403,48 @@
                             timeZone: 'Asia/Kuala_Lumpur',
                             day: '2-digit', month: '2-digit', year: 'numeric'
                         });
-                    } else if (cleanDob.includes('-')) {
-                        const p = cleanDob.split('-');
-                        if (p[0].length === 4) cleanDob = `${p[2]}/${p[1]}/${p[0]}`;
                     }
-                    // ----------------------------------
 
                     let contactHtml = "";
                     if (job.assignedDetails) {
                         contactHtml = `
-            <div class="contact-box">
-                <strong>${job.assignedDetails.label}:</strong> ${job.assignedDetails.name}<br>
-                <strong>Phone:</strong> <a href="tel:${job.assignedDetails.phone}">${job.assignedDetails.phone}</a>
-            </div>`;
+                            <div class="contact-box">
+                                <strong>${job.assignedDetails.label}:</strong> ${job.assignedDetails.name}<br>
+                                <strong>Phone:</strong> <a href="tel:${job.assignedDetails.phone}">${job.assignedDetails.phone}</a>
+                            </div>`;
                     }
 
                     container.innerHTML += `
-        <div class="job-card">
-            <div class="job-meta">REF: ${job.ref} • ${job.dates}</div>
-            <div class="job-title">${job.purpose}</div>
-            
-            <div style="background: #f9f9f9; padding: 15px; border-radius: 4px; margin: 10px 0; border: 1px solid #eee;">
-                <p style="font-size: 0.85rem; margin: 0 0 10px 0; border-bottom: 1px solid #ddd; padding-bottom: 5px; font-weight: bold; color: var(--brand-blue);">RECIPIENT DETAILS</p>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.85rem;">
-                    <div><strong>Name:</strong> ${job.recipient}</div>
-                    <div><strong>Gender:</strong> ${job.gender || "N/A"}</div>
-                    <div><strong>DOB:</strong> ${cleanDob}</div> 
-                    <div><strong>Weight:</strong> ${job.weight || "N/A"}</div>
-                </div>
-                <p style="font-size: 0.85rem; margin: 10px 0 0 0;"><strong>Medical/Meds:</strong> ${job.meds || "None reported"}</p>
-            </div>
+                        <div class="job-card">
+                            <div class="job-meta">REF: ${job.ref} • ${job.dates}</div>
+                            <div class="job-title">${job.purpose}</div>
+                            
+                            <div style="margin: 10px 0; padding: 12px; background: #fff5f5; border: 1px solid #feb2b2; border-radius: 4px;">
+                                <p style="font-size: 0.65rem; font-weight: 800; color: #c53030; text-transform: uppercase; margin: 0 0 5px 0;">Work Location</p>
+                                <p style="font-size: 0.9rem; margin: 0; font-weight: bold; color: #2d3748;">
+                                    ${job.address}<br>
+                                    <span style="color: #c53030;">${job.state}</span>
+                                </p>
+                            </div>
 
-            <div style="font-size: 0.85rem; color: #555; margin-bottom: 10px;">
-                <strong>Emergency Contact:</strong> ${job.eName} (<a href="tel:${job.ePhone}">${job.ePhone}</a>)
-            </div>
+                            <div style="background: #f9f9f9; padding: 15px; border-radius: 4px; margin: 10px 0; border: 1px solid #eee;">
+                                <p style="font-size: 0.85rem; margin: 0 0 10px 0; border-bottom: 1px solid #ddd; padding-bottom: 5px; font-weight: bold; color: var(--brand-blue);">RECIPIENT DETAILS</p>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.85rem;">
+                                    <div><strong>Name:</strong> ${job.recipient}</div>
+                                    <div><strong>Gender:</strong> ${job.gender || "N/A"}</div>
+                                    <div><strong>DOB:</strong> ${cleanDob}</div> 
+                                    <div><strong>Weight:</strong> ${job.weight || "N/A"}</div>
+                                </div>
+                                <p style="font-size: 0.85rem; margin: 10px 0 0 0;"><strong>Medical/Meds:</strong> ${job.meds || "None reported"}</p>
+                            </div>
 
-            <div class="status-tag" style="background: #e3f2fd; color: #1976d2;">${job.status}</div>
-            ${contactHtml}
-        </div>`;
+                            <div style="font-size: 0.85rem; color: #555; margin-bottom: 10px;">
+                                <strong>Emergency Contact:</strong> ${job.eName} (<a href="tel:${job.ePhone}">${job.ePhone}</a>)
+                            </div>
+
+                            <div class="status-tag" style="background: #e3f2fd; color: #1976d2;">${job.status}</div>
+                            ${contactHtml}
+                        </div>`;
                 });
 
             } catch (e) {
