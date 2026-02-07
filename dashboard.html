@@ -444,207 +444,185 @@
         </div>
 
         <div class="main-content">
-            <section id="section-book">
-                <div class="section-header">
-                    <h1>Book a Caretaker</h1>
+    <section id="section-book">
+        <div class="section-header">
+            <h1>Book a Caretaker</h1>
+        </div>
+        <div class="card">
+            <h3 style="color: var(--brand-blue); margin-top: 0; font-size: 1.1rem">
+                1. Care Recipient & Location
+            </h3>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Care Recipient Name</label><input type="text" id="r-name" />
                 </div>
-                <div class="card">
-                    <h3 style="color: var(--brand-blue); margin-top: 0; font-size: 1.1rem">
-                        1. Care Recipient & Location
-                    </h3>
-                    <div class="grid-2">
-                        <div class="input-group">
-                            <label>Care Recipient Name</label><input type="text" id="r-name" />
-                        </div>
-                        <div class="input-group">
-                            <label>Date of Birth</label><input type="date" id="r-dob" />
-                        </div>
-                    </div>
-                    <div class="grid-2">
-                        <div class="input-group">
-                            <label>Weight (kg)</label><input type="text" id="r-weight" placeholder="e.g. 70kg" />
-                        </div>
-                        <div class="input-group">
-                            <label>Gender</label><select id="r-gender">
-                                <option>Male</option>
-                                <option>Female</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="grid-2">
-                        <div class="input-group">
-                            <label>Service Address</label>
-                            <input type="text" id="r-address" placeholder="Unit, Street, Area" />
-                        </div>
-                        <div class="input-group">
-                            <label>State</label>
-                            <select id="r-state">
-                                <option value="" disabled selected>Select State</option>
-                                <option>Selangor</option>
-                                <option>Kuala Lumpur</option>
-                                <option>Johor</option>
-                                <option>Penang</option>
-                                <option>Perak</option>
-                                <option>Negeri Sembilan</option>
-                                <option>Melaka</option>
-                                <option>Pahang</option>
-                                <option>Terengganu</option>
-                                <option>Kelantan</option>
-                                <option>Kedah</option>
-                                <option>Perlis</option>
-                                <option>Sabah</option>
-                                <option>Sarawak</option>
-                                <option>Putrajaya</option>
-                                <option>Labuan</option>
-                            </select>
-                        </div>
-                    </div>
+                <div class="input-group">
+                    <label>Date of Birth</label><input type="date" id="r-dob" />
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Weight (kg)</label><input type="text" id="r-weight" placeholder="70kg" />
+                </div>
+                <div class="input-group">
+                    <label>Gender</label><select id="r-gender">
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Service Address</label>
+                    <input type="text" id="r-address" placeholder="Unit, Street, Area" />
+                </div>
+                <div class="input-group">
+                    <label>State</label>
+                    <select id="r-state">
+                        <option value="" disabled selected>Select State</option>
+                        <option>Selangor</option><option>Kuala Lumpur</option><option>Johor</option><option>Penang</option><option>Perak</option><option>Negeri Sembilan</option><option>Melaka</option><option>Pahang</option><option>Terengganu</option><option>Kelantan</option><option>Kedah</option><option>Perlis</option><option>Sabah</option><option>Sarawak</option><option>Putrajaya</option><option>Labuan</option>
+                    </select>
+                </div>
+            </div>
 
-                    <h3 style="
-                color: var(--brand-blue);
-                margin-top: 15px;
-                font-size: 1.1rem;
-              ">
-                        2. Care & Medical
-                    </h3>
-                    <div class="input-group">
-                        <label>Purpose of Visit</label><textarea id="c-purpose"></textarea>
-                    </div>
-                    <div class="grid-2">
-                        <div class="input-group">
-                            <label>Meds/History</label><input type="text" id="c-meds" />
-                        </div>
-                        <div class="input-group">
-                            <label>Required Professional</label>
-                            <select id="c-role">
-                                <option value="Caregiver">Caregiver — RM35/hour</option>
-                                <option value="Nurse">Nurse — RM50/hour</option>
-                                <option value="Doctor">Doctor — RM100/hour</option>
-                            </select>
-                        </div>
-                    </div>
+            <h3 style="color: var(--brand-blue); margin-top: 15px; font-size: 1.1rem;">2. Care & Medical</h3>
+            <div class="input-group">
+                <label>Purpose of Visit</label><textarea id="c-purpose"></textarea>
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Meds/History</label><input type="text" id="c-meds" />
+                </div>
+                <div class="input-group">
+                    <label>Required Professional</label>
+                    <select id="c-role">
+                        <option value="Caregiver">Caregiver — RM35/hr</option>
+                        <option value="Nurse">Nurse — RM50/hr</option>
+                        <option value="Doctor">Doctor — RM100/hr</option>
+                    </select>
+                </div>
+            </div>
 
-                    <h3 style="
-                color: var(--brand-blue);
-                margin-top: 15px;
-                font-size: 1.1rem;
-              ">
-                        3. Emergency & Dates
-                    </h3>
-                    <div class="grid-2">
-                        <div class="input-group">
-                            <label>Emergency Name</label><input type="text" id="r-e-name" />
+            <h3 style="color: var(--brand-blue); margin-top: 15px; font-size: 1.1rem;">3. Emergency & Dates</h3>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Emergency Name</label><input type="text" id="r-e-name" />
+                </div>
+                <div class="input-group">
+                    <label>Emergency Phone</label><input type="tel" id="r-e-phone" />
+                </div>
+            </div>
+
+            <div style="margin-bottom: 20px; background: #fefefe; border: 1px solid #ddd; padding: 12px; border-radius: 6px;">
+                <label style="display: flex; align-items: center; cursor: pointer; font-weight: bold; font-size: 0.85rem;">
+                    <input type="checkbox" id="multi-toggle" onclick="toggleMultiDate()" style="width: 18px; height: 18px; margin-right: 10px; accent-color: var(--brand-blue);" />
+                    I need to book multiple dates
+                </label>
+            </div>
+
+            <div id="date-selection-area">
+                <div id="multi-list">
+                    <div style="display: grid; grid-template-columns: 1fr 60px; gap: 8px; margin-bottom: 12px;">
+                        <div>
+                            <label style="font-size: 0.6rem; font-weight:bold; margin-bottom:4px; display:block;">DATE & TIME</label>
+                            <input type="datetime-local" class="date-input-field" />
                         </div>
-                        <div class="input-group">
-                            <label>Emergency Phone</label><input type="tel" id="r-e-phone" />
+                        <div>
+                            <label style="font-size: 0.6rem; font-weight:bold; margin-bottom:4px; display:block;">HOURS</label>
+                            <input type="number" class="hour-input-field" min="1" value="1" />
                         </div>
                     </div>
-
-                    <div style="
-                margin-bottom: 20px;
-                background: #f0f7ff;
-                padding: 15px;
-                border-radius: 6px;
-                border: 1px dashed var(--brand-blue);
-              ">
-                        <label style="
-                  display: flex;
-                  align-items: center;
-                  cursor: pointer;
-                  font-weight: bold;
-                  font-size: 0.9rem;
-                  color: var(--brand-blue);
-                ">
-                            <input type="checkbox" id="multi-toggle" onclick="toggleMultiDate()"
-                                style="width: 18px; height: 18px; margin-right: 10px" />
-                            I need to book multiple dates
-                        </label>
-                    </div>
-
-                    <div id="date-selection-area" class="input-group">
-                        <div id="multi-list">
-                            <div class="grid-2" style="grid-template-columns: 2fr 1fr; margin-bottom: 10px">
-                                <div>
-                                    <label id="date-label" style="font-size: 0.65rem">Date & Time</label>
-                                    <input type="datetime-local" class="date-input-field" />
-                                </div>
-                                <div>
-                                    <label style="font-size: 0.65rem">Hours</label>
-                                    <input type="number" class="hour-input-field" placeholder="Hrs" min="1" value="1" />
-                                </div>
-                            </div>
-                        </div>
-                        <div id="add-more-container" class="hidden">
-                            <button onclick="addSlot()" type="button" style="
-                    margin-top: 10px;
-                    cursor: pointer;
-                    background: white;
-                    border: 1px solid var(--brand-black);
-                    padding: 8px;
-                    width: 100%;
-                    font-weight: bold;
-                    font-size: 0.8rem;
-                    border-radius: 4px;
-                  ">
-                                + ADD ANOTHER SLOT
-                            </button>
-                        </div>
-                    </div>
-
-                    <button class="btn-primary" id="book-btn" onclick="proceedToPayment()">
-                        PROCEED TO PAYMENT
+                </div>
+                
+                <div id="add-more-container" style="display: none; margin-bottom: 20px;">
+                    <button onclick="addSlot()" type="button" style="cursor: pointer; background: #eee; border: 1px solid #ccc; padding: 10px; width: 100%; font-weight: bold; font-size: 0.75rem; border-radius: 4px; text-transform: uppercase;">
+                        + ADD ANOTHER SLOT
                     </button>
                 </div>
-            </section>
+            </div>
 
-            <section id="section-details" class="hidden">
-                <div class="section-header">
-                    <h1>My Bookings</h1>
-                </div>
-
-                <div id="history-list-container">
-                    <div style="text-align: center; padding: 40px; color: #999">
-                        Loading your history...
-                    </div>
-                </div>
-            </section>
-
-            <section id="section-profile" class="hidden">
-                <div class="section-header">
-                    <h1>User Profile</h1>
-                </div>
-                <div class="card">
-                    <div class="grid-2">
-                        <div class="input-group">
-                            <label>Full Name</label><input type="text" id="p-name" disabled />
-                        </div>
-                        <div class="input-group">
-                            <label>Role</label><input type="text" id="p-role" disabled />
-                        </div>
-                    </div>
-                    <div class="grid-2">
-                        <div class="input-group">
-                            <label>Email</label><input type="text" id="p-email" disabled />
-                        </div>
-                        <div class="input-group">
-                            <label>Phone</label><input type="text" id="p-phone" disabled />
-                        </div>
-                    </div>
-                    <div class="grid-2">
-                        <div class="input-group">
-                            <label>DOB</label><input type="text" id="p-dob" disabled />
-                        </div>
-                        <div class="input-group">
-                            <label>Gender</label><input type="text" id="p-gender" disabled />
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <label>State</label><input type="text" id="p-state" disabled />
-                    </div>
-                </div>
-            </section>
+            <button class="btn-primary" id="book-btn" onclick="proceedToPayment()">
+                PROCEED TO PAYMENT
+            </button>
         </div>
-    </div>
+    </section>
+
+    <section id="section-details" class="hidden">
+        <div class="section-header">
+            <h1>My Bookings</h1>
+        </div>
+        <div id="history-list-container">
+            <div style="text-align: center; padding: 40px; color: #999">
+                Loading your history...
+            </div>
+        </div>
+    </section>
+
+    <section id="section-profile" class="hidden">
+        <div class="section-header">
+            <h1>User Profile</h1>
+        </div>
+        <div class="card">
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Full Name</label><input type="text" id="p-name" disabled />
+                </div>
+                <div class="input-group">
+                    <label>Role</label><input type="text" id="p-role" disabled />
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Email</label><input type="text" id="p-email" disabled />
+                </div>
+                <div class="input-group">
+                    <label>Phone</label><input type="text" id="p-phone" disabled />
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>DOB</label><input type="text" id="p-dob" disabled />
+                </div>
+                <div class="input-group">
+                    <label>Gender</label><input type="text" id="p-gender" disabled />
+                </div>
+            </div>
+            <div class="input-group">
+                <label>State</label><input type="text" id="p-state" disabled />
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function toggleMultiDate() {
+            const isChecked = document.getElementById("multi-toggle").checked;
+            document.getElementById("add-more-container").style.display = isChecked ? "block" : "none";
+            if (!isChecked) {
+                const list = document.getElementById("multi-list");
+                while (list.children.length > 1) { list.removeChild(list.lastChild); }
+            }
+        }
+
+        function addSlot() {
+            const container = document.getElementById("multi-list");
+            const newRow = document.createElement("div");
+            
+            // Optimized Grid: Date (Auto-filling) | Hours (50px) | Delete (40px)
+            newRow.style.display = "grid";
+            newRow.style.gridTemplateColumns = "1fr 50px 40px";
+            newRow.style.gap = "6px";
+            newRow.style.marginBottom = "8px";
+            newRow.style.alignItems = "center";
+            
+            newRow.innerHTML = `
+                <input type="datetime-local" class="date-input-field" style="font-size: 13px;" />
+                <input type="number" class="hour-input-field" min="1" value="1" style="padding: 10px 4px; text-align: center;" />
+                <button type="button" onclick="this.parentElement.remove()" style="background:#000; color:#fff; border:none; height:48px; border-radius:4px; cursor:pointer; font-size:1rem; font-weight:bold; display: flex; align-items: center; justify-content: center;">✕</button>
+            `;
+            container.appendChild(newRow);
+        }
+    </script>
+</div>
 
     <script src="config.js"></script>
     <script>

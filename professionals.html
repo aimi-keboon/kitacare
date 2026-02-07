@@ -381,76 +381,114 @@
         };
 
         async function fetchProfessionalJobs(email) {
-            const container = document.getElementById('job-list');
-            try {
-                const response = await fetch(`${APPS_SCRIPT_URL}?email=${encodeURIComponent(email)}`);
-                const jobs = await response.json();
+    const container = document.getElementById('job-list');
+    try {
+        const response = await fetch(`${APPS_SCRIPT_URL}?email=${encodeURIComponent(email)}`);
+        const jobs = await response.json();
 
-                if (!jobs || jobs.length === 0) {
-                    container.innerHTML = `
-                        <div class="card" style="text-align: center; color: #999; border: 1px dashed #ccc;">
-                            <p style="font-size: 0.85rem;">No active assignments. Admin will assign new cases here based on your availability.</p>
-                        </div>`;
-                    return;
-                }
-
-                container.innerHTML = "";
-                jobs.reverse().forEach(job => {
-                    let cleanDob = job.dob || "N/A";
-                    if (cleanDob.includes('T')) {
-                        const d = new Date(cleanDob);
-                        cleanDob = d.toLocaleDateString('en-GB', {
-                            timeZone: 'Asia/Kuala_Lumpur',
-                            day: '2-digit', month: '2-digit', year: 'numeric'
-                        });
-                    }
-
-                    let contactHtml = "";
-                    if (job.assignedDetails) {
-                        contactHtml = `
-                            <div class="contact-box">
-                                <strong>${job.assignedDetails.label}:</strong> ${job.assignedDetails.name}<br>
-                                <strong>Phone:</strong> <a href="tel:${job.assignedDetails.phone}">${job.assignedDetails.phone}</a>
-                            </div>`;
-                    }
-
-                    container.innerHTML += `
-                        <div class="job-card">
-                            <div class="job-meta">REF: ${job.ref} • ${job.dates}</div>
-                            <div class="job-title">${job.purpose}</div>
-                            
-                            <div style="margin: 10px 0; padding: 12px; background: #fff5f5; border: 1px solid #feb2b2; border-radius: 4px;">
-                                <p style="font-size: 0.65rem; font-weight: 800; color: #c53030; text-transform: uppercase; margin: 0 0 5px 0;">Work Location</p>
-                                <p style="font-size: 0.9rem; margin: 0; font-weight: bold; color: #2d3748;">
-                                    ${job.address}<br>
-                                    <span style="color: #c53030;">${job.state}</span>
-                                </p>
-                            </div>
-
-                            <div style="background: #f9f9f9; padding: 15px; border-radius: 4px; margin: 10px 0; border: 1px solid #eee;">
-                                <p style="font-size: 0.85rem; margin: 0 0 10px 0; border-bottom: 1px solid #ddd; padding-bottom: 5px; font-weight: bold; color: var(--brand-blue);">RECIPIENT DETAILS</p>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.85rem;">
-                                    <div><strong>Name:</strong> ${job.recipient}</div>
-                                    <div><strong>Gender:</strong> ${job.gender || "N/A"}</div>
-                                    <div><strong>DOB:</strong> ${cleanDob}</div> 
-                                    <div><strong>Weight:</strong> ${job.weight || "N/A"}</div>
-                                </div>
-                                <p style="font-size: 0.85rem; margin: 10px 0 0 0;"><strong>Medical/Meds:</strong> ${job.meds || "None reported"}</p>
-                            </div>
-
-                            <div style="font-size: 0.85rem; color: #555; margin-bottom: 10px;">
-                                <strong>Emergency Contact:</strong> ${job.eName} (<a href="tel:${job.ePhone}">${job.ePhone}</a>)
-                            </div>
-
-                            <div class="status-tag" style="background: #e3f2fd; color: #1976d2;">${job.status}</div>
-                            ${contactHtml}
-                        </div>`;
-                });
-
-            } catch (e) {
-                container.innerHTML = `<p style="color:red; text-align:center;">Failed to load schedule.</p>`;
-            }
+        if (!jobs || jobs.length === 0) {
+            container.innerHTML = `<div class="card" style="text-align:center;color:#999;padding:40px;border:1px dashed #ccc;">No active assignments.</div>`;
+            return;
         }
+
+        container.innerHTML = "";
+        jobs.reverse().forEach((job, index) => {
+            let cleanDob = job.dob || "N/A";
+            if (cleanDob.includes('T')) {
+                const d = new Date(cleanDob);
+                cleanDob = d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            }
+
+            container.innerHTML += `
+                <div class="job-card" style="border: 1px solid #eee; border-radius: 12px; margin-bottom: 16px; background: #fff; overflow: hidden; font-family: 'Segoe UI', sans-serif; box-shadow: 0 2px 5px rgba(0,0,0,0.04);">
+                    
+                    <div style="padding: 18px 16px; cursor: pointer;" onclick="window.toggleJobDetails(${index})">
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+                            <div style="display: flex; flex-direction: column; gap: 4px;">
+                                <span style="font-size: 0.65rem; font-weight: 800; color: #bbb; text-transform: uppercase; letter-spacing: 1px;">REF: ${job.ref}</span>
+                                <div style="font-size: 1.25rem; font-weight: 800; color: var(--brand-black);">${job.recipient}</div>
+                            </div>
+
+                            <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px; text-align: right;">
+                                <span style="font-size: 0.65rem; font-weight: 900; color: var(--brand-black); text-transform: uppercase; letter-spacing: 0.5px;">${job.status}</span>
+                                <div style="display: flex; align-items: center; gap: 4px;">
+                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--brand-blue)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    <span style="font-size: 0.75rem; font-weight: 800; color: var(--brand-blue); text-transform: uppercase;">${job.state}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px;">
+                            <div style="font-size: 0.95rem; color: #555; font-weight: 500; line-height: 1.3; padding-right: 20px;">
+                                ${job.purpose}
+                            </div>
+                            <span id="chevron-${index}" style="font-size: 0.65rem; font-weight: 700; color: #ccc; flex-shrink: 0;">DETAILS ▼</span>
+                        </div>
+                    </div>
+
+                    <div id="details-${index}" style="display: none; padding: 0 16px 16px 16px; background: #fff;">
+                        <div style="border-top: 1px solid #eee; padding-top: 16px;">
+                            <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 8px;">
+                                
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="width: 100px; flex-shrink: 0; font-size: 0.75rem; color: var(--brand-blue); font-weight: 800;">Dates</div>
+                                    <div style="width: 1px; height: 14px; background: #eee; margin: 4px 12px 0 0;"></div>
+                                    <div style="font-size: 0.85rem; font-weight: 400; color: #333; line-height: 1.4;">${job.dates}</div>
+                                </div>
+
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="width: 100px; flex-shrink: 0; font-size: 0.75rem; color: var(--brand-blue); font-weight: 800;">Address</div>
+                                    <div style="width: 1px; height: 14px; background: #eee; margin: 4px 12px 0 0;"></div>
+                                    <div style="font-size: 0.85rem; font-weight: 400; color: #333; line-height: 1.4;">${job.address}</div>
+                                </div>
+
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="width: 100px; flex-shrink: 0; font-size: 0.75rem; color: var(--brand-blue); font-weight: 800;">Emergency</div>
+                                    <div style="width: 1px; height: 14px; background: #eee; margin: 4px 12px 0 0;"></div>
+                                    <div style="font-size: 0.85rem; font-weight: 400; color: #333;">
+                                        ${job.eName} <span style="color: #888; margin-left: 4px;">(${job.ePhone})</span>
+                                    </div>
+                                </div>
+
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="width: 100px; flex-shrink: 0; font-size: 0.75rem; color: var(--brand-blue); font-weight: 800;">Patient</div>
+                                    <div style="width: 1px; height: 14px; background: #eee; margin: 4px 12px 0 0;"></div>
+                                    <div style="font-size: 0.85rem; font-weight: 400; color: #333;">${job.gender}, ${job.weight}kg</div>
+                                </div>
+
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="width: 100px; flex-shrink: 0; font-size: 0.75rem; color: var(--brand-blue); font-weight: 800;">Date of Birth</div>
+                                    <div style="width: 1px; height: 14px; background: #eee; margin: 4px 12px 0 0;"></div>
+                                    <div style="font-size: 0.85rem; font-weight: 400; color: #333;">${cleanDob}</div>
+                                </div>
+
+                                <div style="display: flex; align-items: flex-start;">
+                                    <div style="width: 100px; flex-shrink: 0; font-size: 0.75rem; color: var(--brand-blue); font-weight: 800;">Medical</div>
+                                    <div style="width: 1px; height: 14px; background: #eee; margin: 4px 12px 0 0;"></div>
+                                    <div style="font-size: 0.85rem; font-weight: 400; color: #333; line-height: 1.4;">${job.meds || "None reported"}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        });
+    } catch (e) {
+        container.innerHTML = `<p style="color:red; text-align:center; padding:20px;">Failed to load schedule.</p>`;
+    }
+}
+
+window.toggleJobDetails = function(index) {
+    const detailBox = document.getElementById(`details-${index}`);
+    const chevron = document.getElementById(`chevron-${index}`);
+    if (!detailBox || !chevron) return;
+
+    const isHidden = detailBox.style.display === "none";
+    detailBox.style.display = isHidden ? "block" : "none";
+    chevron.innerText = isHidden ? "HIDE ▲" : "DETAILS ▼";
+    chevron.style.color = isHidden ? "var(--brand-blue)" : "#ccc";
+};
 
         function logout() { localStorage.clear(); window.location.href = "index.html"; }
 
