@@ -3,158 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kitacare | Professional Home Care</title>
+    <title>kitacare | Professional Care</title>
     <style>
+        /* Modern Mobile-First Fixes - PIXEL PERFECT SYNC WITH AUTH */
         :root { --brand-blue: #007bff; --brand-black: #000000; --bg-light: #f8f9fa; }
-        body { margin: 0; padding: 0; overflow: hidden; font-family: 'Segoe UI', sans-serif; background: white; }
+        
+        html, body { 
+            height: 100%; 
+            margin: 0; 
+            padding: 0; 
+            overflow: hidden; 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            background: white;
+        }
 
-        /* Compact Header */
+        body { 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        /* EXACT HEADER CODE FROM YOUR AUTH PAGE */
         header { 
-            padding: 10px 5%; 
+            padding: 0 5%; 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
+            height: 100px; 
+            background: white;
             border-bottom: 1px solid #eee;
-            height: 60px;
             box-sizing: border-box;
+            flex-shrink: 0;
         }
-        header img { height: 28px; }
 
-        /* Main Hero - Adjusted for 1-Page fit */
+        header img { 
+            height: 45px; 
+            display: block;
+        }
+
+        .btn-outline {
+            text-decoration: none;
+            color: var(--brand-black);
+            border: 2px solid var(--brand-black);
+            padding: 10px 28px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* HERO SECTION */
         .hero { 
-            height: calc(100vh - 160px); /* Leaves space for header/footer */
-            display: flex; 
-            flex-direction: column-reverse; 
-            justify-content: center;
+            flex-grow: 1;
+            display: grid; 
+            grid-template-columns: 1.1fr 0.9fr; 
+            gap: 60px; 
             align-items: center; 
-            padding: 0 5%;
-            text-align: center;
-            gap: 20px;
+            padding: 0 8%;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .hero-text h1 { 
-            font-size: 2.2rem; 
+            font-size: 4rem; 
             line-height: 1.1; 
-            margin: 0 0 10px 0; 
+            margin: 0 0 20px 0; 
             font-weight: 800; 
+            color: var(--brand-black);
         }
         
         .hero-text p {
-            font-size: 1rem;
+            font-size: 1.2rem;
             color: #555;
-            margin: 0 auto 20px auto;
-            max-width: 500px;
+            margin-bottom: 35px;
+            max-width: 480px;
+            line-height: 1.5;
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
         }
 
         .hero-visual img { 
-            width: 85%; 
-            max-width: 380px;
+            width: 100%; 
+            max-width: 420px;
             border: 2px solid var(--brand-black); 
-            padding: 6px; 
+            padding: 8px; 
             background: white; 
-            box-shadow: 8px 8px 0px var(--brand-black); 
+            box-shadow: 12px 12px 0px var(--brand-black); /* EXACT SHADOW FROM AUTH CARD */
         }
 
-        @media (min-width: 992px) {
-            .hero { display: grid; grid-template-columns: 1.2fr 1fr; text-align: left; padding: 0 8%; gap: 60px; }
-            .hero-text h1 { font-size: 3.8rem; }
-            .hero-text p { margin-left: 0; font-size: 1.1rem; }
-            .hero-visual img { width: 100%; max-width: 450px; }
-        }
-
-        /* Collaboration & Footer combined into one bottom bar */
-        .bottom-bar {
-            height: 100px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: #fdfdfd;
-            border-top: 1px solid #eee;
-            padding: 10px 0;
-        }
-
-        .collab-text {
-            font-size: 0.65rem;
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            color: #999;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
-
-        .collab-links {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .partner-link {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--brand-black);
-            text-decoration: none;
-            opacity: 0.6;
-            transition: 0.3s;
-        }
-        .partner-link:hover { opacity: 1; color: var(--brand-blue); }
-
+        /* PRIMARY BUTTON - MATCHING AUTH STYLE */
         .btn-primary { 
             display: inline-block;
-            padding: 16px 35px; 
+            padding: 15px 45px; 
             font-weight: 800; 
             letter-spacing: 1px; 
             text-decoration: none;
             background: var(--brand-black);
             color: white;
-            transition: 0.2s;
-        }
-        .btn-primary:hover { background: var(--brand-blue); }
-
-        .btn-outline {
-            text-decoration: none;
-            color: var(--brand-black);
-            border: 1.5px solid var(--brand-black);
-            padding: 6px 15px;
-            font-weight: 700;
-            font-size: 0.85rem;
+            border: none;
+            transition: background 0.3s;
         }
 
-        .footer-contact {
-            font-size: 0.75rem;
-            margin-top: 8px;
-            color: #777;
+        .btn-primary:hover { 
+            background: var(--brand-blue); 
         }
-        .footer-contact a { color: var(--brand-blue); text-decoration: none; font-weight: bold; }
+
+        /* MICRO FOOTER */
+        footer {
+            height: 40px;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #bbb;
+            flex-shrink: 0;
+        }
+        footer a { color: #999; text-decoration: none; }
+
+        /* MOBILE FIXES - EXACT COPIED FROM YOUR AUTH MEDIA QUERY */
+        @media (max-width: 480px) {
+            header { height: 80px; }
+            header img { height: 35px; }
+            .hero { 
+                grid-template-columns: 1fr; 
+                text-align: center; 
+                padding: 20px 5%;
+                gap: 20px;
+                overflow-y: auto;
+            }
+            .hero-text h1 { font-size: 2.5rem; }
+            .hero-visual img { max-width: 300px; box-shadow: 8px 8px 0px var(--brand-black); }
+        }
     </style>
 </head>
 <body>
+
     <header>
-        <a href="index.html"><img src="kitacare.png" alt="kitacare"></a>
+        <a href="index.html" class="logo-link">
+            <img src="kitacare.png" alt="kitacare">
+        </a>
         <nav><a href="auth.html" class="btn-outline">LOGIN</a></nav>
     </header>
     
     <main class="hero">
         <div class="hero-text">
             <h1>Expert Care.<br><span style="color:var(--brand-blue)">At Your Home.</span></h1>
-            <p>Verified caregivers, nurses, and doctors at your doorstep. Professional matching for your loved ones.</p>
-            <a href="auth.html" class="btn-primary">GET STARTED NOW</a>
+            <p>Verified caregivers, nurses, and doctors. Simple requests, professional matching, expert results.</p>
+            <a href="auth.html" class="btn-primary">GET STARTED</a>
         </div>
         <div class="hero-visual">
-            <img src="main.jpg" alt="Home Care">
+            <img src="main.jpg" alt="Kitacare professional">
         </div>
     </main>
 
-    <div class="bottom-bar">
-        <div class="collab-text">In Collaboration With</div>
-        <div class="collab-links">
-            <a href="https://keboon.net" target="_blank" class="partner-link">KEBOON</a>
-            <span style="color:#ddd; font-weight:100;">|</span>
-            <a href="https://nusapulse.my" target="_blank" class="partner-link">NUSAPULSE</a>
-        </div>
-        <div class="footer-contact">
-            Support: <a href="mailto:admin@mykitacare.com">admin@mykitacare.com</a>
-        </div>
-    </div>
+    <footer>
+        &copy; 2026 kitacare | Support: <a href="mailto:admin@mykitacare.com">admin@mykitacare.com</a>
+    </footer>
+
 </body>
 </html>

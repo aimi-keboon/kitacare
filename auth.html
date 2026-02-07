@@ -7,14 +7,32 @@
     <link rel="stylesheet" href="style.css">
     <style>
         /* Modern Mobile-First Fixes */
-        body { background-color: var(--bg-light); margin: 0; }
+        :root { --brand-blue: #007bff; --brand-black: #000000; --bg-light: #f8f9fa; }
+        body { background-color: var(--bg-light); margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         
+        /* MATCHED HEADER FROM INDEX */
+        header { 
+            padding: 0 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            height: 100px; /* Matched to index */
+            background: white;
+            border-bottom: 1px solid #eee;
+            box-sizing: border-box;
+        }
+        header img { 
+            height: 45px; /* Matched large logo size */
+            display: block;
+        }
+
         .auth-wrapper { 
-            min-height: calc(100vh - 80px); 
+            min-height: calc(100vh - 100px); /* Adjusted for 100px header */
             display: flex; 
             justify-content: center; 
             align-items: center; 
             padding: 20px; 
+            box-sizing: border-box;
         }
 
         .auth-card { 
@@ -23,36 +41,29 @@
             background: white; 
             border: 2px solid var(--brand-black); 
             padding: 30px 20px; 
-            box-shadow: 8px 8px 0px var(--brand-black); 
+            box-shadow: 12px 12px 0px var(--brand-black); /* Matched shadow depth */
             box-sizing: border-box;
         }
 
-        /* --- INPUT NORMALIZATION FIX (Updated) --- */
+        /* --- INPUT NORMALIZATION FIX --- */
         input, select, textarea {
             width: 100%;
-            height: 48px; /* Force consistent height */
+            height: 48px; 
             padding: 10px 12px; 
-            font-size: 16px !important; /* Prevents iOS zoom */
+            font-size: 16px !important; 
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
             display: block;
             background-color: #fff;
             font-family: inherit;
-            /* Removes default browser styling/arrows */
             appearance: none;
             -webkit-appearance: none;
             -moz-appearance: none;
         }
 
-        /* Special fix for date inputs */
-        input[type="date"] {
-            min-height: 48px;
-            line-height: 1.2;
-            background-color: #fff;
-        }
+        input[type="date"] { min-height: 48px; line-height: 1.2; background-color: #fff; }
 
-        /* Custom Dropdown Arrow (Fixes the double arrow issue) */
         select {
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
             background-repeat: no-repeat;
@@ -62,23 +73,7 @@
             cursor: pointer;
         }
 
-        /* Removes arrow for IE */
-        select::-ms-expand {
-            display: none;
-        }
-
-        @media (max-width: 480px) {
-            .auth-card {
-                padding: 20px 15px;
-                box-shadow: 5px 5px 0px var(--brand-black);
-            }
-            .grid-mobile-stack {
-                grid-template-columns: 1fr !important;
-                gap: 0 !important;
-            }
-        }
-
-        .tabs { display: flex; margin-bottom: 25px; border-bottom: 2px solid var(--border-gray); }
+        .tabs { display: flex; margin-bottom: 25px; border-bottom: 2px solid #eee; }
         .tab { 
             flex: 1; 
             padding: 15px 10px; 
@@ -87,7 +82,7 @@
             font-weight: 800; 
             text-transform: uppercase; 
             font-size: 0.8rem; 
-            color: var(--text-muted); 
+            color: #999; 
             transition: 0.2s;
         }
         .tab.active { color: var(--brand-blue); border-bottom: 4px solid var(--brand-blue); }
@@ -105,19 +100,34 @@
             background: var(--brand-black);
             color: white;
             border: none;
-            border-radius: 4px;
             transition: background 0.3s;
         }
-        .btn-primary:hover { background: #333; }
+        .btn-primary:hover { background: var(--brand-blue); }
         .loading { opacity: 0.7; pointer-events: none; cursor: wait; }
+
+        .btn-outline {
+            text-decoration: none;
+            color: var(--brand-black);
+            border: 2px solid var(--brand-black);
+            padding: 10px 28px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 480px) {
+            header { height: 80px; }
+            header img { height: 35px; }
+            .auth-card { box-shadow: 8px 8px 0px var(--brand-black); }
+        }
     </style>
 </head>
 <body>
 
-    <header style="padding: 15px 20px; border-bottom: 1px solid #eee; background: white;">
+    <header>
         <a href="index.html" class="logo-link">
-            <img src="kitacare.png" alt="kitacare" style="height: 35px;">
+            <img src="kitacare.png" alt="kitacare">
         </a>
+        <nav><a href="index.html" class="btn-outline">HOME</a></nav>
     </header>
 
     <div class="auth-wrapper">
@@ -152,7 +162,7 @@
                     <label>Full Name</label>
                     <input type="text" id="s-name" placeholder="Full Name" required>
                 </div>
-                <div class="grid-mobile-stack" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div class="input-group">
                         <label>Date of Birth</label>
                         <input type="date" id="s-dob" required>
@@ -189,7 +199,6 @@
             document.getElementById('signup-form').classList.toggle('hidden', view !== 'signup');
             document.getElementById('l-tab').classList.toggle('active', view === 'login');
             document.getElementById('s-tab').classList.toggle('active', view === 'signup');
-            window.scrollTo(0, 0); 
         }
 
         async function handleSignup() {
@@ -207,7 +216,6 @@
 
             if (!data.email || !data.password || !data.name) return alert("Please fill in all fields.");
             
-            // UI Feedback for email sending
             btn.innerText = "SENDING VERIFICATION...";
             btn.classList.add('loading');
 
@@ -219,14 +227,13 @@
                 const result = await response.json();
                 
                 if (result.status === "success") {
-                    // ALERT UPDATE: Tells user to check email
-                    alert("Verification link sent!\n\nPlease check your email inbox (and spam folder) to activate your account. You can log in once verified.");
+                    alert("Verification link sent!\n\nPlease check your email inbox to activate your account.");
                     switchTab('login');
                 } else {
                     alert(result.message);
                 }
             } catch (e) { 
-                alert("Signup error. Please check your connection."); 
+                alert("Signup error."); 
             } finally {
                 btn.innerText = "CREATE ACCOUNT";
                 btn.classList.remove('loading');
@@ -254,14 +261,8 @@
                     localStorage.setItem("userData", JSON.stringify(result.user));
                     localStorage.setItem("userEmail", result.user.email);
                     localStorage.setItem("userName", result.user.name);
-
-                    if (result.user.role === "Client") {
-                        window.location.href = "dashboard.html";
-                    } else {
-                        window.location.href = "professionals.html";
-                    }
+                    window.location.href = result.user.role === "Client" ? "dashboard.html" : "professionals.html";
                 } else {
-                    // Logic for unverified users is handled by result.message from Apps Script
                     alert(result.message);
                 }
             } catch (e) { 
