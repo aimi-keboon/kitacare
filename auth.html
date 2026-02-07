@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,45 +8,60 @@
     <link rel="stylesheet" href="style.css">
     <style>
         /* Modern Mobile-First Fixes */
-        :root { --brand-blue: #007bff; --brand-black: #000000; --bg-light: #f8f9fa; }
-        body { background-color: var(--bg-light); margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-        
-        header { 
-            padding: 0 5%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            height: 100px; 
+        :root {
+            --brand-blue: #007bff;
+            --brand-black: #000000;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            margin: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        header {
+            padding: 0 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100px;
             background: white;
             border-bottom: 1px solid #eee;
             box-sizing: border-box;
         }
-        header img { height: 45px; display: block; }
 
-        .auth-wrapper { 
-            min-height: calc(100vh - 100px); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 20px; 
+        header img {
+            height: 45px;
+            display: block;
+        }
+
+        .auth-wrapper {
+            min-height: calc(100vh - 100px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
             box-sizing: border-box;
         }
 
-        .auth-card { 
-            width: 100%; 
-            max-width: 450px; 
-            background: white; 
-            border: 2px solid var(--brand-black); 
-            padding: 30px 20px; 
-            box-shadow: 12px 12px 0px var(--brand-black); 
-            box-sizing: border-box;
-        }
-
-        input, select, textarea {
+        .auth-card {
             width: 100%;
-            height: 48px; 
-            padding: 10px 12px; 
-            font-size: 16px !important; 
+            max-width: 450px;
+            background: white;
+            border: 2px solid var(--brand-black);
+            padding: 30px 20px;
+            box-shadow: 12px 12px 0px var(--brand-black);
+            box-sizing: border-box;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            height: 48px;
+            padding: 10px 12px;
+            font-size: 16px !important;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
@@ -57,7 +73,11 @@
             -moz-appearance: none;
         }
 
-        input[type="date"] { min-height: 48px; line-height: 1.2; background-color: #fff; }
+        input[type="date"] {
+            min-height: 48px;
+            line-height: 1.2;
+            background-color: #fff;
+        }
 
         select {
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
@@ -68,37 +88,66 @@
             cursor: pointer;
         }
 
-        .tabs { display: flex; margin-bottom: 25px; border-bottom: 2px solid #eee; }
-        .tab { 
-            flex: 1; 
-            padding: 15px 10px; 
-            text-align: center; 
-            cursor: pointer; 
-            font-weight: 800; 
-            text-transform: uppercase; 
-            font-size: 0.8rem; 
-            color: #999; 
+        .tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #999;
             transition: 0.2s;
         }
-        .tab.active { color: var(--brand-blue); border-bottom: 4px solid var(--brand-blue); }
-        
-        .input-group { margin-bottom: 18px; }
-        .input-group label { display: block; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; margin-bottom: 6px; }
-        
-        .hidden { display: none; }
-        .btn-primary { 
-            width: 100%; 
-            padding: 15px; 
-            font-weight: 800; 
-            letter-spacing: 1px; 
+
+        .tab.active {
+            color: var(--brand-blue);
+            border-bottom: 4px solid var(--brand-blue);
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 15px;
+            font-weight: 800;
+            letter-spacing: 1px;
             cursor: pointer;
             background: var(--brand-black);
             color: white;
             border: none;
             transition: background 0.3s;
         }
-        .btn-primary:hover { background: var(--brand-blue); }
-        .loading { opacity: 0.7; pointer-events: none; cursor: wait; }
+
+        .btn-primary:hover {
+            background: var(--brand-blue);
+        }
+
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+            cursor: wait;
+        }
 
         .btn-outline {
             text-decoration: none;
@@ -110,12 +159,21 @@
         }
 
         @media (max-width: 480px) {
-            header { height: 80px; }
-            header img { height: 35px; }
-            .auth-card { box-shadow: 8px 8px 0px var(--brand-black); }
+            header {
+                height: 80px;
+            }
+
+            header img {
+                height: 35px;
+            }
+
+            .auth-card {
+                box-shadow: 8px 8px 0px var(--brand-black);
+            }
         }
     </style>
 </head>
+
 <body>
 
     <header>
@@ -202,7 +260,8 @@
                     <label>Create Password</label>
                     <input type="password" id="s-pass" placeholder="min 8 chars" required>
                 </div>
-                <button type="button" class="btn-primary" id="signup-btn" onclick="handleSignup()">CREATE ACCOUNT</button>
+                <button type="button" class="btn-primary" id="signup-btn" onclick="handleSignup()">CREATE
+                    ACCOUNT</button>
             </form>
         </div>
     </div>
@@ -233,25 +292,25 @@
             if (!data.email || !data.password || !data.name || !data.state) {
                 return alert("Please fill in all fields including your home state.");
             }
-            
+
             btn.innerText = "SENDING VERIFICATION...";
             btn.classList.add('loading');
 
             try {
-                const response = await fetch(APPS_SCRIPT_URL, { 
-                    method: "POST", 
-                    body: JSON.stringify(data) 
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: "POST",
+                    body: JSON.stringify(data)
                 });
                 const result = await response.json();
-                
+
                 if (result.status === "success") {
                     alert("Verification link sent!\n\nPlease check your email inbox to activate your account.");
                     switchTab('login');
                 } else {
                     alert(result.message);
                 }
-            } catch (e) { 
-                alert("Signup error."); 
+            } catch (e) {
+                alert("Signup error.");
             } finally {
                 btn.innerText = "CREATE ACCOUNT";
                 btn.classList.remove('loading');
@@ -264,7 +323,7 @@
             const password = document.getElementById('l-pass').value;
 
             if (!email || !password) return alert("Please enter credentials.");
-            
+
             btn.innerText = "VERIFYING...";
             btn.classList.add('loading');
 
@@ -284,8 +343,8 @@
                 } else {
                     alert(result.message);
                 }
-            } catch (e) { 
-                alert("Login connection error."); 
+            } catch (e) {
+                alert("Login connection error.");
             } finally {
                 btn.innerText = "LOGIN";
                 btn.classList.remove('loading');
@@ -293,4 +352,5 @@
         }
     </script>
 </body>
+
 </html>

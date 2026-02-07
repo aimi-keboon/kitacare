@@ -291,10 +291,10 @@
 
         /* Helper to align rows with delete buttons */
         .slot-row {
-            display: grid; 
-            grid-template-columns: 2fr 1fr 50px; 
-            gap: 10px; 
-            margin-bottom: 15px; 
+            display: grid;
+            grid-template-columns: 2fr 1fr 50px;
+            gap: 10px;
+            margin-bottom: 15px;
             align-items: end;
         }
 
@@ -444,393 +444,469 @@
         </div>
 
         <div class="main-content">
-    <section id="section-book">
-        <div class="section-header">
-            <h1>Book a Caretaker</h1>
-        </div>
-        <div class="card">
-            <h3 style="color: var(--brand-blue); margin-top: 0; font-size: 1.1rem">
-                1. Care Recipient & Location
-            </h3>
-            <div class="grid-2">
-                <div class="input-group">
-                    <label>Care Recipient Name</label><input type="text" id="r-name" />
+            <section id="section-book">
+                <div class="section-header">
+                    <h1>Book a Caretaker</h1>
                 </div>
-                <div class="input-group">
-                    <label>Date of Birth</label><input type="date" id="r-dob" />
-                </div>
-            </div>
-            <div class="grid-2">
-                <div class="input-group">
-                    <label>Weight (kg)</label><input type="text" id="r-weight" placeholder="70kg" />
-                </div>
-                <div class="input-group">
-                    <label>Gender</label><select id="r-gender">
-                        <option>Male</option>
-                        <option>Female</option>
-                    </select>
-                </div>
-            </div>
-            <div class="grid-2">
-                <div class="input-group">
-                    <label>Service Address</label>
-                    <input type="text" id="r-address" placeholder="Unit, Street, Area" />
-                </div>
-                <div class="input-group">
-                    <label>State</label>
-                    <select id="r-state">
-                        <option value="" disabled selected>Select State</option>
-                        <option>Selangor</option><option>Kuala Lumpur</option><option>Johor</option><option>Penang</option><option>Perak</option><option>Negeri Sembilan</option><option>Melaka</option><option>Pahang</option><option>Terengganu</option><option>Kelantan</option><option>Kedah</option><option>Perlis</option><option>Sabah</option><option>Sarawak</option><option>Putrajaya</option><option>Labuan</option>
-                    </select>
-                </div>
-            </div>
-
-            <h3 style="color: var(--brand-blue); margin-top: 15px; font-size: 1.1rem;">2. Care & Medical</h3>
-            <div class="input-group">
-                <label>Purpose of Visit</label><textarea id="c-purpose"></textarea>
-            </div>
-            <div class="grid-2">
-                <div class="input-group">
-                    <label>Meds/History</label><input type="text" id="c-meds" />
-                </div>
-                <div class="input-group">
-                    <label>Required Professional</label>
-                    <select id="c-role">
-                        <option value="Caregiver">Caregiver — RM35/hr</option>
-                        <option value="Nurse">Nurse — RM50/hr</option>
-                        <option value="Doctor">Doctor — RM100/hr</option>
-                    </select>
-                </div>
-            </div>
-
-            <h3 style="color: var(--brand-blue); margin-top: 15px; font-size: 1.1rem;">3. Emergency & Dates</h3>
-            <div class="grid-2">
-                <div class="input-group">
-                    <label>Emergency Name</label><input type="text" id="r-e-name" />
-                </div>
-                <div class="input-group">
-                    <label>Emergency Phone</label><input type="tel" id="r-e-phone" />
-                </div>
-            </div>
-
-            <div style="margin-bottom: 20px; background: #fefefe; border: 1px solid #ddd; padding: 12px; border-radius: 6px;">
-                <label style="display: flex; align-items: center; cursor: pointer; font-weight: bold; font-size: 0.85rem;">
-                    <input type="checkbox" id="multi-toggle" onclick="toggleMultiDate()" style="width: 18px; height: 18px; margin-right: 10px; accent-color: var(--brand-blue);" />
-                    I need to book multiple dates
-                </label>
-            </div>
-
-            <div id="date-selection-area">
-                <div id="multi-list">
-                    <div style="display: grid; grid-template-columns: 1fr 60px; gap: 8px; margin-bottom: 12px;">
-                        <div>
-                            <label style="font-size: 0.6rem; font-weight:bold; margin-bottom:4px; display:block;">DATE & TIME</label>
-                            <input type="datetime-local" class="date-input-field" />
+                <div class="card">
+                    <h3 style="color: var(--brand-blue); margin-top: 0; font-size: 1.1rem">
+                        1. Care Recipient & Location
+                    </h3>
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Care Recipient Name</label><input type="text" id="r-name" />
                         </div>
-                        <div>
-                            <label style="font-size: 0.6rem; font-weight:bold; margin-bottom:4px; display:block;">HOURS</label>
-                            <input type="number" class="hour-input-field" min="1" value="1" />
+                        <div class="input-group">
+                            <label>Date of Birth</label><input type="date" id="r-dob" />
                         </div>
                     </div>
-                </div>
-                
-                <div id="add-more-container" style="display: none; margin-bottom: 20px;">
-                    <button onclick="addSlot()" type="button" style="cursor: pointer; background: #eee; border: 1px solid #ccc; padding: 10px; width: 100%; font-weight: bold; font-size: 0.75rem; border-radius: 4px; text-transform: uppercase;">
-                        + ADD ANOTHER SLOT
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Weight (kg)</label><input type="text" id="r-weight" placeholder="70kg" />
+                        </div>
+                        <div class="input-group">
+                            <label>Gender</label><select id="r-gender">
+                                <option>Male</option>
+                                <option>Female</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Service Address</label>
+                            <input type="text" id="r-address" placeholder="Unit, Street, Area" />
+                        </div>
+                        <div class="input-group">
+                            <label>State</label>
+                            <select id="r-state">
+                                <option value="" disabled selected>Select State</option>
+                                <option>Selangor</option>
+                                <option>Kuala Lumpur</option>
+                                <option>Johor</option>
+                                <option>Penang</option>
+                                <option>Perak</option>
+                                <option>Negeri Sembilan</option>
+                                <option>Melaka</option>
+                                <option>Pahang</option>
+                                <option>Terengganu</option>
+                                <option>Kelantan</option>
+                                <option>Kedah</option>
+                                <option>Perlis</option>
+                                <option>Sabah</option>
+                                <option>Sarawak</option>
+                                <option>Putrajaya</option>
+                                <option>Labuan</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--brand-blue); margin-top: 15px; font-size: 1.1rem;">2. Care & Medical</h3>
+                    <div class="input-group">
+                        <label>Purpose of Visit</label><textarea id="c-purpose"></textarea>
+                    </div>
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Meds/History</label><input type="text" id="c-meds" />
+                        </div>
+                        <div class="input-group">
+                            <label>Required Professional</label>
+                            <select id="c-role">
+                                <option value="Caregiver">Caregiver — RM35/hr</option>
+                                <option value="Nurse">Nurse — RM50/hr</option>
+                                <option value="Doctor">Doctor — RM100/hr</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--brand-blue); margin-top: 15px; font-size: 1.1rem;">3. Emergency & Dates</h3>
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Emergency Name</label><input type="text" id="r-e-name" />
+                        </div>
+                        <div class="input-group">
+                            <label>Emergency Phone</label><input type="tel" id="r-e-phone" />
+                        </div>
+                    </div>
+
+                    <div
+                        style="margin-bottom: 20px; background: #fefefe; border: 1px solid #ddd; padding: 12px; border-radius: 6px;">
+                        <label
+                            style="display: flex; align-items: center; cursor: pointer; font-weight: bold; font-size: 0.85rem;">
+                            <input type="checkbox" id="multi-toggle" onclick="toggleMultiDate()"
+                                style="width: 18px; height: 18px; margin-right: 10px; accent-color: var(--brand-blue);" />
+                            I need to book multiple dates
+                        </label>
+                    </div>
+
+                    <div id="date-selection-area">
+                        <div id="multi-list">
+                            <div style="display: grid; grid-template-columns: 1fr 60px; gap: 8px; margin-bottom: 12px;">
+                                <div>
+                                    <label
+                                        style="font-size: 0.6rem; font-weight:bold; margin-bottom:4px; display:block;">DATE
+                                        & TIME</label>
+                                    <input type="datetime-local" class="date-input-field" />
+                                </div>
+                                <div>
+                                    <label
+                                        style="font-size: 0.6rem; font-weight:bold; margin-bottom:4px; display:block;">HOURS</label>
+                                    <input type="number" class="hour-input-field" min="1" value="1" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="add-more-container" style="display: none; margin-bottom: 20px;">
+                            <button onclick="addSlot()" type="button"
+                                style="cursor: pointer; background: #eee; border: 1px solid #ccc; padding: 10px; width: 100%; font-weight: bold; font-size: 0.75rem; border-radius: 4px; text-transform: uppercase;">
+                                + ADD ANOTHER SLOT
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" id="book-btn" onclick="proceedToPayment()">
+                        PROCEED TO PAYMENT
                     </button>
                 </div>
-            </div>
+            </section>
 
-            <button class="btn-primary" id="book-btn" onclick="proceedToPayment()">
-                PROCEED TO PAYMENT
-            </button>
-        </div>
-    </section>
+            <section id="section-details" class="hidden">
+                <div class="section-header">
+                    <h1>My Bookings</h1>
+                </div>
+                <div id="history-list-container">
+                    <div style="text-align: center; padding: 40px; color: #999">
+                        Loading your history...
+                    </div>
+                </div>
+            </section>
 
-    <section id="section-details" class="hidden">
-        <div class="section-header">
-            <h1>My Bookings</h1>
-        </div>
-        <div id="history-list-container">
-            <div style="text-align: center; padding: 40px; color: #999">
-                Loading your history...
-            </div>
-        </div>
-    </section>
+            <section id="section-profile" class="hidden">
+                <div class="section-header">
+                    <h1>User Profile</h1>
+                </div>
+                <div class="card">
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Full Name</label><input type="text" id="p-name" disabled />
+                        </div>
+                        <div class="input-group">
+                            <label>Role</label><input type="text" id="p-role" disabled />
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Email</label><input type="text" id="p-email" disabled />
+                        </div>
+                        <div class="input-group">
+                            <label>Phone</label><input type="text" id="p-phone" disabled />
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>DOB</label><input type="text" id="p-dob" disabled />
+                        </div>
+                        <div class="input-group">
+                            <label>Gender</label><input type="text" id="p-gender" disabled />
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>State</label><input type="text" id="p-state" disabled />
+                    </div>
+                </div>
+            </section>
 
-    <section id="section-profile" class="hidden">
-        <div class="section-header">
-            <h1>User Profile</h1>
-        </div>
-        <div class="card">
-            <div class="grid-2">
-                <div class="input-group">
-                    <label>Full Name</label><input type="text" id="p-name" disabled />
-                </div>
-                <div class="input-group">
-                    <label>Role</label><input type="text" id="p-role" disabled />
-                </div>
-            </div>
-            <div class="grid-2">
-                <div class="input-group">
-                    <label>Email</label><input type="text" id="p-email" disabled />
-                </div>
-                <div class="input-group">
-                    <label>Phone</label><input type="text" id="p-phone" disabled />
-                </div>
-            </div>
-            <div class="grid-2">
-                <div class="input-group">
-                    <label>DOB</label><input type="text" id="p-dob" disabled />
-                </div>
-                <div class="input-group">
-                    <label>Gender</label><input type="text" id="p-gender" disabled />
-                </div>
-            </div>
-            <div class="input-group">
-                <label>State</label><input type="text" id="p-state" disabled />
-            </div>
-        </div>
-    </section>
+            <script>
+                function toggleMultiDate() {
+                    const isChecked = document.getElementById("multi-toggle").checked;
+                    document.getElementById("add-more-container").style.display = isChecked ? "block" : "none";
+                    if (!isChecked) {
+                        const list = document.getElementById("multi-list");
+                        while (list.children.length > 1) { list.removeChild(list.lastChild); }
+                    }
+                }
 
-    <script>
-        function toggleMultiDate() {
-            const isChecked = document.getElementById("multi-toggle").checked;
-            document.getElementById("add-more-container").style.display = isChecked ? "block" : "none";
-            if (!isChecked) {
-                const list = document.getElementById("multi-list");
-                while (list.children.length > 1) { list.removeChild(list.lastChild); }
-            }
-        }
+                function addSlot() {
+                    const container = document.getElementById("multi-list");
+                    const newRow = document.createElement("div");
 
-        function addSlot() {
-            const container = document.getElementById("multi-list");
-            const newRow = document.createElement("div");
-            
-            // Optimized Grid: Date (Auto-filling) | Hours (50px) | Delete (40px)
-            newRow.style.display = "grid";
-            newRow.style.gridTemplateColumns = "1fr 50px 40px";
-            newRow.style.gap = "6px";
-            newRow.style.marginBottom = "8px";
-            newRow.style.alignItems = "center";
-            
-            newRow.innerHTML = `
+                    // Optimized Grid: Date (Auto-filling) | Hours (50px) | Delete (40px)
+                    newRow.style.display = "grid";
+                    newRow.style.gridTemplateColumns = "1fr 50px 40px";
+                    newRow.style.gap = "6px";
+                    newRow.style.marginBottom = "8px";
+                    newRow.style.alignItems = "center";
+
+                    newRow.innerHTML = `
                 <input type="datetime-local" class="date-input-field" style="font-size: 13px;" />
                 <input type="number" class="hour-input-field" min="1" value="1" style="padding: 10px 4px; text-align: center;" />
                 <button type="button" onclick="this.parentElement.remove()" style="background:#000; color:#fff; border:none; height:48px; border-radius:4px; cursor:pointer; font-size:1rem; font-weight:bold; display: flex; align-items: center; justify-content: center;">✕</button>
             `;
-            container.appendChild(newRow);
-        }
-    </script>
-</div>
-
-    <script src="config.js"></script>
-    <script>
-        // Toggle Sidebar on Mobile
-        function toggleSidebar() {
-            const container = document.getElementById("nav-container");
-            container.classList.toggle("active");
-            document.getElementById("menu-icon").innerText =
-                container.classList.contains("active") ? "✕" : "☰";
-        }
-
-        // Logic for showSection with mobile awareness
-        function showSection(name) {
-            document
-                .querySelectorAll("section")
-                .forEach((s) => s.classList.add("hidden"));
-            document
-                .querySelectorAll(".nav-item")
-                .forEach((n) => n.classList.remove("active"));
-            document.getElementById("section-" + name).classList.remove("hidden");
-            document.getElementById("nav-" + name).classList.add("active");
-
-            // On mobile, close sidebar after clicking
-            if (window.innerWidth < 992) {
-                document.getElementById("nav-container").classList.remove("active");
-                document.getElementById("menu-icon").innerText = "☰";
-            }
-
-            if (name === "details") fetchHistory();
-        }
-
-        // Rest of your JS logic...
-        window.onload = function () {
-            const user = JSON.parse(localStorage.getItem("userData"));
-            if (!user) {
-                window.location.href = "index.html";
-                return;
-            }
-            document.getElementById("p-name").value = user.name || "N/A";
-            document.getElementById("p-role").value = user.role || "N/A";
-            document.getElementById("p-email").value = user.email || "N/A";
-            document.getElementById("p-phone").value = user.phone || "N/A";
-            document.getElementById("p-gender").value = user.gender || "N/A";
-            document.getElementById("p-state").value = user.state || "N/A"; // Display signup state
-            
-            // Set default booking state to user's home state
-            if (user.state) {
-                document.getElementById("r-state").value = user.state;
-            }
-
-            if (user.dob) {
-                let rawDob = user.dob;
-                if (rawDob.includes('T')) {
-                    const dateObj = new Date(rawDob);
-                    rawDob = dateObj.toLocaleDateString('en-GB', {
-                        timeZone: 'Asia/Kuala_Lumpur',
-                        day: '2-digit', month: '2-digit', year: 'numeric'
-                    });
+                    container.appendChild(newRow);
                 }
-                document.getElementById("p-dob").value = rawDob;
-            } else {
-                document.getElementById("p-dob").value = "N/A";
+            </script>
+        </div>
+
+        <script src="config.js"></script>
+        <script>
+            // Toggle Sidebar on Mobile
+            function toggleSidebar() {
+                const container = document.getElementById("nav-container");
+                container.classList.toggle("active");
+                document.getElementById("menu-icon").innerText =
+                    container.classList.contains("active") ? "✕" : "☰";
             }
-            
-            fetchHistory();
-        };
 
-        async function proceedToPayment() {
-            const btn = document.getElementById("book-btn");
+            // Logic for showSection with mobile awareness
+            function showSection(name) {
+                document
+                    .querySelectorAll("section")
+                    .forEach((s) => s.classList.add("hidden"));
+                document
+                    .querySelectorAll(".nav-item")
+                    .forEach((n) => n.classList.remove("active"));
+                document.getElementById("section-" + name).classList.remove("hidden");
+                document.getElementById("nav-" + name).classList.add("active");
 
-            const dateInputs = Array.from(document.querySelectorAll(".date-input-field"));
-            const hourInputs = Array.from(document.querySelectorAll(".hour-input-field"));
+                // On mobile, close sidebar after clicking
+                if (window.innerWidth < 992) {
+                    document.getElementById("nav-container").classList.remove("active");
+                    document.getElementById("menu-icon").innerText = "☰";
+                }
 
-            const dates = dateInputs.map((i) => i.value).filter((v) => v);
-            if (dates.length === 0) return alert("Select at least one date");
-
-            const combinedDates = dates
-                .map((d, index) => {
-                    const h = hourInputs[index] ? hourInputs[index].value : "1";
-                    return `${d} (${h}hrs)`;
-                })
-                .join(" | ");
-
-            btn.innerText = "SAVING...";
-            btn.disabled = true;
-
-            const data = {
-                action: "book",
-                userEmail: localStorage.getItem("userEmail"),
-                recipientName: document.getElementById("r-name").value,
-                recipientDob: document.getElementById("r-dob").value,
-                weight: document.getElementById("r-weight").value,
-                gender: document.getElementById("r-gender").value,
-                address: document.getElementById("r-address").value, // Captured independently
-                state: document.getElementById("r-state").value,     // Captured independently
-                emergencyName: document.getElementById("r-e-name").value,
-                emergencyPhone: document.getElementById("r-e-phone").value,
-                purpose: document.getElementById("c-purpose").value,
-                requestedRole: document.getElementById("c-role").value,
-                meds: document.getElementById("c-meds").value,
-                dates: combinedDates
-            };
-
-            try {
-                const res = await fetch(APPS_SCRIPT_URL, {
-                    method: "POST",
-                    body: JSON.stringify(data),
-                });
-                const result = await res.json();
-                if (result.status === "success")
-                    window.location.href = "https://buy.stripe.com/8x2eVe4Nv7kR9lp8gRgw00d";
-                // "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
-            } catch (e) {
-                alert("Server error.");
-                btn.disabled = false;
-                btn.innerText = "PROCEED TO DEPOSIT PAYMENT";
+                if (name === "details") fetchHistory();
             }
-        }
 
-        async function fetchHistory() {
-            const email = localStorage.getItem("userEmail");
-            const container = document.getElementById("history-list-container");
-
-            try {
-                const res = await fetch(
-                    APPS_SCRIPT_URL + "?email=" + encodeURIComponent(email),
-                );
-                const data = await res.json();
-
-                if (!data || data.length === 0) {
-                    container.innerHTML = `<div class="card" style="text-align:center">No records found.</div>`;
+            // Rest of your JS logic...
+            window.onload = function () {
+                const user = JSON.parse(localStorage.getItem("userData"));
+                if (!user) {
+                    window.location.href = "index.html";
                     return;
                 }
+                document.getElementById("p-name").value = user.name || "N/A";
+                document.getElementById("p-role").value = user.role || "N/A";
+                document.getElementById("p-email").value = user.email || "N/A";
+                document.getElementById("p-phone").value = user.phone || "N/A";
+                document.getElementById("p-gender").value = user.gender || "N/A";
+                document.getElementById("p-state").value = user.state || "N/A"; // Display signup state
 
-                container.innerHTML = data
-                    .reverse()
-                    .map((row, index) => {
+                // Set default booking state to user's home state
+                if (user.state) {
+                    document.getElementById("r-state").value = user.state;
+                }
+
+                if (user.dob) {
+                    let rawDob = user.dob;
+                    if (rawDob.includes('T')) {
+                        const dateObj = new Date(rawDob);
+                        rawDob = dateObj.toLocaleDateString('en-GB', {
+                            timeZone: 'Asia/Kuala_Lumpur',
+                            day: '2-digit', month: '2-digit', year: 'numeric'
+                        });
+                    }
+                    document.getElementById("p-dob").value = rawDob;
+                } else {
+                    document.getElementById("p-dob").value = "N/A";
+                }
+
+                fetchHistory();
+            };
+
+            async function proceedToPayment() {
+                const btn = document.getElementById("book-btn");
+
+                const dateInputs = Array.from(document.querySelectorAll(".date-input-field"));
+                const hourInputs = Array.from(document.querySelectorAll(".hour-input-field"));
+
+                const dates = dateInputs.map((i) => i.value).filter((v) => v);
+                if (dates.length === 0) return alert("Select at least one date");
+
+                const combinedDates = dates
+                    .map((d, index) => {
+                        const h = hourInputs[index] ? hourInputs[index].value : "1";
+                        return `${d} (${h}hrs)`;
+                    })
+                    .join(" | ");
+
+                btn.innerText = "SAVING...";
+                btn.disabled = true;
+
+                const data = {
+                    action: "book",
+                    userEmail: localStorage.getItem("userEmail"),
+                    recipientName: document.getElementById("r-name").value,
+                    recipientDob: document.getElementById("r-dob").value,
+                    weight: document.getElementById("r-weight").value,
+                    gender: document.getElementById("r-gender").value,
+                    address: document.getElementById("r-address").value, // Captured independently
+                    state: document.getElementById("r-state").value,     // Captured independently
+                    emergencyName: document.getElementById("r-e-name").value,
+                    emergencyPhone: document.getElementById("r-e-phone").value,
+                    purpose: document.getElementById("c-purpose").value,
+                    requestedRole: document.getElementById("c-role").value,
+                    meds: document.getElementById("c-meds").value,
+                    dates: combinedDates
+                };
+
+                try {
+                    const res = await fetch(APPS_SCRIPT_URL, {
+                        method: "POST",
+                        body: JSON.stringify(data),
+                    });
+                    const result = await res.json();
+                    if (result.status === "success")
+                        window.location.href = "https://buy.stripe.com/8x2eVe4Nv7kR9lp8gRgw00d";
+                    // "https://buy.stripe.com/test_6oUcN6a7P9sZ415fJjgw000";
+                } catch (e) {
+                    alert("Server error.");
+                    btn.disabled = false;
+                    btn.innerText = "PROCEED TO DEPOSIT PAYMENT";
+                }
+            }
+
+            async function fetchHistory() {
+                const email = localStorage.getItem("userEmail");
+                const container = document.getElementById("history-list-container");
+
+                try {
+                    const res = await fetch(APPS_SCRIPT_URL + "?email=" + encodeURIComponent(email));
+                    const data = await res.json();
+
+                    if (!data || data.length === 0) {
+                        container.innerHTML = `<div class="card" style="text-align:center;color:#999;padding:40px;border:1px dashed #ccc;">No records found.</div>`;
+                        return;
+                    }
+
+                    container.innerHTML = data.reverse().map((row, index) => {
                         let assignedHtml = "";
-                        if (row.assignedDetails) {
+                        if (row.assignedDetails && row.assignedDetails.name) {
                             assignedHtml = `
-                            <div class="assigned-pro-box">
-                                <strong>${row.assignedDetails.label}</strong>
-                                <p>${row.assignedDetails.name}</p>
-                                <a href="tel:${row.assignedDetails.phone}" style="text-decoration:none; font-size:0.85rem; color:var(--brand-blue);">
-                                    📞 Call: ${row.assignedDetails.phone}
-                                </a>
-                            </div>
-                        `;
+                    <div style="margin-top: 15px; padding: 12px; background: #f0f7ff; border-radius: 8px; border: 1px solid #e0eefe;">
+                        <div style="font-size: 0.65rem; font-weight: 800; color: var(--brand-blue); text-transform: uppercase; margin-bottom: 4px;">
+                            ${row.assignedDetails.label || "Assigned Professional"}
+                        </div>
+                        <div style="font-size: 0.9rem; font-weight: 800; color: #333; margin-bottom: 2px;">
+                            ${row.assignedDetails.name}
+                        </div>
+                        <div style="font-size: 0.8rem; color: #555; margin-bottom: 8px;">
+                            ${row.assignedDetails.phone || "No number provided"}
+                        </div>
+                        ${row.assignedDetails.phone ? `
+                        <a href="tel:${row.assignedDetails.phone}" style="text-decoration:none; font-size: 0.8rem; font-weight: 700; color: #fff; background: var(--brand-blue); display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 4px;">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.19-2.19a2 2 0 0 1 2.11-.45c.9.27 1.83.51 2.78.71a2 2 0 0 1 1.74 1.94z"></path></svg>
+                            Call Now
+                        </a>` : ''}
+                    </div>
+                `;
                         }
 
                         return `
-                    <div class="booking-card">
-                        <div class="booking-card-header" onclick="toggleBookingDropdown('${index}')">
-                            <div class="header-info">
-                                <h4>${row.recipient}</h4>
-                                <span>${row.ref} • ${row.role || "Care"}</span>
-                            </div>
-                            <div style="text-align:right">
-                                <span class="status-pill ${row.status.toLowerCase().includes("submitted") ? "status-paid" : "status-pending"}">
-                                    ${row.status}
-                                </span>
-                                <div style="font-size: 10px; margin-top: 5px; color: #999;" id="chevron-${index}">DETAILS ▼</div>
-                            </div>
+            <div class="booking-card" style="border: 1px solid #eee; border-radius: 12px; margin-bottom: 16px; background: #fff; overflow: hidden; font-family: 'Segoe UI', sans-serif; box-shadow: 0 2px 5px rgba(0,0,0,0.04);">
+                
+                <div style="padding: 18px 16px; cursor: pointer;" onclick="toggleCard('history-${index}')">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <span style="font-size: 0.65rem; font-weight: 800; color: #bbb; text-transform: uppercase; letter-spacing: 1px;">REF: ${row.ref}</span>
+                            <div style="font-size: 1.25rem; font-weight: 800; color: var(--brand-black);">${row.recipient}</div>
                         </div>
-                        
-                        <div class="booking-card-body" id="body-${index}">
-                            <div class="info-grid">
-                                <div class="info-item"><label>Visit Purpose</label><p>${row.purpose || "N/A"}</p></div>
-                                <div class="info-item"><label>Service Location</label><p>${row.address}<br><strong>${row.state}</strong></p></div>
-                                <div class="info-item"><label>Medications</label><p>${row.meds || "None"}</p></div>
-                                <div class="info-item"><label>Emergency</label><p>${row.eName} (${row.ePhone || ""})</p></div>
-                                <div class="info-item" style="grid-column: span 2;"><label>Scheduled Dates</label><p>${row.dates.replace(/\|/g, "<br>")}</p></div>
+                        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px; text-align: right;">
+                            <span style="font-size: 0.65rem; font-weight: 900; color: var(--brand-black); text-transform: uppercase; letter-spacing: 0.5px;">${row.status}</span>
+                            <div style="display: flex; align-items: center; gap: 4px;">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--brand-blue)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                <span style="font-size: 0.75rem; font-weight: 800; color: var(--brand-blue); text-transform: uppercase;">${row.state}</span>
                             </div>
-                            ${assignedHtml}
                         </div>
                     </div>
-                `;
-                    })
-                    .join("");
-            } catch (e) {
-                container.innerHTML = `<div class="card" style="color:red; text-align:center;">Error loading records.</div>`;
+
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px;">
+                        <div style="font-size: 0.95rem; color: #555; font-weight: 500; line-height: 1.3; padding-right: 20px;">
+                            ${row.purpose || "General Care"}
+                        </div>
+                        <span id="chevron-history-${index}" style="font-size: 0.65rem; font-weight: 700; color: #ccc; flex-shrink: 0;">DETAILS ▼</span>
+                    </div>
+                </div>
+
+                <div id="body-history-${index}" style="display: none; padding: 0 16px 16px 16px; background: #fff;">
+                    <div style="border-top: 1px solid #eee; padding-top: 16px;">
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <div style="display: flex; align-items: flex-start;">
+                                <div style="width: 100px; flex-shrink: 0; font-size: 0.75rem; color: var(--brand-blue); font-weight: 800;">Dates</div>
+                                <div style="width: 1px; height: 14px; background: #eee; margin: 4px 12px 0 0;"></div>
+                                <div style="font-size: 0.85rem; font-weight: 400; color: #333; line-height: 1.4;">${row.dates ? row.dates.replace(/\|/g, ", ") : "N/A"}</div>
+                            </div>
+                            <div style="display: flex; align-items: flex-start;">
+                                <div style="width: 100px; flex-shrink: 0; font-size: 0.75rem; color: var(--brand-blue); font-weight: 800;">Address</div>
+                                <div style="width: 1px; height: 14px; background: #eee; margin: 4px 12px 0 0;"></div>
+                                <div style="font-size: 0.85rem; font-weight: 400; color: #333; line-height: 1.4;">${row.address}</div>
+                            </div>
+                            <div style="display: flex; align-items: flex-start;">
+                                <div style="width: 100px; flex-shrink: 0; font-size: 0.75rem; color: var(--brand-blue); font-weight: 800;">Emergency</div>
+                                <div style="width: 1px; height: 14px; background: #eee; margin: 4px 12px 0 0;"></div>
+                                <div style="font-size: 0.85rem; font-weight: 400; color: #333;">${row.eName} (${row.ePhone || "N/A"})</div>
+                            </div>
+                            <div style="display: flex; align-items: flex-start;">
+                                <div style="width: 100px; flex-shrink: 0; font-size: 0.75rem; color: var(--brand-blue); font-weight: 800;">Medical</div>
+                                <div style="width: 1px; height: 14px; background: #eee; margin: 4px 12px 0 0;"></div>
+                                <div style="font-size: 0.85rem; font-weight: 400; color: #333; line-height: 1.4;">${row.meds || "None reported"}</div>
+                            </div>
+                        </div>
+                        ${assignedHtml}
+                    </div>
+                </div>
+            </div>`;
+                    }).join("");
+
+                } catch (e) {
+                    container.innerHTML = `<div class="card" style="color:red; text-align:center; padding:20px;">Error loading records.</div>`;
+                }
             }
-        }
 
-        function toggleBookingDropdown(index) {
-            const body = document.getElementById(`body-${index}`);
-            const chevron = document.getElementById(`chevron-${index}`);
-            const isActive = body.classList.contains("active");
+            // Unified Toggle Function
+            window.toggleCard = function (id) {
+                const body = document.getElementById(`body-${id}`);
+                const chevron = document.getElementById(`chevron-${id}`);
 
-            // Close all others
-            document
-                .querySelectorAll(".booking-card-body")
-                .forEach((el) => el.classList.remove("active"));
-            document
-                .querySelectorAll('[id^="chevron-"]')
-                .forEach((el) => (el.innerText = "DETAILS ▼"));
+                if (!body) return;
 
-            if (!isActive) {
-                body.classList.add("active");
-                chevron.innerText = "HIDE ▲";
+                if (body.style.display === "none" || body.style.display === "") {
+                    body.style.display = "block";
+                    if (chevron) {
+                        chevron.innerText = "HIDE ▲";
+                        chevron.style.color = "var(--brand-blue)";
+                    }
+                } else {
+                    body.style.display = "none";
+                    if (chevron) {
+                        chevron.innerText = "DETAILS ▼";
+                        chevron.style.color = "#ccc";
+                    }
+                }
             }
-        }
 
-        function logout() {
-            localStorage.clear();
-            window.location.href = "index.html";
-        }
-    </script>
+            function toggleBookingDropdown(index) {
+                const body = document.getElementById(`body-${index}`);
+                const chevron = document.getElementById(`chevron-${index}`);
+                const isActive = body.classList.contains("active");
+
+                // Close all others
+                document
+                    .querySelectorAll(".booking-card-body")
+                    .forEach((el) => el.classList.remove("active"));
+                document
+                    .querySelectorAll('[id^="chevron-"]')
+                    .forEach((el) => (el.innerText = "DETAILS ▼"));
+
+                if (!isActive) {
+                    body.classList.add("active");
+                    chevron.innerText = "HIDE ▲";
+                }
+            }
+
+            function logout() {
+                localStorage.clear();
+                window.location.href = "index.html";
+            }
+        </script>
 </body>
 
 </html>

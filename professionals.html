@@ -309,9 +309,10 @@
                     <div class="input-group">
                         <label>Base Location (State)</label><input type="text" id="p-state" disabled>
                     </div>
-                    
-                    <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border: 1px solid #ffeeba; color: #856404; border-radius: 4px; font-size: 0.85rem; text-align: center;">
-                        <strong>Need to update your info?</strong><br> 
+
+                    <div
+                        style="margin-top: 20px; padding: 15px; background: #fff3cd; border: 1px solid #ffeeba; color: #856404; border-radius: 4px; font-size: 0.85rem; text-align: center;">
+                        <strong>Need to update your info?</strong><br>
                         Please contact the Kitacare Admin to request changes to your verified credentials.
                     </div>
                 </div>
@@ -381,25 +382,25 @@
         };
 
         async function fetchProfessionalJobs(email) {
-    const container = document.getElementById('job-list');
-    try {
-        const response = await fetch(`${APPS_SCRIPT_URL}?email=${encodeURIComponent(email)}`);
-        const jobs = await response.json();
+            const container = document.getElementById('job-list');
+            try {
+                const response = await fetch(`${APPS_SCRIPT_URL}?email=${encodeURIComponent(email)}`);
+                const jobs = await response.json();
 
-        if (!jobs || jobs.length === 0) {
-            container.innerHTML = `<div class="card" style="text-align:center;color:#999;padding:40px;border:1px dashed #ccc;">No active assignments.</div>`;
-            return;
-        }
+                if (!jobs || jobs.length === 0) {
+                    container.innerHTML = `<div class="card" style="text-align:center;color:#999;padding:40px;border:1px dashed #ccc;">No active assignments.</div>`;
+                    return;
+                }
 
-        container.innerHTML = "";
-        jobs.reverse().forEach((job, index) => {
-            let cleanDob = job.dob || "N/A";
-            if (cleanDob.includes('T')) {
-                const d = new Date(cleanDob);
-                cleanDob = d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            }
+                container.innerHTML = "";
+                jobs.reverse().forEach((job, index) => {
+                    let cleanDob = job.dob || "N/A";
+                    if (cleanDob.includes('T')) {
+                        const d = new Date(cleanDob);
+                        cleanDob = d.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                    }
 
-            container.innerHTML += `
+                    container.innerHTML += `
                 <div class="job-card" style="border: 1px solid #eee; border-radius: 12px; margin-bottom: 16px; background: #fff; overflow: hidden; font-family: 'Segoe UI', sans-serif; box-shadow: 0 2px 5px rgba(0,0,0,0.04);">
                     
                     <div style="padding: 18px 16px; cursor: pointer;" onclick="window.toggleJobDetails(${index})">
@@ -473,22 +474,22 @@
                         </div>
                     </div>
                 </div>`;
-        });
-    } catch (e) {
-        container.innerHTML = `<p style="color:red; text-align:center; padding:20px;">Failed to load schedule.</p>`;
-    }
-}
+                });
+            } catch (e) {
+                container.innerHTML = `<p style="color:red; text-align:center; padding:20px;">Failed to load schedule.</p>`;
+            }
+        }
 
-window.toggleJobDetails = function(index) {
-    const detailBox = document.getElementById(`details-${index}`);
-    const chevron = document.getElementById(`chevron-${index}`);
-    if (!detailBox || !chevron) return;
+        window.toggleJobDetails = function (index) {
+            const detailBox = document.getElementById(`details-${index}`);
+            const chevron = document.getElementById(`chevron-${index}`);
+            if (!detailBox || !chevron) return;
 
-    const isHidden = detailBox.style.display === "none";
-    detailBox.style.display = isHidden ? "block" : "none";
-    chevron.innerText = isHidden ? "HIDE ▲" : "DETAILS ▼";
-    chevron.style.color = isHidden ? "var(--brand-blue)" : "#ccc";
-};
+            const isHidden = detailBox.style.display === "none";
+            detailBox.style.display = isHidden ? "block" : "none";
+            chevron.innerText = isHidden ? "HIDE ▲" : "DETAILS ▼";
+            chevron.style.color = isHidden ? "var(--brand-blue)" : "#ccc";
+        };
 
         function logout() { localStorage.clear(); window.location.href = "index.html"; }
 
