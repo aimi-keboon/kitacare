@@ -14,9 +14,10 @@
             font-family: 'Segoe UI', system-ui, sans-serif; 
             background: white;
             scroll-behavior: smooth;
+            color: var(--brand-black);
         }
 
-        /* HEADER - PIXEL PERFECT SYNC WITH AUTH PAGE */
+        /* HEADER - PIXEL PERFECT SYNC */
         header { 
             position: sticky;
             top: 0;
@@ -37,60 +38,60 @@
             text-decoration: none;
             color: var(--brand-black);
             border: 2px solid var(--brand-black);
-            padding: 10px 28px;
+            padding: 10px 24px;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
         }
 
         /* HERO SECTION */
         .hero { 
             display: grid; 
             grid-template-columns: 1.1fr 0.9fr; 
-            gap: 60px; 
+            gap: 40px; 
             align-items: center; 
-            padding: 80px 8%;
+            padding: 60px 8%;
             max-width: 1400px;
             margin: 0 auto;
         }
 
         .hero-text h1 { 
-            font-size: 4rem; 
+            font-size: clamp(2.5rem, 5vw, 4rem); 
             line-height: 1.1; 
             margin: 0 0 20px 0; 
             font-weight: 800; 
-            color: var(--brand-black);
         }
         
         .hero-text p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #555;
             margin-bottom: 35px;
             max-width: 480px;
             line-height: 1.5;
         }
 
+        .hero-visual { display: flex; justify-content: center; }
         .hero-visual img { 
             width: 100%; 
-            max-width: 420px;
+            max-width: 400px;
             border: 2px solid var(--brand-black); 
-            padding: 8px; 
+            padding: 6px; 
             background: white; 
-            box-shadow: 12px 12px 0px var(--brand-black); 
+            box-shadow: 10px 10px 0px var(--brand-black); 
         }
 
         /* CONTENT SECTIONS */
         .content-container {
             background: var(--bg-light);
-            padding: 80px 8%;
+            padding: 60px 8%;
         }
 
         .about-grid {
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 0 auto 60px auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 100px;
-            margin-bottom: 80px;
+            gap: 60px;
         }
 
         .section-label {
@@ -98,42 +99,42 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-size: 0.8rem;
-            margin-bottom: 15px;
+            font-size: 0.75rem;
+            margin-bottom: 12px;
             display: block;
         }
 
-        h2 { font-size: 2.5rem; font-weight: 800; margin: 0 0 30px 0; }
+        h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; margin: 0 0 25px 0; }
 
         /* JUSTIFIED TABULAR ROWS */
         .info-row {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             border-bottom: 1px solid #e9ecef;
-            padding-bottom: 20px;
+            padding-bottom: 15px;
         }
 
         .info-key {
-            width: 120px;
+            width: 100px;
             flex-shrink: 0;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--brand-blue);
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
-            padding-top: 5px;
+            padding-top: 4px;
         }
 
         .vertical-divider {
             width: 1px;
-            height: 15px;
+            height: 14px;
             background: #ddd;
-            margin: 8px 20px 0 0;
+            margin: 6px 15px 0 0;
         }
 
         .info-val {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 500;
             color: #333;
             line-height: 1.4;
@@ -145,31 +146,28 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 30px;
         }
 
         .benefit-card {
             background: white;
             border: 1px solid #eee;
-            padding: 40px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            padding: 30px;
         }
 
         .btn-primary { 
             display: inline-block;
-            padding: 15px 45px; 
+            padding: 16px 40px; 
             font-weight: 800; 
             letter-spacing: 1px; 
             text-decoration: none;
             background: var(--brand-black);
             color: white;
-            transition: 0.3s;
+            font-size: 0.9rem;
         }
 
-        .btn-primary:hover { background: var(--brand-blue); }
-
         footer {
-            padding: 60px 0;
+            padding: 40px 0;
             text-align: center;
             font-size: 0.75rem;
             color: #999;
@@ -177,17 +175,40 @@
             border-top: 1px solid #eee;
         }
 
-        @media (max-width: 992px) {
-            .hero, .about-grid, .benefits-section { grid-template-columns: 1fr; }
-            .hero-text h1 { font-size: 2.8rem; }
-            header { height: 80px; }
+        /* MOBILE OPTIMIZATION */
+        @media (max-width: 768px) {
+            header { height: 80px; padding: 0 5%; }
+            header img { height: 35px; }
+            
+            .hero { 
+                grid-template-columns: 1fr; 
+                text-align: center; 
+                padding: 40px 5%;
+                gap: 40px;
+            }
+            .hero-text { order: 1; }
+            .hero-visual { order: 2; }
+            .hero-text p { margin-left: auto; margin-right: auto; }
+
+            .about-grid, .benefits-section { 
+                grid-template-columns: 1fr; 
+                gap: 40px;
+            }
+            
+            .content-container { padding: 40px 5%; }
+            .benefit-card { padding: 25px; }
+            
+            /* Allow tabular rows to wrap on very small screens */
+            .info-row { flex-direction: column; }
+            .vertical-divider { display: none; }
+            .info-key { margin-bottom: 4px; width: 100%; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="index.html" class="logo-link">
+        <a href="index.html">
             <img src="kitacare.png" alt="kitacare">
         </a>
         <nav><a href="auth.html" class="btn-outline">LOGIN</a></nav>
@@ -195,13 +216,12 @@
     
     <main class="hero">
         <div class="hero-text">
-            <span class="section-label">Established 2026</span>
             <h1>Expert Care.<br><span style="color:var(--brand-blue)">At Your Home.</span></h1>
             <p>Verified caregivers, nurses, and doctors. Simple requests, professional matching, expert results.</p>
             <a href="auth.html" class="btn-primary">GET STARTED</a>
         </div>
         <div class="hero-visual">
-            <img src="main.jpg" alt="Kitacare professional">
+            <img src="main.jpg" alt="Professional Care">
         </div>
     </main>
 
@@ -211,7 +231,7 @@
             <div>
                 <span class="section-label">About Kitacare</span>
                 <h2>On-Demand Infrastructure for Modern Care.</h2>
-                <p style="font-size: 1.1rem; color: #555;">KitaCare is a technology-driven platform connecting families with a verified network of healthcare professionals. We facilitate immediate access to quality support without the friction of traditional administrative processes.</p>
+                <p>KitaCare is a technology-driven platform connecting families with a verified network of healthcare professionals. We facilitate immediate access to quality support without the friction of traditional administrative processes.</p>
             </div>
             <div>
                 <span class="section-label">The Core Model</span>
@@ -234,47 +254,40 @@
         </div>
 
         <div class="benefits-section">
-            
             <div class="benefit-card">
                 <span class="section-label">For Seekers</span>
-                <h3 style="font-size: 1.5rem; font-weight: 800;">Request Quality Care</h3>
-                <div style="margin-top: 25px;">
-                    <div class="info-row">
-                        <div class="info-key">Matching</div>
-                        <div class="vertical-divider"></div>
-                        <div class="info-val">Connect with nurses and caregivers who fit your specific health profile.</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-key">Control</div>
-                        <div class="vertical-divider"></div>
-                        <div class="info-val">Manage schedules and view professional history in one dashboard.</div>
-                    </div>
+                <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 20px;">Request Quality Care</h3>
+                <div class="info-row">
+                    <div class="info-key">Matching</div>
+                    <div class="vertical-divider"></div>
+                    <div class="info-val">Connect with professionals who fit your specific health profile.</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-key">Control</div>
+                    <div class="vertical-divider"></div>
+                    <div class="info-val">Manage schedules and view professional history in one dashboard.</div>
                 </div>
             </div>
 
             <div class="benefit-card">
                 <span class="section-label">For Professionals</span>
-                <h3 style="font-size: 1.5rem; font-weight: 800;">Join the Care Network</h3>
-                <div style="margin-top: 25px;">
-                    <div class="info-row">
-                        <div class="info-key">Autonomy</div>
-                        <div class="vertical-divider"></div>
-                        <div class="info-val">Accept assignments that match your expertise and personal schedule.</div>
-                    </div>
-                    <div class="info-row">
-                        <div class="info-key">Visibility</div>
-                        <div class="vertical-divider"></div>
-                        <div class="info-val">Access detailed job briefs, patient history, and emergency protocols instantly.</div>
-                    </div>
+                <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 20px;">Join the Care Network</h3>
+                <div class="info-row">
+                    <div class="info-key">Autonomy</div>
+                    <div class="vertical-divider"></div>
+                    <div class="info-val">Accept assignments that match your expertise and personal schedule.</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-key">Visibility</div>
+                    <div class="vertical-divider"></div>
+                    <div class="info-val">Access detailed job briefs and patient history instantly.</div>
                 </div>
             </div>
-
         </div>
     </section>
 
     <footer>
-        &copy; 2026 kitacare | Website: kitacare.com<br><br>
-        Support: <a href="mailto:admin@kitacare.com" style="color:var(--brand-blue); text-decoration:none;">admin@kitacare.com</a>
+        &copy; 2026 kitacare | Support: <a href="mailto:admin@kitacare.com" style="color:var(--brand-blue); text-decoration:none;">admin@kitacare.com</a>
     </footer>
 
 </body>
