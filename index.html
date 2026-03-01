@@ -4,279 +4,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | KitaCare</title>
+    
+    <title>KitaCare | Professional Home Care & Nursing Services Malaysia</title>
+    <meta name="description" content="KitaCare connects you with verified caregivers, private nurses, and doctors. Professional home care available nationwide in Malaysia.">
+    <meta name="keywords" content="KitaCare, Home Care Malaysia, Private Nurse, Caregiver, Home Nursing, Elderly Care Malaysia">
+
     <style>
-        /* CORE BRANDING & SYNC WITH AUTH */
-        :root {
-            --brand-blue: #007bff;
-            --brand-black: #000000;
-            --bg-light: #f8f9fa;
-        }
+        :root { --brand-blue: #007bff; --brand-black: #000000; --bg-light: #f8f9fa; }
+        html, body { margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; background: white; scroll-behavior: smooth; color: var(--brand-black); }
 
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: white;
-            scroll-behavior: smooth;
-            color: var(--brand-black);
-        }
+        header { position: sticky; top: 0; padding: 0 5%; display: flex; justify-content: space-between; align-items: center; height: 90px; background: white; border-bottom: 1px solid #eee; box-sizing: border-box; z-index: 1000; }
+        header img { height: 35px; }
+        .nav-links { display: flex; align-items: center; gap: 20px; }
+        .nav-links a { text-decoration: none; color: var(--brand-black); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
 
-        /* HEADER - PIXEL PERFECT SYNC */
-        header {
-            position: sticky;
-            top: 0;
-            padding: 0 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 100px;
-            background: white;
-            border-bottom: 1px solid #eee;
-            box-sizing: border-box;
-            z-index: 1000;
-        }
-
-        header img {
-            height: 45px;
-            display: block;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .btn-outline {
-            text-decoration: none;
-            color: var(--brand-black);
-            border: 2px solid var(--brand-black);
-            padding: 10px 24px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-            transition: 0.2s;
-        }
-
-        .btn-outline:hover {
-            background: var(--brand-black);
-            color: white;
-        }
-
-        /* NEW: Secondary Button Style */
-        .btn-blue-outline {
-            text-decoration: none;
-            color: var(--brand-blue);
-            border: 2px solid var(--brand-blue);
-            padding: 10px 24px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-        }
+        .btn-outline { border: 2px solid var(--brand-black); padding: 10px 24px; transition: 0.2s; }
+        .btn-outline:hover { background: var(--brand-black); color: white; }
 
         /* HERO SECTION */
-        .hero {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 40px;
-            align-items: center;
-            padding: 60px 8%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+        .hero { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center; padding: 80px 8%; max-width: 1400px; margin: 0 auto; }
+        .hero-text h1 { font-size: clamp(2.5rem, 5vw, 3.8rem); line-height: 1.1; margin: 0 0 20px 0; font-weight: 800; }
+        .hero-text p { font-size: 1.15rem; color: #555; margin-bottom: 35px; max-width: 500px; line-height: 1.6; }
+        
+        /* CLEAN NATIONWIDE TAG */
+        .coverage-line { font-size: 0.75rem; font-weight: 800; color: var(--brand-blue); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 15px; display: block; }
 
-        .hero-text h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            line-height: 1.1;
-            margin: 0 0 20px 0;
-            font-weight: 800;
-        }
+        .cta-group { display: flex; gap: 15px; flex-wrap: wrap; }
+        .btn-primary { display: inline-block; padding: 18px 40px; font-weight: 800; letter-spacing: 1px; text-decoration: none; background: var(--brand-black); color: white; font-size: 0.9rem; border-radius: 4px; border: none; cursor: pointer; }
+        .btn-blue { background: var(--brand-blue); }
 
-        .hero-text p {
-            font-size: 1.1rem;
-            color: #555;
-            margin-bottom: 35px;
-            max-width: 480px;
-            line-height: 1.5;
-        }
+        .hero-visual img { width: 100%; max-width: 450px; border: 1px solid #eee; border-radius: 8px; box-shadow: 20px 20px 0px var(--bg-light); }
 
-        .cta-group {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
+        /* SERVICES SECTION */
+        .services-section { padding: 80px 8%; background: white; text-align: center; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 50px; }
+        .service-card { padding: 40px; border: 1px solid #eee; border-radius: 8px; transition: 0.3s; text-align: left; }
+        .service-card:hover { border-color: var(--brand-blue); transform: translateY(-5px); }
+        .service-card h3 { font-size: 1.4rem; margin-bottom: 15px; margin-top: 0; }
 
-        .hero-visual {
-            display: flex;
-            justify-content: center;
-        }
+        /* INSTANT BOOKING BANNER */
+        .instant-banner { background: var(--brand-black); color: white; padding: 80px 8%; text-align: center; }
+        .instant-banner h2 { font-size: 2.2rem; margin-bottom: 20px; }
 
-        .hero-visual img {
-            width: 100%;
-            max-width: 400px;
-            border: 2px solid var(--brand-black);
-            padding: 6px;
-            background: white;
-            box-shadow: 10px 10px 0px var(--brand-black);
-        }
+        footer { padding: 60px 8%; text-align: center; border-top: 1px solid #eee; background: white; }
+        .footer-links { margin-bottom: 30px; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .footer-links a { text-decoration: none; color: #666; font-weight: 600; font-size: 0.9rem; }
 
-        /* CONTENT SECTIONS */
-        .content-container {
-            background: var(--bg-light);
-            padding: 60px 8%;
-        }
-
-        .about-grid {
-            max-width: 1200px;
-            margin: 0 auto 60px auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-        }
-
-        .section-label {
-            color: var(--brand-blue);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.75rem;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        h2 {
-            font-size: clamp(1.8rem, 3vw, 2.5rem);
-            font-weight: 800;
-            margin: 0 0 25px 0;
-        }
-
-        /* JUSTIFIED TABULAR ROWS */
-        .info-row {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #e9ecef;
-            padding-bottom: 15px;
-        }
-
-        .info-key {
-            width: 100px;
-            flex-shrink: 0;
-            font-size: 0.65rem;
-            color: var(--brand-blue);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding-top: 4px;
-        }
-
-        .vertical-divider {
-            width: 1px;
-            height: 14px;
-            background: #ddd;
-            margin: 6px 15px 0 0;
-        }
-
-        .info-val {
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: #333;
-            line-height: 1.4;
-        }
-
-        /* DUAL BENEFITS SECTION */
-        .benefits-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .benefit-card {
-            background: white;
-            border: 1px solid #eee;
-            padding: 30px;
-        }
-
-        .btn-primary {
-            display: inline-block;
-            padding: 16px 40px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-decoration: none;
-            background: var(--brand-black);
-            color: white;
-            font-size: 0.9rem;
-        }
-
-        /* NEW: Special Instant Booking Section */
-        .instant-banner {
-            background: var(--brand-black);
-            color: white;
-            padding: 60px 8%;
-            text-align: center;
-        }
-
-        footer {
-            padding: 40px 0;
-            text-align: center;
-            font-size: 0.75rem;
-            color: #999;
-            background: white;
-            border-top: 1px solid #eee;
-        }
-
-        /* MOBILE OPTIMIZATION */
         @media (max-width: 768px) {
-            header {
-                height: 80px;
-                padding: 0 5%;
-            }
-
-            header img {
-                height: 35px;
-            }
-
-            .hero {
-                grid-template-columns: 1fr;
-                text-align: center;
-                padding: 40px 5%;
-                gap: 40px;
-            }
-
-            .cta-group {
-                justify-content: center;
-            }
-
-            .hero-text {
-                order: 1;
-            }
-
-            .hero-visual {
-                order: 2;
-            }
-
-            .about-grid,
-            .benefits-section {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .info-row {
-                flex-direction: column;
-            }
-
-            .vertical-divider {
-                display: none;
-            }
-
-            .info-key {
-                margin-bottom: 4px;
-                width: 100%;
-            }
+            .hero { grid-template-columns: 1fr; text-align: center; padding: 60px 5%; }
+            .hero-text p { margin: 0 auto 30px auto; }
+            .cta-group { justify-content: center; }
+            .hero-visual { display: none; }
         }
     </style>
 </head>
@@ -284,116 +62,72 @@
 <body>
 
     <header>
-        <a href="index.html">
-            <img src="kitacare.png" alt="kitacare">
-        </a>
+        <a href="index.html"><img src="kitacare.png" alt="KitaCare Logo"></a>
         <nav class="nav-links">
-            <a href="instant-booking.html" class="btn-blue-outline" style="border:none; font-size: 0.75rem;">QUICK BOOK</a>
-            <a href="auth.html" class="btn-outline">LOGIN</a>
+            <a href="articles.html">Resources</a>
+            <a href="auth.html" class="btn-outline">Login</a>
         </nav>
     </header>
 
     <main class="hero">
         <div class="hero-text">
+            <span class="coverage-line">NATIONWIDE SUPPORT</span>
             <h1>Expert Care.<br><span style="color:var(--brand-blue)">At Your Home.</span></h1>
-            <p>Verified caregivers, nurses, and doctors. Simple requests, professional matching, expert results.</p>
+            <p>Malaysia's trusted platform for verified caregivers, nurses, and doctors. Professional healthcare, tailored to your needs.</p>
             
             <div class="cta-group">
-                <a href="auth.html" class="btn-primary">GET STARTED</a>
-                <a href="instant-booking.html" class="btn-outline" style="background: white;">INSTANT BOOKING</a>
+                <a href="instant-booking.html" class="btn-primary btn-blue">INSTANT BOOKING</a>
+                <a href="auth.html" class="btn-primary">CREATE ACCOUNT</a>
             </div>
-            <p style="font-size: 0.75rem; margin-top: 15px; font-weight: 700; color: #888;">No account required for Instant Booking</p>
+            <p style="font-size: 0.8rem; margin-top: 15px; font-weight: 600; color: #999;">Quick booking available without registration.</p>
         </div>
         <div class="hero-visual">
-            <img src="main.jpg" alt="Professional Care">
+            <img src="main.jpg" alt="KitaCare Professional Care">
         </div>
     </main>
 
+    <section class="services-section">
+        <span style="color:var(--brand-blue); font-weight:800; text-transform:uppercase; letter-spacing:2px; font-size:0.75rem;">Our Network</span>
+        <h2>Home Healthcare Professionals</h2>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Caregivers</h3>
+                <p>Support with daily living, mobility, and companionship for elderly and recovering patients.</p>
+            </div>
+            <div class="service-card">
+                <h3>Private Nurses</h3>
+                <p>Clinical medical support including wound care, injections, and medication management.</p>
+            </div>
+            <div class="service-card">
+                <h3>House-Call Doctors</h3>
+                <p>Qualified medical consultations and diagnostics in the comfort of your own home.</p>
+            </div>
+        </div>
+    </section>
+
     <section class="instant-banner">
-        <span class="section-label" style="color: #66b2ff;">Fast Track</span>
-        <h2 style="color: white; margin-bottom: 10px;">In a hurry?</h2>
-        <p style="max-width: 600px; margin: 0 auto 30px auto; color: #ccc;">Use our Instant Booking feature to secure a professional without creating a profile. Perfect for one-time clinical needs.</p>
-        <a href="instant-booking.html" class="btn-primary" style="background: var(--brand-blue);">BOOK NOW WITHOUT SIGNUP</a>
+        <h2>Ready to book?</h2>
+        <p style="max-width: 600px; margin: 0 auto 40px auto; color: #aaa; font-size: 1.1rem;">Skip the registration. Find and secure a KitaCare professional instantly.</p>
+        <a href="instant-booking.html" class="btn-primary" style="background: white; color: black;">START INSTANT BOOKING</a>
     </section>
 
-    <section class="content-container">
-
-        <div class="about-grid">
-            <div>
-                <span class="section-label">About Kitacare</span>
-                <h2>On-Demand Infrastructure for Modern Care.</h2>
-                <p>KitaCare is a technology-driven platform connecting families with a verified network of healthcare
-                    professionals. We facilitate immediate access to quality support without the friction of traditional
-                    administrative processes.</p>
-            </div>
-            <div>
-                <span class="section-label">The Core Model</span>
-                <div class="info-row">
-                    <div class="info-key">Efficiency</div>
-                    <div class="vertical-divider"></div>
-                    <div class="info-val">Deployment based on real-time location and clinical requirements.</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-key">Trust</div>
-                    <div class="vertical-divider"></div>
-                    <div class="info-val">Strict vetting protocols and credential verification for every user.</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-key">Precision</div>
-                    <div class="vertical-divider"></div>
-                    <div class="info-val">Comprehensive data matching for medical history and emergency accuracy.</div>
-                </div>
-            </div>
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="articles.html">Articles & FAQ</a>
+            <a href="instant-booking.html">Booking</a>
+            <a href="mailto:admin@mykitacare.com">Support</a>
         </div>
-
-        <div class="benefits-section">
-            <div class="benefit-card">
-                <span class="section-label">For Seekers</span>
-                <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 20px;">Request Quality Care</h3>
-                <div class="info-row">
-                    <div class="info-key">Matching</div>
-                    <div class="vertical-divider"></div>
-                    <div class="info-val">Connect with professionals who fit your specific health profile.</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-key">Control</div>
-                    <div class="vertical-divider"></div>
-                    <div class="info-val">Manage schedules and view professional history in one dashboard.</div>
-                </div>
-            </div>
-
-            <div class="benefit-card">
-                <span class="section-label">For Professionals</span>
-                <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 20px;">Join the Care Network</h3>
-                <div class="info-row">
-                    <div class="info-key">Autonomy</div>
-                    <div class="vertical-divider"></div>
-                    <div class="info-val">Accept assignments that match your expertise and personal schedule.</div>
-                </div>
-                <div class="info-row">
-                    <div class="info-key">Visibility</div>
-                    <div class="vertical-divider"></div>
-                    <div class="info-val">Access detailed job briefs and patient history instantly.</div>
-                </div>
-            </div>
+        
+        <div style="font-size: 0.8rem; color: #999;">
+            &copy; 2026 KitaCare Malaysia. All rights reserved. Professional Home Healthcare.
         </div>
-    </section>
-
-    <footer style="padding: 60px 0;">
-        <div style="margin-bottom: 15px;">
-            &copy; 2026 kitacare | Support: <a href="mailto:admin@mykitacare.com"
-                style="color:var(--brand-blue); text-decoration:none; font-weight: 700;">admin@mykitacare.com</a>
-        </div>
-        <div style="font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; color: #bbb; font-weight: 600;">
-            Powered by
-            <a href="https://nusapulse.my" target="_blank"
-                style="color: #888; text-decoration: none; border-bottom: 1px solid #ddd; padding-bottom: 2px; margin: 0 4px;">NusaPulse</a>
-            &
-            <a href="https://keboon.net" target="_blank"
-                style="color: #888; text-decoration: none; border-bottom: 1px solid #ddd; padding-bottom: 2px; margin: 0 4px;">Keboon</a>
+        
+        <div style="font-size: 0.65rem; margin-top: 20px; letter-spacing: 1px; text-transform: uppercase; color: #bbb; font-weight: 600;">
+            Powered by <a href="#" style="color:#999; text-decoration:none;">NusaPulse</a> & <a href="#" style="color:#999; text-decoration:none;">Keboon</a>
         </div>
     </footer>
 
 </body>
-
 </html>
