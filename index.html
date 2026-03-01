@@ -43,10 +43,33 @@
             display: block;
         }
 
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
         .btn-outline {
             text-decoration: none;
             color: var(--brand-black);
             border: 2px solid var(--brand-black);
+            padding: 10px 24px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            transition: 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: var(--brand-black);
+            color: white;
+        }
+
+        /* NEW: Secondary Button Style */
+        .btn-blue-outline {
+            text-decoration: none;
+            color: var(--brand-blue);
+            border: 2px solid var(--brand-blue);
             padding: 10px 24px;
             font-weight: 700;
             font-size: 0.85rem;
@@ -77,6 +100,12 @@
             margin-bottom: 35px;
             max-width: 480px;
             line-height: 1.5;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
         .hero-visual {
@@ -183,6 +212,14 @@
             font-size: 0.9rem;
         }
 
+        /* NEW: Special Instant Booking Section */
+        .instant-banner {
+            background: var(--brand-black);
+            color: white;
+            padding: 60px 8%;
+            text-align: center;
+        }
+
         footer {
             padding: 40px 0;
             text-align: center;
@@ -210,6 +247,10 @@
                 gap: 40px;
             }
 
+            .cta-group {
+                justify-content: center;
+            }
+
             .hero-text {
                 order: 1;
             }
@@ -218,26 +259,12 @@
                 order: 2;
             }
 
-            .hero-text p {
-                margin-left: auto;
-                margin-right: auto;
-            }
-
             .about-grid,
             .benefits-section {
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
 
-            .content-container {
-                padding: 40px 5%;
-            }
-
-            .benefit-card {
-                padding: 25px;
-            }
-
-            /* Allow tabular rows to wrap on very small screens */
             .info-row {
                 flex-direction: column;
             }
@@ -260,19 +287,34 @@
         <a href="index.html">
             <img src="kitacare.png" alt="kitacare">
         </a>
-        <nav><a href="auth.html" class="btn-outline">LOGIN</a></nav>
+        <nav class="nav-links">
+            <a href="instant-booking.html" class="btn-blue-outline" style="border:none; font-size: 0.75rem;">QUICK BOOK</a>
+            <a href="auth.html" class="btn-outline">LOGIN</a>
+        </nav>
     </header>
 
     <main class="hero">
         <div class="hero-text">
             <h1>Expert Care.<br><span style="color:var(--brand-blue)">At Your Home.</span></h1>
             <p>Verified caregivers, nurses, and doctors. Simple requests, professional matching, expert results.</p>
-            <a href="auth.html" class="btn-primary">GET STARTED</a>
+            
+            <div class="cta-group">
+                <a href="auth.html" class="btn-primary">GET STARTED</a>
+                <a href="instant-booking.html" class="btn-outline" style="background: white;">INSTANT BOOKING</a>
+            </div>
+            <p style="font-size: 0.75rem; margin-top: 15px; font-weight: 700; color: #888;">No account required for Instant Booking</p>
         </div>
         <div class="hero-visual">
             <img src="main.jpg" alt="Professional Care">
         </div>
     </main>
+
+    <section class="instant-banner">
+        <span class="section-label" style="color: #66b2ff;">Fast Track</span>
+        <h2 style="color: white; margin-bottom: 10px;">In a hurry?</h2>
+        <p style="max-width: 600px; margin: 0 auto 30px auto; color: #ccc;">Use our Instant Booking feature to secure a professional without creating a profile. Perfect for one-time clinical needs.</p>
+        <a href="instant-booking.html" class="btn-primary" style="background: var(--brand-blue);">BOOK NOW WITHOUT SIGNUP</a>
+    </section>
 
     <section class="content-container">
 
@@ -342,7 +384,6 @@
             &copy; 2026 kitacare | Support: <a href="mailto:admin@mykitacare.com"
                 style="color:var(--brand-blue); text-decoration:none; font-weight: 700;">admin@mykitacare.com</a>
         </div>
-
         <div style="font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; color: #bbb; font-weight: 600;">
             Powered by
             <a href="https://nusapulse.my" target="_blank"

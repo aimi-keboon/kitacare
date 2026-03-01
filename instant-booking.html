@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instant Booking | kitacare</title>
+    <style>
+        :root { --brand-blue: #007bff; --brand-black: #000000; --bg-light: #f8f9fa; --border: #dddddd; }
+        body { background-color: var(--bg-light); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 50px; }
+        header { position: sticky; top: 0; padding: 0 5%; display: flex; justify-content: space-between; align-items: center; height: 60px; background: white; border-bottom: 1px solid var(--border); z-index: 1000; box-sizing: border-box; }
+        header img { height: 30px; }
+        .container { max-width: 700px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; }
+        .card { background: white; border: 1px solid var(--border); padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--brand-blue); margin: 25px 0 15px 0; border-bottom: 2px solid var(--brand-black); padding-bottom: 5px; display: inline-block; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.75rem; font-weight: 700; margin-bottom: 5px; text-transform: uppercase; color: #555; }
+        input, select, textarea { width: 100%; height: 48px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; font-size: 16px; background: #fff; font-family: inherit; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+        
+        /* MOBILE FRIENDLY SLOTS */
+        .slot-row { 
+            display: grid; 
+            grid-template-columns: 1fr 80px 45px; 
+            gap: 10px; 
+            margin-bottom: 15px; 
+            align-items: end; 
+        }
+        @media (max-width: 480px) {
+            .slot-row { grid-template-columns: 1fr 70px 40px; gap: 5px; }
+            .slot-row input { font-size: 14px; padding: 8px; }
+        }
+
+        .price-box { background: #f1f3f5; padding: 20px; border-radius: 6px; margin-top: 25px; text-align: right; border-left: 4px solid var(--brand-blue); }
+        .total-price { font-size: 1.6rem; font-weight: 800; color: var(--brand-black); }
+        .btn-primary { background: var(--brand-black); color: white; width: 100%; padding: 18px; border: none; border-radius: 4px; font-weight: 800; font-size: 1rem; cursor: pointer; margin-top: 20px; text-transform: uppercase; }
+        .btn-add { width: 100%; border: 1px dashed var(--brand-blue); color: var(--brand-blue); background: #f0f7ff; padding: 12px; cursor: pointer; font-weight: bold; border-radius: 4px; text-transform: uppercase; font-size: 0.75rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="kitacare.png" alt="kitacare">
+        <a href="index.html" style="text-decoration:none; color:red; font-weight:700; font-size:0.7rem; border:1px solid red; padding:5px 10px;">CANCEL</a>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h1 style="margin:0; font-size: 1.5rem;">Instant Booking</h1>
+            <p style="color:#666; font-size: 0.9rem; margin-bottom: 0;">Care at your doorstep. No account needed.</p>
+
+            <h3>1. Contact Person</h3>
+            <div class="grid-2">
+                <div class="input-group"><label>Full Name</label><input type="text" id="u-name"></div>
+                <div class="input-group"><label>Email</label><input type="email" id="u-email"></div>
+            </div>
+            <div class="input-group"><label>Phone Number</label><input type="tel" id="u-phone"></div>
+
+            <h3>2. Care Recipient</h3>
+            <div class="grid-2">
+                <div class="input-group"><label>Recipient Name</label><input type="text" id="r-name"></div>
+                <div class="input-group"><label>Date of Birth</label><input type="date" id="r-dob"></div>
+            </div>
+            <div class="grid-2">
+                <div class="input-group"><label>Gender</label><select id="r-gender"><option>Male</option><option>Female</option></select></div>
+                <div class="input-group"><label>Weight (kg)</label><input type="number" id="r-weight" placeholder="e.g. 70"></div>
+            </div>
+            <div class="input-group"><label>Medical History / Meds</label><textarea id="c-meds" style="height:60px;"></textarea></div>
+
+            <h3>3. Service Details</h3>
+            <div class="input-group">
+                <label>Professional Type</label>
+                <select id="c-role" onchange="updatePrice()">
+                    <option value="Caregiver">Caregiver — RM35/hr</option>
+                    <option value="Nurse">Nurse — RM50/hr</option>
+                    <option value="Doctor">Doctor — RM100/hr</option>
+                </select>
+            </div>
+            <div class="input-group"><label>Service Address</label><input type="text" id="r-address"></div>
+            <div class="grid-2">
+                <div class="input-group"><label>Emergency Contact</label><input type="text" id="r-e-name"></div>
+                <div class="input-group"><label>Emergency Phone</label><input type="tel" id="r-e-phone"></div>
+            </div>
+
+            <h3>4. Booking Slots</h3>
+            <div id="multi-list">
+                <div class="slot-row">
+                    <div><label>Date & Time</label><input type="datetime-local" class="date-input-field" onchange="updatePrice()"></div>
+                    <div><label>Hours</label><input type="number" class="hour-input-field" value="1" min="1" onchange="updatePrice()"></div>
+                    <div></div>
+                </div>
+            </div>
+            <button class="btn-add" onclick="addSlot()">+ Add Another Slot</button>
+
+            <div class="price-box">
+                <label style="margin:0; font-size: 0.65rem;">Estimated Total</label>
+                <div class="total-price" id="display-total">RM 35.00</div>
+            </div>
+
+            <button class="btn-primary" id="submit-btn" onclick="submitBooking()">Proceed to Payment</button>
+        </div>
+    </div>
+
+    <script>
+        const QUICKBOOK_URL = "https://script.google.com/macros/s/AKfycbx2U8vM0xgzWN2hlxMhRNgCK8Eex1Vv7TTEDtQeiljzFquVw9iVaTnV76qqoWDnpOc0/exec";
+        const RATES = { "Caregiver": 35, "Nurse": 50, "Doctor": 100 };
+
+        function updatePrice() {
+            const role = document.getElementById("c-role").value;
+            const hours = Array.from(document.querySelectorAll(".hour-input-field")).reduce((sum, el) => sum + (parseFloat(el.value) || 0), 0);
+            document.getElementById("display-total").innerText = `RM ${(hours * RATES[role]).toFixed(2)}`;
+        }
+
+        function setMinDate(el) {
+            const d = new Date();
+            d.setDate(d.getDate() + 3); // 72-hour logic
+            el.min = d.toISOString().slice(0, 16);
+        }
+
+        window.onload = () => {
+            document.querySelectorAll(".date-input-field").forEach(setMinDate);
+            updatePrice();
+        };
+
+        function addSlot() {
+            const div = document.createElement("div");
+            div.className = "slot-row";
+            div.innerHTML = `
+                <div><input type="datetime-local" class="date-input-field" onchange="updatePrice()"></div>
+                <div><input type="number" class="hour-input-field" value="1" min="1" onchange="updatePrice()"></div>
+                <button onclick="this.parentElement.remove(); updatePrice();" style="background:#000; color:#fff; border:none; height:48px; border-radius:4px; cursor:pointer; font-weight:bold;">✕</button>
+            `;
+            document.getElementById("multi-list").appendChild(div);
+            setMinDate(div.querySelector(".date-input-field"));
+            updatePrice();
+        }
+
+        async function submitBooking() {
+            const btn = document.getElementById("submit-btn");
+            const slots = Array.from(document.querySelectorAll(".date-input-field")).map((el, i) => {
+                const h = document.querySelectorAll(".hour-input-field")[i].value;
+                return el.value ? `${el.value} (${h}hrs)` : null;
+            }).filter(v => v).join(" | ");
+
+            if(!slots) return alert("Please select a date/time.");
+
+            const payload = {
+                userName: document.getElementById("u-name").value,
+                userEmail: document.getElementById("u-email").value,
+                userPhone: document.getElementById("u-phone").value,
+                recipientName: document.getElementById("r-name").value,
+                recipientDob: document.getElementById("r-dob").value,
+                weight: document.getElementById("r-weight").value,
+                gender: document.getElementById("r-gender").value,
+                state: "Selangor", // Default
+                address: document.getElementById("r-address").value,
+                purpose: "Instant Booking",
+                meds: document.getElementById("c-meds").value,
+                requestedRole: document.getElementById("c-role").value,
+                emergencyName: document.getElementById("r-e-name").value,
+                emergencyPhone: document.getElementById("r-e-phone").value,
+                dates: slots
+            };
+
+            btn.innerText = "SAVING..."; btn.disabled = true;
+
+            try {
+                await fetch(QUICKBOOK_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(payload) });
+                setTimeout(() => { window.location.href = "https://buy.stripe.com/8x2eVe4Nv7kR9lp8gRgw00d"; }, 1000);
+            } catch (e) {
+                window.location.href = "https://buy.stripe.com/8x2eVe4Nv7kR9lp8gRgw00d";
+            }
+        }
+    </script>
+</body>
+</html>
