@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources | KitaCare Malaysia</title>
+    <meta name="description" content="KitaCare professional home care resources. Nationwide support across Peninsular Malaysia, Sabah, and Sarawak.">
+    
+    <style>
+        :root { --brand-blue: #007bff; --brand-black: #000000; --bg-light: #f8f9fa; --border: #dddddd; }
+        body { background-color: var(--bg-light); font-family: 'Segoe UI', sans-serif; margin: 0; color: #333; line-height: 1.6; }
+        
+        header { position: sticky; top: 0; padding: 0 5%; display: flex; justify-content: space-between; align-items: center; height: 70px; background: white; border-bottom: 1px solid var(--border); z-index: 1000; box-sizing: border-box; }
+        header img { height: 30px; }
+        .nav-links a { text-decoration: none; color: var(--brand-black); font-weight: 700; font-size: 0.8rem; margin-left: 20px; text-transform: uppercase; }
+
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+
+        .hero { text-align: center; margin-bottom: 50px; }
+        .hero h1 { font-size: 2.5rem; color: var(--brand-black); margin: 0; letter-spacing: -1px; }
+        .hero p { color: #666; font-size: 1.1rem; margin-top: 10px; }
+        .coverage-line { font-size: 0.7rem; font-weight: 800; color: var(--brand-blue); text-transform: uppercase; letter-spacing: 2px; margin-top: 20px; }
+
+        .lang-switch { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; }
+        .lang-btn { padding: 10px 22px; border: 1px solid var(--brand-black); background: white; cursor: pointer; font-weight: 700; border-radius: 4px; font-size: 0.8rem; transition: 0.3s; }
+        .lang-btn.active { background: var(--brand-black); color: white; }
+
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .article-card { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 25px; transition: 0.3s; display: flex; flex-direction: column; justify-content: space-between; }
+        .article-card:hover { border-color: var(--brand-black); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .article-tag { color: var(--brand-blue); font-size: 0.65rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .article-card h2 { font-size: 1.25rem; margin: 0 0 10px 0; color: var(--brand-black); line-height: 1.3; font-weight: 800; }
+        .article-card p { font-size: 0.9rem; color: #555; margin-bottom: 20px; }
+        .source-label { font-size: 0.65rem; color: #bbb; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .read-btn { background: none; border: 1px solid var(--brand-black); color: var(--brand-black); padding: 8px 15px; font-weight: 800; border-radius: 4px; cursor: pointer; font-size: 0.75rem; text-transform: uppercase; align-self: flex-start; }
+        .read-btn:hover { background: var(--brand-black); color: white; }
+
+        .full-article { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.95rem; color: #444; text-align: justify; }
+        .full-article.active { display: block; }
+
+        .faq-box { margin-top: 80px; border-top: 2px solid var(--brand-black); padding-top: 40px; margin-bottom: 100px; }
+        .faq-item { margin-bottom: 30px; }
+        .faq-q { font-weight: 800; font-size: 1.1rem; color: var(--brand-black); margin-bottom: 8px; }
+        .faq-a { font-size: 1rem; color: #666; }
+
+        @media (max-width: 600px) { .hero h1 { font-size: 1.8rem; } .blog-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="kitacare.png" alt="KitaCare Logo">
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="instant-booking.html">Booking</a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="hero">
+        <h1>Caregiving Insights</h1>
+        <p>Expert healthcare resources across Malaysia.</p>
+        <div class="coverage-line">Serving Nationwide: Peninsular • Sabah • Sarawak</div>
+    </div>
+
+    <div class="lang-switch">
+        <button class="lang-btn active" id="btn-en" onclick="render('en')">English (10)</button>
+        <button class="lang-btn" id="btn-ms" onclick="render('ms')">Bahasa Melayu (10)</button>
+    </div>
+
+    <div class="blog-grid" id="article-container"></div>
+
+    <div class="faq-box">
+        <h2 style="margin-bottom:40px; text-align: center;">KitaCare Knowledge Base</h2>
+        <div class="faq-item">
+            <div class="faq-q">Which regions are covered by KitaCare?</div>
+            <div class="faq-a">KitaCare provides professional caregiving and home nursing nationwide. We serve major hubs including Kuala Lumpur, Selangor, Penang, and Johor Bahru, as well as reaching families in Sabah and Sarawak.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">What is the difference between a KitaCare Caregiver and a KitaCare Nurse?</div>
+            <div class="faq-a">KitaCare caregivers focus on activities of daily living (ADL), companionship, and hygiene. KitaCare nurses are licensed professionals capable of medical procedures like wound care, tube feeding, and injections.</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const data = {
+        en: [
+            { tag: "Policy", title: "Malaysia's Aging Population Trends 2025", source: "Source: DOSM", desc: "Understanding the shift toward 15% elderly population.", full: "Department of Statistics Malaysia reports that by 2030, the 60+ age group will equal the 14-and-under group. KitaCare is positioned to support this shift by providing home-based medical care that prevents hospital congestion." },
+            { tag: "Infection Control", title: "Benefits of Home Wound Care", source: "Source: NIH / Lancet", desc: "Why home-based treatment reduces HAI risks.", full: "Hospital-Acquired Infections (HAIs) are a significant risk for the elderly. KitaCare private nurses use sterile techniques to manage surgical wounds at home, resulting in 30% faster recovery rates according to clinical observations." },
+            { tag: "Dementia", title: "Early Signs of Alzheimer's in Seniors", source: "Source: Alzheimer's Disease Foundation Malaysia", desc: "What families need to watch for in aging parents.", full: "Memory loss is not always 'normal aging.' KitaCare caregivers are trained to identify behavioral changes and provide cognitive stimulation exercises to help slow the progression of dementia in home environments." },
+            { tag: "Stroke Recovery", title: "The Critical First 6 Months Post-Stroke", source: "Source: NASAM Malaysia", desc: "Maximizing neuroplasticity through home therapy.", full: "The 'Golden Period' for stroke recovery requires intensive movement. KitaCare brings therapists and specialized caregivers to the home, ensuring the patient performs daily exercises that are crucial for regaining mobility." },
+            { tag: "Diabetes", title: "Managing Diabetic Ulcers at Home", source: "Source: Sunway Medical Centre", desc: "Preventing amputations through consistent care.", full: "Poor glucose control leads to non-healing foot ulcers. KitaCare's nursing team provides regular debridement and dressing changes, ensuring that diabetic patients avoid the complications that lead to hospitalization." },
+            { tag: "Family Health", title: "Combatting Caregiver Burnout in KL", source: "Source: Malaysian Psychiatric Association", desc: "Why respite care is vital for family well-being.", full: "Families in the 'sandwich generation' often face extreme stress. KitaCare offers respite sessions, allowing family members to work or rest while a professional KitaCare caregiver takes over the duties." },
+            { tag: "End of Life", title: "Palliative Care: Comfort over Clinical Care", source: "Source: Hospis Malaysia", desc: "The importance of dignified home-based support.", full: "In terminal cases, patients often prefer the comfort of their own bed. KitaCare doctors and nurses provide pain management and emotional support, ensuring a dignified and peaceful journey for both patient and family." },
+            { tag: "Emergency", title: "Fall Prevention for Seniors in Malaysia", source: "Source: University Malaya Medical Centre", desc: "Modifying the home environment for safety.", full: "Falls are the leading cause of hip fractures. KitaCare staff perform home safety assessments, suggesting grab bars and non-slip mats while assisting seniors with balance-improvement exercises." },
+            { tag: "Nutrition", title: "Elderly Nutrition and Tube Feeding Guide", source: "Source: Nestle Health Science Malaysia", desc: "Safe Ryle's Tube management at home.", full: "Tube feeding requires precision to avoid aspiration pneumonia. KitaCare nurses train family members and provide direct supervision for NG tube insertion and feeding schedules for bedridden patients." },
+            { tag: "Economics", title: "The Cost of Home Care vs. Nursing Homes", source: "Source: Khazanah Research", desc: "A financial breakdown for Malaysian families.", full: "With private nursing homes costing up to RM8,000 monthly, KitaCare's hourly model (starting RM35/hr) provides a flexible alternative that keeps families together without a heavy financial burden." }
+        ],
+        ms: [
+            { tag: "Trend Sosial", title: "Malaysia Menuju Negara Tua 2040", source: "Sumber: Jabatan Perangkaan Malaysia", desc: "Cabaran penjagaan warga emas di bandar dan luar bandar.", full: "KitaCare menyediakan solusi bagi kekurangan pusat jagaan dengan membawa khidmat perubatan terus ke rumah, membolehkan warga emas kekal dalam komuniti mereka sendiri." },
+            { tag: "Luka Perubatan", title: "Kelebihan Cuci Luka di Rumah", source: "Sumber: KKM / IMR", desc: "Mencegah jangkitan kuman hospital di rumah.", full: "Pesakit kencing manis dan pembedahan berisiko tinggi terkena kuman hospital. Jururawat KitaCare memastikan prosedur cuci luka dilakukan dengan piawaian klinikal yang tinggi untuk kesembuhan pantas." },
+            { tag: "Demensia", title: "Tanda Awal Alzheimer: Apa Perlu Tahu?", source: "Sumber: ADFM", desc: "Cara mengenalpasti perubahan kognitif warga emas.", full: "Penjaga KitaCare dilatih untuk memberikan sokongan emosi dan aktiviti harian yang membantu pesakit demensia kekal fokus dan mengurangkan kegelisahan (sundowning) di waktu malam." },
+            { tag: "Pemulihan Strok", title: "Fisioterapi di Rumah Selepas Strok", source: "Sumber: NASAM", desc: "Memulihkan pergerakan dalam tempoh kritikal.", full: "Sesi fisioterapi KitaCare dilakukan dalam persekitaran yang selesa. Pakar kami membantu pesakit melakukan senaman imbangan yang penting untuk berjalan semula tanpa perlu ke pusat pemulihan." },
+            { tag: "Kencing Manis", title: "Penjagaan Ulser Diabetik KitaCare", source: "Sumber: Pusat Perubatan UM", desc: "Mencegah komplikasi serius dan pemotongan anggota.", full: "Penjagaan luka yang konsisten oleh jururawat KitaCare membantu mengawal jangkitan ulser. Kami bekerjasama dengan doktor KitaCare untuk memastikan paras gula pesakit dipantau dengan teliti." },
+            { tag: "Kesihatan Mental", title: "Menangani Burnout Penjaga Keluarga", source: "Sumber: Persatuan Psikiatri Malaysia", desc: "Kepentingan khidmat bantuan (respite care).", full: "Menjaga pesakit terlantar adalah tugasan berat. KitaCare memberikan peluang kepada ahli keluarga untuk berehat sementara profesional kami mengambil alih tugas penjagaan harian." },
+            { tag: "Penjagaan Akhir", title: "Penjagaan Paliatif yang Bermaruah", source: "Sumber: Hospis Malaysia", desc: "Sokongan perubatan di saat-saat akhir di rumah.", full: "KitaCare membantu menguruskan kesakitan dan keselesaan pesakit di rumah, membolehkan mereka menghabiskan masa berkualiti bersama orang tersayang dalam suasana yang tenang." },
+            { tag: "Keselamatan", title: "Cegah Jatuh: Keselamatan Rumah Warga Emas", source: "Sumber: MyHealth KKM", desc: "Ubahsuai rumah untuk mengurangkan risiko kecederaan.", full: "KitaCare melakukan penilaian risiko jatuh di rumah. Kami mencadangkan pemasangan pemegang tangan dan pencahayaan yang cukup bagi memastikan warga emas selamat bergerak di dalam rumah." },
+            { tag: "Pemakanan", title: "Panduan Susu Melalui Tiub (Ryle's Tube)", source: "Sumber: Nestle Health Science", desc: "Teknik penyusuan yang selamat untuk pesakit.", full: "Jururawat KitaCare melatih waris tentang cara pemberian susu yang betul bagi mengelakkan tersedak (aspiration). Kami juga menyediakan khidmat menukar tiub secara berkala di rumah." },
+            { tag: "Ekonomi", title: "Analisis Kos: Penjagaan Rumah vs Pusat Jagaan", source: "Sumber: Laporan Khazanah", desc: "Kenapa KitaCare lebih menjimatkan untuk keluarga.", full: "Berbanding komitmen bulanan yang tinggi di pusat jagaan, KitaCare menawarkan fleksibiliti bayaran mengikut jam (RM35/jam). Ini membolehkan keluarga merancang bajet dengan lebih efektif." }
+        ]
+    };
+
+    function render(lang) {
+        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        document.getElementById('btn-ms').classList.toggle('active', lang === 'ms');
+        const container = document.getElementById('article-container');
+        container.innerHTML = data[lang].map((a, i) => `
+            <div class="article-card">
+                <div>
+                    <span class="article-tag">${a.tag}</span>
+                    <h2>${a.title}</h2>
+                    <div class="source-label">${a.source}</div>
+                    <p>${a.desc}</p>
+                </div>
+                <div>
+                    <button class="read-btn" onclick="toggleArticle('${lang}', ${i}, this)">Read More</button>
+                    <div class="full-article" id="full-${lang}-${i}">${a.full}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function toggleArticle(lang, id, btn) {
+        const full = document.getElementById(`full-${lang}-${id}`);
+        const isActive = full.classList.toggle('active');
+        btn.innerText = isActive ? "Close" : "Read More";
+    }
+
+    window.onload = () => render('en');
+</script>
+
+</body>
+</html>
