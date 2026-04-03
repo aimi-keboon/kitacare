@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join as a Professional | KitaCare Malaysia</title>
+    <link rel="icon" type="image/png" href="kitacare-icon.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ── ROOT & RESET ─────────────────────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --blue: #184AB7;
+            --blue2: #007BFF;
+            --blue-dark: #0F3285;
+            --blue-pale: #E8F0FE;
+            --sky: #EFF5FF;
+            --green: #1DB87A;
+            --green-pale: #E6F9F1;
+            --white: #FFFFFF;
+            --text: #1A1C20;
+            --text-mid: #4A4D55;
+            --border: #DDE3EE;
+            --gold: #FFB020;
+            --radius: 16px;
+            --radius-lg: 28px;
+            --font-head: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            --nav-h: 72px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text);
+            background: var(--white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+        .section { padding: 60px 0; }
+        
+        /* ── NAVIGATION (Matching Booking Style) ─────────────────────────────── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+            z-index: 1000; background: rgba(255, 255, 255, .98);
+            backdrop-filter: blur(16px); border-bottom: 1px solid var(--border);
+            transition: 0.3s;
+        }
+        nav.scrolled { box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); }
+        .nav-logo img { height: 34px; width: auto; display: block; }
+        
+        .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text); font-weight: 600; font-size: 14px; transition: 0.2s; }
+        .nav-links a:hover { color: var(--blue); }
+
+        .nav-actions { display: flex; gap: 12px; align-items: center; }
+        .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text); }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; padding: 10px 24px;
+            border-radius: 50px; font-family: var(--font-head); font-weight: 700;
+            font-size: 14px; text-decoration: none; transition: .2s; border: none; cursor: pointer;
+        }
+        .btn-primary { background: var(--blue); color: white; }
+        .btn-secondary { background: var(--blue-pale); color: var(--blue); }
+        .btn-gold { background: var(--gold); color: black; }
+
+        /* ── HERO ─────────────────────────────────────────────────────────────── */
+        .hero {
+            background: linear-gradient(135deg, #0F3285 0%, #184AB7 100%);
+            padding: calc(var(--nav-h) + 60px) 0 80px;
+            color: white;
+        }
+        .hero-inner { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; }
+        .tag {
+            display: inline-block; background: rgba(255,255,255,0.15); color: white;
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; padding: 6px 14px; border-radius: 50px; margin-bottom: 20px;
+        }
+        .hero h1 { font-family: var(--font-head); font-size: clamp(32px, 5vw, 48px); font-weight: 800; line-height: 1.1; margin-bottom: 24px; }
+        .hero h1 em { font-style: normal; color: var(--gold); }
+        .hero-desc { font-size: 18px; opacity: 0.9; margin-bottom: 40px; max-width: 500px; }
+
+        /* ── STATS BAR ────────────────────────────────────────────────────────── */
+        .stats-bar { background: #0A2665; padding: 32px 0; color: white; }
+        .stats-inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+        .stat strong { display: block; font-family: var(--font-head); font-size: 24px; font-weight: 800; color: var(--gold); }
+        .stat span { font-size: 12px; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+
+        /* ── BENEFITS SECTION ─────────────────────────────────────────────────── */
+        .benefits-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; align-items: center; }
+        .benefit-item { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+        .benefit-icon { 
+            width: 44px; height: 44px; background: var(--blue-pale); color: var(--blue); 
+            border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .benefit-content h3 { font-family: var(--font-head); font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+        .benefit-content p { font-size: 15px; color: var(--text-mid); }
+
+        /* ── FAQ ──────────────────────────────────────────────────────────────── */
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid var(--border); padding: 20px 0; }
+        .faq-question { 
+            font-family: var(--font-head); font-weight: 700; font-size: 16px; 
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 10px;
+        }
+        .faq-answer { margin-top: 12px; color: var(--text-mid); display: none; font-size: 14px; line-height: 1.6; }
+        .faq-item.active .faq-answer { display: block; }
+        .faq-toggle { transition: 0.3s; font-size: 20px; }
+        .faq-item.active .faq-toggle { transform: rotate(45deg); color: var(--blue); }
+
+        /* ── JOIN CTA ─────────────────────────────────────────────────────────── */
+        .join-cta {
+            background: var(--blue); color: white; border-radius: var(--radius-lg);
+            padding: 60px 24px; text-align: center; margin-bottom: 60px;
+        }
+
+        /* ── FOOTER ──────────────────────────────────────────────────────────── */
+        footer { background: #0F3285; color: white; padding: 60px 0 30px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 40px; }
+        .footer-col-title { font-weight: 700; margin-bottom: 16px; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; color: var(--gold); }
+        .footer-links { list-style: none; font-size: 14px; opacity: 0.8; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: white; text-decoration: none; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; text-align: center; font-size: 12px; opacity: 0.6; }
+
+        /* ── MOBILE RESPONSIVE ───────────────────────────────────────────────── */
+        @media (max-width: 900px) {
+            .menu-toggle { display: block; }
+            .nav-links { 
+                display: none; position: absolute; top: var(--nav-h); left: 0; right: 0; 
+                background: white; flex-direction: column; padding: 24px; gap: 20px; 
+                border-bottom: 1px solid var(--border); box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+            }
+            .nav-links.open { display: flex; }
+            .nav-actions { display: none; }
+            
+            .hero-inner { grid-template-columns: 1fr; text-align: center; }
+            .hero-desc { margin: 0 auto 40px; }
+            .hero-image { display: none; }
+            
+            .stats-inner { grid-template-columns: 1fr 1fr; gap: 24px; }
+            .benefits-grid { grid-template-columns: 1fr; }
+            .benefits-image { order: -1; }
+            
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="home.html" class="nav-logo">
+                    <img src="kitacare.png" alt="KitaCare Logo">
+                </a>
+
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="instant-booking.html">Instant Booking</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="recruitment.html" style="color: var(--blue);">Join as Caregiver</a></li>
+                </ul>
+
+                <div class="nav-actions">
+                    <a href="auth.html" class="btn btn-secondary">Login</a>
+                    <a href="instant-booking.html" class="btn btn-primary">Book Now</a>
+                </div>
+
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container hero-inner">
+            <div>
+                <h1>Empowering You to <em>Provide Better Care</em></h1>
+                <p class="hero-desc">Join Malaysia's fastest-growing network of verified caregivers, nurses, and doctors. Set your own schedule and earn professional rates.</p>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-start;">
+                    <a href="auth.html" class="btn btn-gold" style="padding: 14px 32px;">Create Profile</a>
+                    <a href="mailto:admin@mykitacare.com" class="btn" style="border: 1px solid white; color: white; padding: 14px 32px;">Recruitment Inquiry</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://creativemojo.asia/images/caregiver.jpg?w=600&q=80" alt="Professional Care" style="border-radius: var(--radius); width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+            </div>
+        </div>
+    </section>
+
+    <div class="stats-bar">
+        <div class="container stats-inner">
+            <div class="stat"><strong>RM35+</strong><span>Hourly Rate</span></div>
+            <div class="stat"><strong>Verified</strong><span>Vetted Identity</span></div>
+            <div class="stat"><strong>Flexible</strong><span>Custom Schedule</span></div>
+            <div class="stat"><strong>Secure</strong><span>Reliable Payouts</span></div>
+        </div>
+    </div>
+
+    <main class="container">
+        
+        <section class="section benefits-grid">
+            <div>
+                <div class="tag" style="background: var(--blue-pale); color: var(--blue);">Why Join KitaCare</div>
+                <h2 style="font-family: var(--font-head); font-size: 30px; font-weight: 800; margin-bottom: 30px; line-height: 1.2;">A Professional Platform for Care Experts</h2>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Work Near Your Home</h3>
+                        <p>Our matching connects you with families in your preferred areas to reduce travel time.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Total Schedule Control</h3>
+                        <p>Accept assignments that fit your lifestyle. You decide when and where you work.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
+                    <div class="benefit-content">
+                        <h3>Verified Professional Identity</h3>
+                        <p>Build a verified profile that families across Malaysia rely on and trust.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="benefits-image">
+                <img src="https://creativemojo.asia/images/97542.jpg?w=600&q=80" alt="Matching" style="border-radius: var(--radius); width: 100%; box-shadow: 0 15px 30px rgba(0,0,0,0.08);">
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 style="font-family: var(--font-head); font-size: 28px; font-weight: 800; text-align: center; margin-bottom: 40px;">Professional FAQ</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">Is it free to register? <span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">We require a vetting fee of RM50.00 annually to maintain your verified profile. This covers IC and qualification checks to keep our community safe.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">When do I get paid? <span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">Payouts are processed securely on a regular cycle following the completion of your verified assignments.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">How am I matched with jobs? <span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">We use your profile skills (e.g. nursing, physiotherapy) and preferred location to suggest the best matches for you.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="join-cta">
+            <h2 style="font-family: var(--font-head); font-size: 28px; font-weight: 800; margin-bottom: 12px;">Join the KitaCare Community</h2>
+            <p style="font-size: 16px; opacity: 0.9; margin-bottom: 30px;">Start providing professional care to families in your area today.</p>
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <a href="auth.html" class="btn btn-gold" style="padding: 14px 40px;">Start Registration</a>
+                <a href="mailto:admin@mykitacare.com" class="btn" style="border: 1px solid white; color: white; padding: 14px 40px;">Email Inquiries</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <p class="copyright">
+                © <span id="year-display"></span> KitaCare Malaysia. All rights reserved.
+            </p>
+
+            <div class="powered-by">
+                Powered by 
+                <a href="https://nusapulse.my" target="_blank" rel="noopener">NusaPulse</a> & 
+                <a href="https://keboon.net" target="_blank" rel="noopener">Keboon</a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* ── FOOTER STYLING ──────────────────────────────── */
+        .site-footer {
+            background-color: #0F3285; /* Your blue-dark variable */
+            color: rgba(255, 255, 255, 0.7);
+            padding: 40px 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .copyright {
+            font-size: 14px;
+            margin: 0;
+            letter-spacing: 0.2px;
+        }
+
+        .powered-by {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0.6;
+        }
+
+        /* Underlining the specific links */
+        .powered-by a {
+            color: #FFFFFF;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.2s ease, opacity 0.2s ease;
+        }
+
+        .powered-by a:hover {
+            color: #FFB020; /* Gold highlight from your root */
+            opacity: 1;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 600px) {
+            .site-footer {
+                padding: 30px 20px;
+            }
+            .powered-by {
+                line-height: 1.6;
+            }
+        }
+    </style>
+
+    <script>
+        // Set current year automatically
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearSpan = document.getElementById('year-display');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
+</footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('open');
+        }
+
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 40);
+        });
+
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                const parent = item.parentElement;
+                parent.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

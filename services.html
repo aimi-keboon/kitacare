@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services | Professional Home Care — KitaCare</title>
+    <link rel="icon" type="image/png" href="kitacare-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ── ROOT & RESET ─────────────────────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --blue: #184AB7;
+            --blue2: #007BFF;
+            --blue-dark: #0F3285;
+            --blue-pale: #E8F0FE;
+            --sky: #EFF5FF;
+            --white: #FFFFFF;
+            --text: #1A1C20;
+            --text-mid: #4A4D55;
+            --border: #DDE3EE;
+            --gold: #FFB020;
+            --radius: 16px;
+            --radius-lg: 28px;
+            --font-head: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            --nav-h: 72px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text);
+            background: var(--white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+        .section { padding: 60px 0; }
+        
+        /* ── NAVIGATION ───────────────────────────────────────────────────────── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+            z-index: 1000; background: rgba(255, 255, 255, .98);
+            backdrop-filter: blur(16px); border-bottom: 1px solid var(--border);
+            transition: 0.3s;
+        }
+        nav.scrolled { box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); }
+        .nav-logo img { height: 34px; width: auto; display: block; }
+        
+        .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text); font-weight: 600; font-size: 14px; transition: 0.2s; }
+        .nav-links a:hover { color: var(--blue); }
+
+        .nav-actions { display: flex; gap: 12px; align-items: center; }
+        
+        /* Mobile Toggle */
+        .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text); }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; padding: 10px 24px;
+            border-radius: 50px; font-family: var(--font-head); font-weight: 700;
+            font-size: 14px; text-decoration: none; transition: .2s; border: none; cursor: pointer;
+        }
+        .btn-primary { background: var(--blue); color: white; }
+        .btn-secondary { background: var(--blue-pale); color: var(--blue); }
+
+        /* ── PAGE HEADER ─────────────────────────────────────────────────────── */
+        .tag {
+            display: inline-block; background: var(--blue-pale); color: var(--blue);
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; padding: 6px 14px; border-radius: 50px; margin-bottom: 16px;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #0F3285 0%, #184AB7 100%);
+            padding: calc(var(--nav-h) + 60px) 0 80px;
+            color: white; text-align: center;
+        }
+        .page-header h1 { font-family: var(--font-head); font-size: clamp(28px, 6vw, 48px); font-weight: 800; margin-bottom: 15px; padding: 0 10px; }
+        .page-header p { opacity: 0.85; font-size: 16px; max-width: 650px; margin: 0 auto; padding: 0 20px; }
+
+        /* ── CARDS ───────────────────────────────────────────────────────────── */
+        .booking-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 24px; 
+            margin-top: -40px; 
+        }
+        .card {
+            background: white; border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 30px 24px; transition: .3s; position: relative; display: flex; flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+        }
+        .card:hover { border-color: var(--blue2); transform: translateY(-5px); }
+        .card h3 { font-family: var(--font-head); font-size: 20px; margin-bottom: 10px; }
+        .card p { color: var(--text-mid); font-size: 14px; margin-bottom: 20px; flex-grow: 1; }
+        .price-tag { font-family: var(--font-head); font-weight: 800; font-size: 18px; color: var(--blue); display: block; }
+
+        /* ── PROBLEM SECTION ─────────────────────────────────────────────────── */
+        .problem-section { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; }
+        .worry-list { list-style: none; margin: 24px 0; }
+        .worry-list li {
+            display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border);
+            font-weight: 500; color: var(--text-mid); align-items: flex-start; font-size: 15px;
+        }
+        .worry-list svg { color: var(--blue); flex-shrink: 0; margin-top: 4px; }
+        .answer-box { background: var(--sky); padding: 20px; border-radius: var(--radius); border-left: 4px solid var(--blue); }
+
+        /* ── FAQ ─────────────────────────────────────────────────────────────── */
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid var(--border); padding: 20px 0; }
+        .faq-question { 
+            font-family: var(--font-head); font-weight: 700; font-size: 16px; 
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 10px;
+        }
+        .faq-answer { margin-top: 12px; color: var(--text-mid); display: none; font-size: 14px; line-height: 1.6; }
+        .faq-item.active .faq-answer { display: block; }
+        .faq-toggle { transition: 0.3s; font-size: 20px; color: var(--text-mid); }
+        .faq-item.active .faq-toggle { transform: rotate(45deg); color: var(--blue); }
+
+        .final-cta {
+            background: var(--blue); color: white; border-radius: var(--radius-lg);
+            padding: 60px 24px; text-align: center; margin-bottom: 60px;
+        }
+
+        /* ── FOOTER ──────────────────────────────────────────────────────────── */
+        footer { background: #0F3285; color: white; padding: 60px 0 30px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 40px; }
+        .footer-col-title { font-weight: 700; margin-bottom: 16px; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; color: var(--gold); }
+        .footer-links { list-style: none; font-size: 14px; opacity: 0.8; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: white; text-decoration: none; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; text-align: center; font-size: 12px; opacity: 0.6; }
+
+        /* ── MOBILE RESPONSIVE ───────────────────────────────────────────────── */
+        @media (max-width: 900px) {
+            .menu-toggle { display: block; }
+            .nav-links { 
+                display: none; position: absolute; top: var(--nav-h); left: 0; right: 0; 
+                background: white; flex-direction: column; padding: 24px; gap: 20px; 
+                border-bottom: 1px solid var(--border); box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+            }
+            .nav-links.open { display: flex; }
+            .nav-actions { display: none; }
+            
+            .booking-grid { grid-template-columns: 1fr; margin-top: 20px; }
+            .problem-section { grid-template-columns: 1fr; text-align: center; }
+            .problem-image { order: -1; }
+            .worry-list li { text-align: left; }
+            
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .btn { width: 100%; }
+            .final-cta div { flex-direction: column; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="home.html" class="nav-logo">
+                    <img src="kitacare.png" alt="KitaCare Logo">
+                </a>
+
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="services.html" style="color: var(--blue);">Services</a></li>
+                    <li><a href="instant-booking.html">Instant Booking</a></li>
+                    <li><a href="articles.html">Articles</a></li>
+                    <li><a href="recruitment.html">Join as Caregiver</a></li>
+                    
+                </ul>
+
+                <div class="nav-actions">
+                    <a href="auth.html" class="btn btn-secondary">Login</a>
+                    <a href="instant-booking.html" class="btn btn-primary">Book Now</a>
+                </div>
+
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <div class="tag" style="background: rgba(255,255,255,0.15); color: white;">Verified Care Professionals</div>
+            <h1>Request a Professional</h1>
+            <p>Professional care at home for your family. Choose between instant one-time booking or register to manage recurring care.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="booking-grid">
+            <div class="card">
+                <h3>Home Caregiver</h3>
+                <p>Support with daily activities, hygiene, and companionship to keep your loved ones safe.</p>
+                <span class="price-tag">From RM35/hr</span>
+            </div>
+
+            <div class="card" style="border: 2px solid var(--blue2);">
+                <div style="position:absolute; top:-12px; right:20px; background:var(--gold); color:black; font-size:10px; font-weight:800; padding:2px 10px; border-radius:50px; text-transform:uppercase;">Most Required</div>
+                <h3>Private Nurse</h3>
+                <p>Skilled medical care, wound dressing, and post-hospitalisation support from qualified nurses.</p>
+                <span class="price-tag">From RM50/hr</span>
+            </div>
+
+            <div class="card">
+                <h3>House-Call Doctor</h3>
+                <p>Registered doctors providing medical consultations and assessments in your own home.</p>
+                <span class="price-tag">From RM100/visit</span>
+            </div>
+        </div>
+
+        <section class="section problem-section">
+            <div class="problem-image">
+                <img src="https://creativemojo.asia/images/97542b.jpg?w=600&q=80" alt="Professional care" style="width:100%; border-radius: var(--radius); box-shadow: 0 15px 30px rgba(0,0,0,0.1);">
+            </div>
+            <div>
+                <div class="tag">Peace of Mind</div>
+                <h2 style="font-family: var(--font-head); font-size: 30px; font-weight: 800; line-height: 1.2;">Support When You Can't Be There</h2>
+                <ul class="worry-list">
+                    <li>
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Assistance for recovery at home
+                    </li>
+                    <li>
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Professional management of medications
+                    </li>
+                    <li>
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Qualified medical monitoring
+                    </li>
+                </ul>
+                <div class="answer-box">
+                    <p style="color: var(--text-mid); font-size: 14px;"><strong>KitaCare connects you with verified professionals.</strong> Our platform ensures your family receives the right care promptly and safely.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 style="font-family: var(--font-head); font-size: 28px; font-weight: 800; text-align: center; margin-bottom: 40px;">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">Do I need to register to book? <span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">Registration is optional. You can use our instant booking for one-time needs. However, an account allows you to manage recurring bookings more easily.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Can I book for today or tomorrow? <span class="faq-toggle">+</span></div>
+                    <div class="faq-answer">Standard bookings require notice. For urgent same-day requests, please email us. Note that short-notice surcharges may apply.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="final-cta">
+            <h2 style="font-family: var(--font-head); font-size: 28px; font-weight: 800; margin-bottom: 12px;">Ready to Arrange Care?</h2>
+            <p style="font-size: 16px; opacity: 0.9; margin-bottom: 30px;">Our care professionals are ready to assist your family.</p>
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <a href="instant-booking.html" class="btn" style="background: var(--gold); color: black; padding: 14px 40px;">Start Booking</a>
+                <a href="mailto:admin@mykitacare.com" class="btn" style="border: 1px solid white; color: white; padding: 14px 40px;">Email Us</a>
+            </div>
+        </section>
+    </main>
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <p class="copyright">
+                © <span id="year-display"></span> KitaCare Malaysia. All rights reserved.
+            </p>
+
+            <div class="powered-by">
+                Powered by 
+                <a href="https://nusapulse.my" target="_blank" rel="noopener">NusaPulse</a> & 
+                <a href="https://keboon.net" target="_blank" rel="noopener">Keboon</a>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* ── FOOTER STYLING ──────────────────────────────── */
+        .site-footer {
+            background-color: #0F3285; /* Your blue-dark variable */
+            color: rgba(255, 255, 255, 0.7);
+            padding: 40px 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .copyright {
+            font-size: 14px;
+            margin: 0;
+            letter-spacing: 0.2px;
+        }
+
+        .powered-by {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0.6;
+        }
+
+        /* Underlining the specific links */
+        .powered-by a {
+            color: #FFFFFF;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.2s ease, opacity 0.2s ease;
+        }
+
+        .powered-by a:hover {
+            color: #FFB020; /* Gold highlight from your root */
+            opacity: 1;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 600px) {
+            .site-footer {
+                padding: 30px 20px;
+            }
+            .powered-by {
+                line-height: 1.6;
+            }
+        }
+    </style>
+
+    <script>
+        // Set current year automatically
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearSpan = document.getElementById('year-display');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
+</footer>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('open');
+        }
+
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 40);
+        });
+
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                const parent = item.parentElement;
+                parent.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

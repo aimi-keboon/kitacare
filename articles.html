@@ -1,146 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resources & Care Insights | KitaCare Malaysia</title>
     <link rel="icon" type="image/png" href="kitacare-icon.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resources | KitaCare Malaysia</title>
-    <meta name="description" content="KitaCare professional home care resources. Nationwide support across Peninsular Malaysia, Sabah, and Sarawak.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
     
     <style>
-        :root { --brand-blue: #007bff; --brand-black: #000000; --bg-light: #f8f9fa; --border: #dddddd; }
-        body { background-color: var(--bg-light); font-family: 'Segoe UI', sans-serif; margin: 0; color: #333; line-height: 1.6; }
+        /* ── ROOT & RESET (Synced with Recruitment) ─────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --blue: #184AB7;
+            --blue2: #007BFF;
+            --blue-dark: #0F3285;
+            --blue-pale: #E8F0FE;
+            --sky: #EFF5FF;
+            --green: #1DB87A;
+            --green-pale: #E6F9F1;
+            --white: #FFFFFF;
+            --text: #1A1C20;
+            --text-mid: #4A4D55;
+            --border: #DDE3EE;
+            --gold: #FFB020;
+            --radius: 16px;
+            --radius-lg: 28px;
+            --font-head: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+            --nav-h: 72px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text);
+            background: #f8faff;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+        .section { padding: 60px 0; }
         
-        header { position: sticky; top: 0; padding: 0 5%; display: flex; justify-content: space-between; align-items: center; height: 70px; background: white; border-bottom: 1px solid var(--border); z-index: 1000; box-sizing: border-box; }
-        header img { height: 30px; }
-        .nav-links a { text-decoration: none; color: var(--brand-black); font-weight: 700; font-size: 0.8rem; margin-left: 20px; text-transform: uppercase; }
-
-        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
-
-        .hero { text-align: center; margin-bottom: 50px; }
-        .hero h1 { font-size: 2.5rem; color: var(--brand-black); margin: 0; letter-spacing: -1px; }
-        .hero p { color: #666; font-size: 1.1rem; margin-top: 10px; }
-        .coverage-line { font-size: 0.7rem; font-weight: 800; color: var(--brand-blue); text-transform: uppercase; letter-spacing: 2px; margin-top: 20px; }
-
-        .lang-switch { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; }
-        .lang-btn { padding: 10px 22px; border: 1px solid var(--brand-black); background: white; cursor: pointer; font-weight: 700; border-radius: 4px; font-size: 0.8rem; transition: 0.3s; }
-        .lang-btn.active { background: var(--brand-black); color: white; }
-
-        .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
-        .article-card { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 25px; transition: 0.3s; display: flex; flex-direction: column; justify-content: space-between; }
-        .article-card:hover { border-color: var(--brand-black); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .article-tag { color: var(--brand-blue); font-size: 0.65rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; display: block; }
-        .article-card h2 { font-size: 1.25rem; margin: 0 0 10px 0; color: var(--brand-black); line-height: 1.3; font-weight: 800; }
-        .article-card p { font-size: 0.9rem; color: #555; margin-bottom: 20px; }
-        .source-label { font-size: 0.65rem; color: #bbb; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+        /* ── NAVIGATION (Uniformed) ────────────────────────────────────────── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+            z-index: 1000; background: rgba(255, 255, 255, .98);
+            backdrop-filter: blur(16px); border-bottom: 1px solid var(--border);
+            transition: 0.3s;
+        }
+        nav.scrolled { box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); }
+        .nav-logo img { height: 34px; width: auto; display: block; }
         
-        .read-btn { background: none; border: 1px solid var(--brand-black); color: var(--brand-black); padding: 8px 15px; font-weight: 800; border-radius: 4px; cursor: pointer; font-size: 0.75rem; text-transform: uppercase; align-self: flex-start; }
-        .read-btn:hover { background: var(--brand-black); color: white; }
+        .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text); font-weight: 600; font-size: 14px; transition: 0.2s; }
+        .nav-links a:hover { color: var(--blue); }
 
-        .full-article { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee; font-size: 0.95rem; color: #444; text-align: justify; }
-        .full-article.active { display: block; }
+        .nav-actions { display: flex; gap: 12px; align-items: center; }
+        .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text); }
 
-        .faq-box { margin-top: 80px; border-top: 2px solid var(--brand-black); padding-top: 40px; margin-bottom: 100px; }
-        .faq-item { margin-bottom: 30px; }
-        .faq-q { font-weight: 800; font-size: 1.1rem; color: var(--brand-black); margin-bottom: 8px; }
-        .faq-a { font-size: 1rem; color: #666; }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; padding: 10px 24px;
+            border-radius: 50px; font-family: var(--font-head); font-weight: 700;
+            font-size: 14px; text-decoration: none; transition: .2s; border: none; cursor: pointer;
+        }
+        .btn-primary { background: var(--blue); color: white; }
+        .btn-secondary { background: var(--blue-pale); color: var(--blue); }
 
-        @media (max-width: 600px) { .hero h1 { font-size: 1.8rem; } .blog-grid { grid-template-columns: 1fr; } }
+        /* ── HERO ─────────────────────────────────────────────────────────────── */
+        .hero-mini {
+            background: linear-gradient(135deg, #0F3285 0%, #184AB7 100%);
+            padding: calc(var(--nav-h) + 60px) 0 60px;
+            color: white;
+            text-align: center;
+        }
+        .hero-mini h1 { font-family: var(--font-head); font-size: clamp(32px, 5vw, 42px); font-weight: 800; margin-bottom: 12px; }
+        .hero-mini p { font-size: 18px; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+
+        /* ── LANGUAGE SWITCHER ────────────────────────────────────────────────── */
+        .lang-wrapper { margin-top: -30px; position: relative; z-index: 10; text-align: center; margin-bottom: 50px; }
+        .lang-switcher { display: inline-flex; background: white; padding: 6px; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 1px solid var(--border); }
+        .lang-btn { 
+            padding: 10px 24px; border: none; background: transparent; 
+            cursor: pointer; font-weight: 700; border-radius: 50px; font-family: var(--font-head);
+            font-size: 14px; transition: 0.3s; color: var(--text-mid);
+        }
+        .lang-btn.active { background: var(--blue); color: white; }
+
+        /* ── ARTICLES GRID ────────────────────────────────────────────────────── */
+        .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; margin-bottom: 80px; }
+        
+        .article-card { 
+            background: white; border: 1px solid var(--border); border-radius: var(--radius); 
+            padding: 32px; transition: 0.3s; display: flex; flex-direction: column; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+        .article-card:hover { transform: translateY(-5px); border-color: var(--blue); box-shadow: 0 12px 30px rgba(15, 50, 133, 0.08); }
+        
+        .article-tag { color: var(--blue); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: block; }
+        .article-card h2 { font-family: var(--font-head); font-size: 20px; margin-bottom: 8px; color: var(--blue-dark); line-height: 1.3; font-weight: 700; }
+        .source-label { font-size: 11px; color: #999; margin-bottom: 16px; font-weight: 700; text-transform: uppercase; }
+        .article-card p { font-size: 15px; color: var(--text-mid); margin-bottom: 24px; flex-grow: 1; }
+        
+        .read-btn { 
+            background: var(--blue-pale); color: var(--blue); border: none; padding: 10px 20px; 
+            font-weight: 800; border-radius: 12px; cursor: pointer; font-size: 12px; 
+            text-transform: uppercase; align-self: flex-start; transition: 0.2s;
+        }
+        .read-btn:hover { background: var(--blue); color: white; }
+
+        .full-content { 
+            display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--sky); 
+            font-size: 14px; color: #555; line-height: 1.7; animation: fadeIn 0.4s ease;
+        }
+        .full-content.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ── KNOWLEDGE BASE ──────────────────────────────────────────────────── */
+        .kb-section { background: white; padding: 80px 0; border-radius: var(--radius-lg); margin-bottom: 80px; border: 1px solid var(--border); }
+        .kb-section h2 { text-align: center; font-family: var(--font-head); font-size: 30px; font-weight: 800; margin-bottom: 50px; color: var(--blue-dark); }
+        .kb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .kb-item h4 { font-family: var(--font-head); font-size: 18px; color: var(--blue); margin-bottom: 12px; font-weight: 700; }
+        .kb-item p { color: var(--text-mid); font-size: 15px; }
+
+        /* ── FOOTER (Uniformed) ──────────────────────────────────────────────── */
+        footer { background: #0F3285; color: white; padding: 60px 0 30px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-bottom: 40px; }
+        .footer-col-title { font-weight: 700; margin-bottom: 16px; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; color: var(--gold); }
+        .footer-links { list-style: none; font-size: 14px; opacity: 0.8; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a { color: white; text-decoration: none; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; text-align: center; font-size: 12px; opacity: 0.6; }
+
+        /* ── MOBILE RESPONSIVE ───────────────────────────────────────────────── */
+        @media (max-width: 900px) {
+            .menu-toggle { display: block; }
+            .nav-links { 
+                display: none; position: absolute; top: var(--nav-h); left: 0; right: 0; 
+                background: white; flex-direction: column; padding: 24px; gap: 20px; 
+                border-bottom: 1px solid var(--border); box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+            }
+            .nav-links.open { display: flex; }
+            .nav-actions { display: none; }
+            
+            .kb-grid { grid-template-columns: 1fr; gap: 30px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .articles-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .lang-switcher { width: 90%; }
+            .lang-btn { flex: 1; padding: 10px 12px; font-size: 12px; }
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <img src="kitacare.png" alt="KitaCare Logo">
-    <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="instant-booking.html">Booking</a>
-    </div>
-</header>
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="home.html" class="nav-logo">
+                    <img src="kitacare.png" alt="KitaCare Logo">
+                </a>
 
-<div class="container">
-    <div class="hero">
-        <h1>Caregiving Insights</h1>
-        <p>Expert healthcare resources across Malaysia.</p>
-        <div class="coverage-line">Serving Nationwide: Peninsular • Sabah • Sarawak</div>
-    </div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="instant-booking.html">Instant Booking</a></li>
+                    <li><a href="articles.html" style="color: var(--blue);">Articles</a></li>
+                    <li><a href="recruitment.html">Join as Caregiver</a></li>
+                </ul>
 
-    <div class="lang-switch">
-        <button class="lang-btn active" id="btn-en" onclick="render('en')">English (10)</button>
-        <button class="lang-btn" id="btn-ms" onclick="render('ms')">Bahasa Melayu (10)</button>
-    </div>
-
-    <div class="blog-grid" id="article-container"></div>
-
-    <div class="faq-box">
-        <h2 style="margin-bottom:40px; text-align: center;">KitaCare Knowledge Base</h2>
-        <div class="faq-item">
-            <div class="faq-q">Which regions are covered by KitaCare?</div>
-            <div class="faq-a">KitaCare provides professional caregiving and home nursing nationwide. We serve major hubs including Kuala Lumpur, Selangor, Penang, and Johor Bahru, as well as reaching families in Sabah and Sarawak.</div>
-        </div>
-        <div class="faq-item">
-            <div class="faq-q">What is the difference between a KitaCare Caregiver and a KitaCare Nurse?</div>
-            <div class="faq-a">KitaCare caregivers focus on activities of daily living (ADL), companionship, and hygiene. KitaCare nurses are licensed professionals capable of medical procedures like wound care, tube feeding, and injections.</div>
-        </div>
-    </div>
-</div>
-
-<script>
-    const data = {
-        en: [
-            { tag: "Policy", title: "Malaysia's Aging Population Trends 2025", source: "Source: DOSM", desc: "Understanding the shift toward 15% elderly population.", full: "Department of Statistics Malaysia reports that by 2030, the 60+ age group will equal the 14-and-under group. KitaCare is positioned to support this shift by providing home-based medical care that prevents hospital congestion." },
-            { tag: "Infection Control", title: "Benefits of Home Wound Care", source: "Source: NIH / Lancet", desc: "Why home-based treatment reduces HAI risks.", full: "Hospital-Acquired Infections (HAIs) are a significant risk for the elderly. KitaCare private nurses use sterile techniques to manage surgical wounds at home, resulting in 30% faster recovery rates according to clinical observations." },
-            { tag: "Dementia", title: "Early Signs of Alzheimer's in Seniors", source: "Source: Alzheimer's Disease Foundation Malaysia", desc: "What families need to watch for in aging parents.", full: "Memory loss is not always 'normal aging.' KitaCare caregivers are trained to identify behavioral changes and provide cognitive stimulation exercises to help slow the progression of dementia in home environments." },
-            { tag: "Stroke Recovery", title: "The Critical First 6 Months Post-Stroke", source: "Source: NASAM Malaysia", desc: "Maximizing neuroplasticity through home therapy.", full: "The 'Golden Period' for stroke recovery requires intensive movement. KitaCare brings therapists and specialized caregivers to the home, ensuring the patient performs daily exercises that are crucial for regaining mobility." },
-            { tag: "Diabetes", title: "Managing Diabetic Ulcers at Home", source: "Source: Sunway Medical Centre", desc: "Preventing amputations through consistent care.", full: "Poor glucose control leads to non-healing foot ulcers. KitaCare's nursing team provides regular debridement and dressing changes, ensuring that diabetic patients avoid the complications that lead to hospitalization." },
-            { tag: "Family Health", title: "Combatting Caregiver Burnout in KL", source: "Source: Malaysian Psychiatric Association", desc: "Why respite care is vital for family well-being.", full: "Families in the 'sandwich generation' often face extreme stress. KitaCare offers respite sessions, allowing family members to work or rest while a professional KitaCare caregiver takes over the duties." },
-            { tag: "End of Life", title: "Palliative Care: Comfort over Clinical Care", source: "Source: Hospis Malaysia", desc: "The importance of dignified home-based support.", full: "In terminal cases, patients often prefer the comfort of their own bed. KitaCare doctors and nurses provide pain management and emotional support, ensuring a dignified and peaceful journey for both patient and family." },
-            { tag: "Emergency", title: "Fall Prevention for Seniors in Malaysia", source: "Source: University Malaya Medical Centre", desc: "Modifying the home environment for safety.", full: "Falls are the leading cause of hip fractures. KitaCare staff perform home safety assessments, suggesting grab bars and non-slip mats while assisting seniors with balance-improvement exercises." },
-            { tag: "Nutrition", title: "Elderly Nutrition and Tube Feeding Guide", source: "Source: Nestle Health Science Malaysia", desc: "Safe Ryle's Tube management at home.", full: "Tube feeding requires precision to avoid aspiration pneumonia. KitaCare nurses train family members and provide direct supervision for NG tube insertion and feeding schedules for bedridden patients." },
-            { tag: "Economics", title: "The Cost of Home Care vs. Nursing Homes", source: "Source: Khazanah Research", desc: "A financial breakdown for Malaysian families.", full: "With private nursing homes costing up to RM8,000 monthly, KitaCare's hourly model (starting RM35/hr) provides a flexible alternative that keeps families together without a heavy financial burden." }
-        ],
-        ms: [
-            { tag: "Trend Sosial", title: "Malaysia Menuju Negara Tua 2040", source: "Sumber: Jabatan Perangkaan Malaysia", desc: "Cabaran penjagaan warga emas di bandar dan luar bandar.", full: "KitaCare menyediakan solusi bagi kekurangan pusat jagaan dengan membawa khidmat perubatan terus ke rumah, membolehkan warga emas kekal dalam komuniti mereka sendiri." },
-            { tag: "Luka Perubatan", title: "Kelebihan Cuci Luka di Rumah", source: "Sumber: KKM / IMR", desc: "Mencegah jangkitan kuman hospital di rumah.", full: "Pesakit kencing manis dan pembedahan berisiko tinggi terkena kuman hospital. Jururawat KitaCare memastikan prosedur cuci luka dilakukan dengan piawaian klinikal yang tinggi untuk kesembuhan pantas." },
-            { tag: "Demensia", title: "Tanda Awal Alzheimer: Apa Perlu Tahu?", source: "Sumber: ADFM", desc: "Cara mengenalpasti perubahan kognitif warga emas.", full: "Penjaga KitaCare dilatih untuk memberikan sokongan emosi dan aktiviti harian yang membantu pesakit demensia kekal fokus dan mengurangkan kegelisahan (sundowning) di waktu malam." },
-            { tag: "Pemulihan Strok", title: "Fisioterapi di Rumah Selepas Strok", source: "Sumber: NASAM", desc: "Memulihkan pergerakan dalam tempoh kritikal.", full: "Sesi fisioterapi KitaCare dilakukan dalam persekitaran yang selesa. Pakar kami membantu pesakit melakukan senaman imbangan yang penting untuk berjalan semula tanpa perlu ke pusat pemulihan." },
-            { tag: "Kencing Manis", title: "Penjagaan Ulser Diabetik KitaCare", source: "Sumber: Pusat Perubatan UM", desc: "Mencegah komplikasi serius dan pemotongan anggota.", full: "Penjagaan luka yang konsisten oleh jururawat KitaCare membantu mengawal jangkitan ulser. Kami bekerjasama dengan doktor KitaCare untuk memastikan paras gula pesakit dipantau dengan teliti." },
-            { tag: "Kesihatan Mental", title: "Menangani Burnout Penjaga Keluarga", source: "Sumber: Persatuan Psikiatri Malaysia", desc: "Kepentingan khidmat bantuan (respite care).", full: "Menjaga pesakit terlantar adalah tugasan berat. KitaCare memberikan peluang kepada ahli keluarga untuk berehat sementara profesional kami mengambil alih tugas penjagaan harian." },
-            { tag: "Penjagaan Akhir", title: "Penjagaan Paliatif yang Bermaruah", source: "Sumber: Hospis Malaysia", desc: "Sokongan perubatan di saat-saat akhir di rumah.", full: "KitaCare membantu menguruskan kesakitan dan keselesaan pesakit di rumah, membolehkan mereka menghabiskan masa berkualiti bersama orang tersayang dalam suasana yang tenang." },
-            { tag: "Keselamatan", title: "Cegah Jatuh: Keselamatan Rumah Warga Emas", source: "Sumber: MyHealth KKM", desc: "Ubahsuai rumah untuk mengurangkan risiko kecederaan.", full: "KitaCare melakukan penilaian risiko jatuh di rumah. Kami mencadangkan pemasangan pemegang tangan dan pencahayaan yang cukup bagi memastikan warga emas selamat bergerak di dalam rumah." },
-            { tag: "Pemakanan", title: "Panduan Susu Melalui Tiub (Ryle's Tube)", source: "Sumber: Nestle Health Science", desc: "Teknik penyusuan yang selamat untuk pesakit.", full: "Jururawat KitaCare melatih waris tentang cara pemberian susu yang betul bagi mengelakkan tersedak (aspiration). Kami juga menyediakan khidmat menukar tiub secara berkala di rumah." },
-            { tag: "Ekonomi", title: "Analisis Kos: Penjagaan Rumah vs Pusat Jagaan", source: "Sumber: Laporan Khazanah", desc: "Kenapa KitaCare lebih menjimatkan untuk keluarga.", full: "Berbanding komitmen bulanan yang tinggi di pusat jagaan, KitaCare menawarkan fleksibiliti bayaran mengikut jam (RM35/jam). Ini membolehkan keluarga merancang bajet dengan lebih efektif." }
-        ]
-    };
-
-    function render(lang) {
-        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-        document.getElementById('btn-ms').classList.toggle('active', lang === 'ms');
-        const container = document.getElementById('article-container');
-        container.innerHTML = data[lang].map((a, i) => `
-            <div class="article-card">
-                <div>
-                    <span class="article-tag">${a.tag}</span>
-                    <h2>${a.title}</h2>
-                    <div class="source-label">${a.source}</div>
-                    <p>${a.desc}</p>
+                <div class="nav-actions">
+                    <a href="auth.html" class="btn btn-secondary">Login</a>
+                    <a href="instant-booking.html" class="btn btn-primary">Book Now</a>
                 </div>
-                <div>
-                    <button class="read-btn" onclick="toggleArticle('${lang}', ${i}, this)">Read More</button>
-                    <div class="full-article" id="full-${lang}-${i}">${a.full}</div>
+
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-mini">
+        <div class="container">
+            <h1>Caregiving Insights</h1>
+            <p>Expert healthcare resources and guides curated for Malaysian families.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="lang-wrapper">
+            <div class="lang-switcher">
+                <button class="lang-btn active" id="btn-en" onclick="render('en')">English</button>
+                <button class="lang-btn" id="btn-ms" onclick="render('ms')">Bahasa Melayu</button>
+            </div>
+        </div>
+
+        <div class="articles-grid" id="article-container">
+            </div>
+
+        <section class="kb-section">
+            <div class="container">
+                <h2>KitaCare Knowledge Base</h2>
+                <div class="kb-grid">
+                    <div class="kb-item">
+                        <h4>Which regions are covered?</h4>
+                        <p>KitaCare provides home nursing nationwide. We serve major hubs like KL, Selangor, Penang, and JB, as well as reaching families in Sabah and Sarawak via our local verified partners.</p>
+                    </div>
+                    <div class="kb-item">
+                        <h4>Caregiver vs. Private Nurse?</h4>
+                        <p>Caregivers focus on daily living (ADL), companionship, and hygiene. Private Nurses are licensed (SRN) professionals for medical procedures like wound care, tube feeding, and injections.</p>
+                    </div>
                 </div>
             </div>
-        `).join('');
-    }
+        </section>
+    </div>
 
-    function toggleArticle(lang, id, btn) {
-        const full = document.getElementById(`full-${lang}-${id}`);
-        const isActive = full.classList.toggle('active');
-        btn.innerText = isActive ? "Close" : "Read More";
-    }
+     <footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <p class="copyright">
+                © <span id="year-display"></span> KitaCare Malaysia. All rights reserved.
+            </p>
 
-    window.onload = () => render('en');
-</script>
+            <div class="powered-by">
+                Powered by 
+                <a href="https://nusapulse.my" target="_blank" rel="noopener">NusaPulse</a> & 
+                <a href="https://keboon.net" target="_blank" rel="noopener">Keboon</a>
+            </div>
+        </div>
+    </div>
 
+    <style>
+        /* ── FOOTER STYLING ──────────────────────────────── */
+        .site-footer {
+            background-color: #0F3285; /* Your blue-dark variable */
+            color: rgba(255, 255, 255, 0.7);
+            padding: 40px 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .copyright {
+            font-size: 14px;
+            margin: 0;
+            letter-spacing: 0.2px;
+        }
+
+        .powered-by {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0.6;
+        }
+
+        /* Underlining the specific links */
+        .powered-by a {
+            color: #FFFFFF;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.2s ease, opacity 0.2s ease;
+        }
+
+        .powered-by a:hover {
+            color: #FFB020; /* Gold highlight from your root */
+            opacity: 1;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 600px) {
+            .site-footer {
+                padding: 30px 20px;
+            }
+            .powered-by {
+                line-height: 1.6;
+            }
+        }
+    </style>
+
+    <script>
+        // Set current year automatically
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearSpan = document.getElementById('year-display');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
+</footer>
+
+    <script>
+        // --- NAVIGATION LOGIC ---
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('open');
+        }
+
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 40);
+        });
+
+        // --- ARTICLE CONTENT DATA ---
+        const data = {
+            en: [
+                { tag: "Policy", title: "Aging Population Trends 2025", source: "Source: DOSM", desc: "Understanding Malaysia's shift toward 15% elderly population.", full: "Department of Statistics Malaysia reports that by 2030, the 60+ age group will equal the 14-and-under group. KitaCare supports this shift by providing home-based medical care." },
+                { tag: "Infection Control", title: "Benefits of Home Wound Care", source: "Source: NIH / Lancet", desc: "Why home-based treatment reduces hospital-acquired infection risks.", full: "Hospital-Acquired Infections (HAIs) are a significant risk. KitaCare nurses use sterile techniques to manage surgical wounds at home, resulting in 30% faster recovery rates." },
+                { tag: "Stroke Recovery", title: "The Critical First 6 Months", source: "Source: NASAM Malaysia", desc: "Maximizing neuroplasticity through consistent home therapy.", full: "The 'Golden Period' for stroke recovery requires intensive movement. KitaCare brings specialized caregivers to the home, ensuring daily exercises that are crucial." },
+                { tag: "Economics", title: "Home Care vs. Nursing Homes", source: "Source: Khazanah Research", desc: "A financial breakdown for Malaysian families in 2026.", full: "With private nursing homes costing up to RM8,000 monthly, KitaCare's hourly model (starting RM35/hr) provides a flexible alternative." }
+            ],
+            ms: [
+                { tag: "Trend Sosial", title: "Malaysia Menuju Negara Tua 2040", source: "Sumber: Jabatan Perangkaan", desc: "Cabaran penjagaan warga emas di bandar dan luar bandar.", full: "KitaCare menyediakan solusi bagi kekurangan pusat jagaan dengan membawa khidmat perubatan terus ke rumah." },
+                { tag: "Luka Perubatan", title: "Kelebihan Cuci Luka di Rumah", source: "Sumber: KKM / IMR", desc: "Mencegah jangkitan kuman hospital melalui rawatan di rumah.", full: "Pesakit kencing manis berisiko tinggi terkena kuman hospital. Jururawat KitaCare memastikan prosedur cuci luka dilakukan dengan piawaian klinikal tinggi." },
+                { tag: "Pemulihan Strok", title: "Fisioterapi di Rumah Selepas Strok", source: "Sumber: NASAM", desc: "Memulihkan pergerakan dalam tempoh kritikal di rumah.", full: "Sesi KitaCare dilakukan dalam persekitaran selesa. Pakar kami membantu pesakit melakukan senaman imbangan yang penting." },
+                { tag: "Ekonomi", title: "Analisis Kos Penjagaan Rumah", source: "Sumber: Laporan Khazanah", desc: "Kenapa KitaCare lebih menjimatkan untuk keluarga Malaysia.", full: "Berbanding komitmen bulanan tinggi di pusat jagaan, KitaCare menawarkan fleksibiliti bayaran mengikut jam." }
+            ]
+        };
+
+        function render(lang) {
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            document.getElementById('btn-ms').classList.toggle('active', lang === 'ms');
+            const container = document.getElementById('article-container');
+            
+            container.innerHTML = data[lang].map((a, i) => `
+                <div class="article-card">
+                    <div>
+                        <span class="article-tag">${a.tag}</span>
+                        <h2>${a.title}</h2>
+                        <div class="source-label">${a.source}</div>
+                        <p>${a.desc}</p>
+                    </div>
+                    <div>
+                        <button class="read-btn" onclick="toggleArticle('${lang}', ${i}, this)">Read Analysis</button>
+                        <div class="full-content" id="full-${lang}-${i}">${a.full}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleArticle(lang, id, btn) {
+            const full = document.getElementById(`full-${lang}-${id}`);
+            const isActive = full.classList.toggle('active');
+            btn.innerText = isActive ? "Close" : "Read Analysis";
+        }
+
+        window.onload = () => render('en');
+    </script>
 </body>
 </html>
