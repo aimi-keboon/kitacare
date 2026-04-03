@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -79,9 +80,11 @@
         input, select, textarea { 
             width: 100%; height: 52px; padding: 12px 16px; 
             border: 1px solid var(--border); border-radius: 12px; 
-            font-size: 16px; /* Prevents iOS zoom */
+            font-size: 16px; 
             font-family: var(--font-body); background: #fafafa;
+            outline: none;
         }
+        input:focus, select:focus, textarea:focus { border-color: var(--blue); background: #fff; }
 
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
@@ -141,16 +144,22 @@
                 <div class="input-group"><label>Full Name</label><input type="text" id="u-name" placeholder="Name for contact"></div>
                 <div class="grid-2">
                     <div class="input-group"><label>Email</label><input type="email" id="u-email" placeholder="Email for receipt"></div>
-                    <div class="input-group"><label>Phone</label><input type="tel" id="u-phone" placeholder="01X-XXXXXXX"></div>
+                    <div class="input-group"><label>Phone</label><input type="tel" id="u-phone" placeholder="01X-XXXXXXX" inputmode="tel"></div>
                 </div>
 
                 <h3>2. Care Recipient</h3>
                 <div class="input-group"><label>Recipient Name</label><input type="text" id="r-name"></div>
                 <div class="grid-2">
                     <div class="input-group"><label>Date of Birth</label><input type="date" id="r-dob"></div>
-                    <div class="input-group"><label>Weight (kg)</label><input type="number" id="r-weight"></div>
+                    <div class="input-group"><label>Gender</label>
+                        <select id="r-gender">
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="input-group"><label>Medical History</label><textarea id="c-meds" style="height:70px; padding-top:12px;"></textarea></div>
+                <div class="input-group"><label>Weight (kg)</label><input type="number" id="r-weight" inputmode="decimal"></div>
+                <div class="input-group"><label>Medical History / Meds</label><textarea id="c-meds" style="height:70px; padding-top:12px;"></textarea></div>
 
                 <h3>3. Service Details</h3>
                 <div class="input-group">
@@ -161,7 +170,12 @@
                         <option value="Doctor">Doctor — RM100/hr</option>
                     </select>
                 </div>
-                <div class="input-group"><label>Full Address</label><input type="text" id="r-address" placeholder="Unit, Street, Area"></div>
+                <div class="input-group"><label>Full Service Address</label><input type="text" id="r-address" placeholder="Unit, Street, Area"></div>
+                
+                <div class="grid-2">
+                    <div class="input-group"><label>Emergency Name</label><input type="text" id="r-e-name"></div>
+                    <div class="input-group"><label>Emergency Phone</label><input type="tel" id="r-e-phone" inputmode="tel"></div>
+                </div>
 
                 <h3>4. Booking Slots</h3>
                 <div id="multi-list">
@@ -195,7 +209,7 @@
 
         function setMinDate(el) {
             const d = new Date();
-            d.setDate(d.getDate() + 3); // 72h policy
+            d.setDate(d.getDate() + 3); 
             el.min = d.toISOString().slice(0, 16);
         }
 
@@ -210,7 +224,7 @@
             div.innerHTML = `
                 <div><input type="datetime-local" class="date-input-field" onchange="updatePrice()"></div>
                 <div><input type="number" class="hour-input-field" value="1" min="1" onchange="updatePrice()"></div>
-                <button onclick="this.parentElement.remove(); updatePrice();" style="background:#000; color:#fff; border:none; height:52px; border-radius:12px; cursor:pointer;">✕</button>
+                <button onclick="this.parentElement.remove(); updatePrice();" style="background:#1A1C20; color:#fff; border:none; height:52px; border-radius:12px; cursor:pointer;">✕</button>
             `;
             document.getElementById("multi-list").appendChild(div);
             setMinDate(div.querySelector(".date-input-field"));
@@ -219,15 +233,16 @@
 
         async function submitBooking() {
             const btn = document.getElementById("submit-btn");
+            
+            // Map the slots exactly as the original logic
             const slots = Array.from(document.querySelectorAll(".date-input-field")).map((el, i) => {
                 const h = document.querySelectorAll(".hour-input-field")[i].value;
                 return el.value ? `${el.value} (${h}hrs)` : null;
             }).filter(v => v).join(" | ");
 
-            if(!slots) return alert("Please select a date.");
+            if(!slots) return alert("Please select a date/time.");
 
-            btn.innerText = "SAVING..."; btn.disabled = true;
-
+            // Construct payload EXACTLY as the first working version
             const payload = {
                 userName: document.getElementById("u-name").value,
                 userEmail: document.getElementById("u-email").value,
@@ -235,14 +250,27 @@
                 recipientName: document.getElementById("r-name").value,
                 recipientDob: document.getElementById("r-dob").value,
                 weight: document.getElementById("r-weight").value,
+                gender: document.getElementById("r-gender").value,
+                state: "Selangor", // Matching original default
                 address: document.getElementById("r-address").value,
+                purpose: "Instant Booking", // Matching original
+                meds: document.getElementById("c-meds").value,
                 requestedRole: document.getElementById("c-role").value,
+                emergencyName: document.getElementById("r-e-name").value,
+                emergencyPhone: document.getElementById("r-e-phone").value,
                 dates: slots
             };
 
+            btn.innerText = "SAVING..."; btn.disabled = true;
+
             try {
-                await fetch(QUICKBOOK_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(payload) });
-                window.location.href = "https://buy.stripe.com/8x2eVe4Nv7kR9lp8gRgw00d";
+                await fetch(QUICKBOOK_URL, { 
+                    method: "POST", 
+                    mode: "no-cors", 
+                    body: JSON.stringify(payload) 
+                });
+                // Short delay to ensure browser doesn't kill the request before redirect
+                setTimeout(() => { window.location.href = "https://buy.stripe.com/8x2eVe4Nv7kR9lp8gRgw00d"; }, 1000);
             } catch (e) {
                 window.location.href = "https://buy.stripe.com/8x2eVe4Nv7kR9lp8gRgw00d";
             }
